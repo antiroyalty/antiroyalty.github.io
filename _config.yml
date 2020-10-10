@@ -1,4 +1,11 @@
-theme: riggraz/no-style-please # if you are using GitHub Pages, change it to remote_theme: riggraz/no-style-please
+title: hey it's Ana # name of the site
+author: ana # name of site's author
+email: mail@heyitsana.com # email of site's author
+url: heyitsana.com # root address of the site
+description: > # description of the site (multiple lines allowed)
+  none
+
+remote_theme: riggraz/no-style-please # if you are using GitHub Pages, change it to remote_theme: riggraz/no-style-please
 
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
