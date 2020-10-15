@@ -1,0 +1,36 @@
+# For documentation on this file, see:
+# https://github.com/riggraz/no-style-please#customize-the-menu
+
+entries:
+  - title: github
+    url: https://github.com/antiroyalty
+  - title: twitter
+    url: https://twitter.com/antiroyalty_
+  - title: linkedin
+    url: https://www.linkedin.com/in/asantash/
+
+  - title: entries
+    post_list: true
+    url: false
+    entries:
+      - title: 2016-11-23 how to get started with djing
+        url: "https://medium.com/@asantash/how-to-get-started-with-djing-495c275be5e4"
+
+# - title: rss
+  #   url: feed.xml
+  
+  # - title: another list
+  #   url: false
+  #   entries:
+  #     - title: with subitems
+  #       url: false
+  #       entries:
+  #         - title: with subsubitems
+  #           url: false
+  #         - title: example page
+  #           url: about
+  # - title: PRO TIP
+  #   url: false
+  #   entries:
+  #     - title: to edit this menu, edit _data/menu.yml file
+  #       url: false
