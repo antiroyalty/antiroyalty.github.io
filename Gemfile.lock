@@ -1,4 +1,5 @@
 GEM
+  remote: https://rubygems.org/
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
@@ -7,7 +8,7 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
     eventmachine (1.2.7)
-    ffi (1.9.18)
+    ffi (1.13.1)
     forwardable-extended (2.6.0)
     http_parser.rb (0.6.0)
     i18n (0.8.1)
@@ -51,12 +52,23 @@ GEM
     rouge (3.23.0)
     safe_yaml (1.0.5)
     sass (3.4.23)
+    thread_safe (0.3.6)
+    tzinfo (1.2.7)
+      thread_safe (~> 0.1)
+    tzinfo-data (1.2020.2)
+      tzinfo (>= 1.0.0)
+    wdm (0.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  jekyll (~> 3.8.7)
+  jekyll-feed (~> 0.6)
   no-style-please
+  tzinfo (~> 1.2)
+  tzinfo-data
+  wdm (~> 0.1.0)
 
 BUNDLED WITH
    1.14.6

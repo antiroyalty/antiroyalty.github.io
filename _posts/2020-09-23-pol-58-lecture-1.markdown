@@ -1,0 +1,17 @@
+---
+layout: post
+title:  "POL 58 Lecture 1 Notes"
+date:   2020-09-23 21:20:39 -0700
+categories: notes
+---
+## Use of technology in elections
+
+- The US has over 10,000 jurisdictions, each implementing their own set of rules about how to administer the voting process
+
+- On the one hand, carrying out electoral reform is diffcult in such a system. On the other, it makes it difficult to hack and manipulate from the outside
+
+- A push for more technology does not work as a substitute for trust
+
+- What should technology for elections look like? Is this technology secure enough that the loser will concede to losing the race within this system?
+
+- For this election, fewer "neutral" foreign journalists are available to provide coverage because of the travel bans
