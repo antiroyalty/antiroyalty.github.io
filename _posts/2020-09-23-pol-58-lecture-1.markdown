@@ -4,14 +4,77 @@ title:  "POL 58 Lecture 1 Notes"
 date:   2020-09-23 21:20:39 -0700
 categories: notes
 ---
-## Use of technology in elections
 
-- The US has over 10,000 jurisdictions, each implementing their own set of rules about how to administer the voting process
+*Notes from [Stanford's Continuing Studies POL 58][pol 58] class offered in Fall 2020, lecture 1.*
 
-- On the one hand, carrying out electoral reform is diffcult in such a system. On the other, it makes it difficult to hack and manipulate from the outside
+## Use of Technology in Elections
 
-- A push for more technology does not work as a substitute for trust
+### Background
+- The US has over 10,000 jurisdictions, each implementing their own set of rules about how to administer the voting process. US has more types of ballots than anywhere else in the world
 
-- What should technology for elections look like? Is this technology secure enough that the loser will concede to losing the race within this system?
+- The US doesn't have a central "election" authority like most other countries do, we rely on counties to self-organize. No centralized organization or funding for its processes. Also no coverage -- rely on media news outlets to provide information about election results
+
+- On the one hand, carrying out electoral reform is diffcult in such a system. On the other, it makes it difficult to manipulate from the outside
+
+### Current affairs
 
 - For this election, fewer "neutral" foreign journalists are available to provide coverage because of the travel bans
+
+- In this upcoming election, with the pandemic, there will be more mail-in and absentee ballots. These take longer to count. Need to be prepared that we won't know the full picture of election results on election day, if it's close
+
+- When ballot counts are announced, precincts send a digital confirmation and a phone call to ensure the integrity of the information
+
+- Milwaukee might be a harbinger for what might be the worst case for how an election might be in November. 108 voting places were consolidated to 5, with major closures due to the fact that there weren't enough workers
+
+- There are gaps that need to be filled -- legislature is making rules about how the election process goes, without the folks at the table who actually implement those rules.
+
+- "Curing process" allows mistakes to be corrected if someone filled out a ballot incorrectly, tries to make every vote count. [States and their curing provisions][states and provisions]; [Signature matching][signature matching]
+
+- In 2020 US, plutocrats are coming to the rescue of democracy -- very unusual!
+
+### Technology and elections
+- What should technology for elections look like? It must answer this question: `Is this technology secure enough that the loser will concede to losing the race within this system?`
+
+- A push for more technology does not work as a substitute for trust (eg Kenya, Netherlands voting reform)
+
+- An increase in technology in the election process has a high risk of exacerbating the digital divide. Have to make sure changes includes accommodation for every demographic of voter in the country. There has to be a really strong eye for negative externalities in exacerbating the voting divide
+
+- Better ballot design helps bring ballot rejection rejection rates down to less than 1% (Center for Civic Design). Low tech solutions are practical.
+
+### Questions asked
+
+- **Are there any constitutional limitations capping how the US can standardize the election process?** Articles 1 and 2 of the constitution have provisions to give the time, place, and manor for the election. The president can choose the electors. Decentralization is somewhat baked into the constitution.
+
+- **How can a third party verify the election results?** You can watch the livestream counting of the ballots provided by each precinct. But deepfakes??
+
+- **We trust ATMs with our transactions, why can't we do something similar with voting?** (1) You can't get a receipt that says how you voted (voter coercion); (2) Online banking transactions have a base rate of fraud. Fraud is insured by the bank, not the account holder. No room for fraud in an election -- the risks of systemic failure of an online voting system might be difficult to recover from.
+
+### Closing thoughts
+- Either it's going to be close, or we're going to know the winner on election night -- `either way, we must build an inoculation against precipitous claims of victory`
+
+- Failures of the election process are the responsibility of the government. If there's a prediction of fraud, then that's a self-failure. Unfortunately, no recognition of that in this current administration.
+
+### Resources (Required Reading)
+- [healthyelections.org][a]
+- [Recommendations for a healthy and safe election][b]
+- [Six ways to protect the election in 6 weeks][c]
+- [8pm election day nightmare scenarios][d]
+- [The looming threat to voting in person][e]
+- [Bringing US voting to the 21st century][f]
+- [The terrifying inadequacy of American election law][g]
+- [Summary of recommendations][h]
+
+[a]: https://healthyelections.org/
+[b]: https://www.lawfareblog.com/ten-recommendations-ensure-healthy-and-trustworthy-2020-election
+[c]: https://www.nytimes.com/2020/09/20/opinion/2020-election-security-voting.html?smid=tw-share
+[d]: https://www.nytimes.com/2020/09/09/opinion/sunday/election-security-trump.html
+[e]: https://www.theatlantic.com/ideas/archive/2020/06/looming-threat-voting-person/613552/
+[f]: https://www.youtube.com/watch?v=PK8PR22-c_U&feature=emb_title
+[g]: https://www.theatlantic.com/ideas/archive/2020/09/terrifying-inadequacy-american-election-law/616072/
+[h]: https://fsi-live.s3.us-west-1.amazonaws.com/s3fs-public/stanford_cyber_policy_center-securing_american_elections.pdf
+
+[pol 58]: https://continuingstudies.stanford.edu/courses/liberal-arts-and-sciences/technology-and-the-2020-election-how-silicon-valley-technologies-impact-our-elections-and-shape-our-democracy/20201_POL-58
+
+[states and provisions]: https://www.ncsl.org/research/elections-and-campaigns/vopp-table-15-states-that-permit-voters-to-correct-signature-discrepancies.aspx
+
+[signature matching]: https://www-cdn.law.stanford.edu/wp-content/uploads/2020/04/SLS_Signature_Verification_Report-5-15-20-FINAL.pdf
