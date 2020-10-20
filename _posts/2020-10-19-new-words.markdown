@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "New Words"
+date:   2020-10-19 21:20:39 -0700
+categories: words
+---
+
+- acrimonious - hostile
+- compediums - a brief summary of a larger work
+- compunction - like remorse
+- denigrate - criticize unfairly
+- enervating - causing one to be drained of energy
+- headlong - in a rush, with reckless haste
+- harried - feeling strained as a result of having demands persistently imposed
+- Kleiber's law - organisms become more metabolically efficient as they scale up (from shrew to elephant)
+- loutish - rude, aggressive, lacking good manners, uncouth
+- perfunctory - carried out with little effort or reflection
+- vaingloriously - boastfully, self aggrandising
+
