@@ -1,10 +1,9 @@
 ---
 layout: post
-title:  "DP"
+title:  "Dynamic Programming"
 date:   2020-10-22 13:18:39 -0700
 ---
 
-# Dynamic Programming
 ### Climb Stairs
 
 ```

@@ -17,6 +17,8 @@ entries:
     entries:
       - title: dynamic programming
         url: /algo_solutions/dynamic_programming.html
+      - title: trees
+        url: /algo_solutions/dynamic_programming.html
 
 # - title: rss
   #   url: feed.xml
