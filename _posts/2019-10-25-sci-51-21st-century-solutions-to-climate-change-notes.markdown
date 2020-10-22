@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "21st Century Solutions to Climate Change Notes"
+title:  "SCI 51 - Solutions to Climate Change Notes"
 date:   2019-10-23 21:20:39 -0700
 categories: notes
 ---
