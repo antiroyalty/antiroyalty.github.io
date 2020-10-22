@@ -15,6 +15,8 @@ categories: words
 
 - enervating - causing one to be drained of energy
 
+- frenetic - fast and energetic in a wild, uncontrolled way
+
 - headlong - in a rush, with reckless haste
 
 - harried - feeling strained as a result of having demands persistently imposed
@@ -23,7 +25,10 @@ categories: words
 
 - loutish - rude, aggressive, lacking good manners, uncouth
 
+- pejorative - expressing contempt or disapproval
+
 - perfunctory - carried out with little effort or reflection
 
-- vaingloriously - boastfully, self aggrandising
+- sleep inertia - the transitional state between sleep and wakefulness, characterised by impaired performance, reduced vigilance, and a desire to return to sleep
 
+- vaingloriously - boastfully, self aggrandising
