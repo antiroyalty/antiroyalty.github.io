@@ -5,7 +5,7 @@ date:   2019-10-23 21:20:39 -0700
 categories: notes
 ---
 
-*Notes from [Stanford's Continuing Studies SCI 51]class offered in Fall 2019*
+*Notes from Stanford's Continuing Studies SCI 51 class offered in Fall 2019*
 
 ### Lecture 1 - Climate Science
 - Carbon -> 82% of GHGs, with a staying power of 1000ppm
