@@ -5,7 +5,7 @@ date:   2019-10-23 21:20:39 -0700
 categories: notes
 ---
 
-*Notes from Stanford's Continuing Studies SCI 51 class offered in Fall 2019*
+*Notes from Stanford's Continuing Studies SCI 51 - 21st Century Solutions to Climate Change class offered in Fall 2019*
 
 ### Lecture 1 - Climate Science
 - Carbon -> 82% of GHGs, with a staying power of 1000ppm
@@ -35,7 +35,7 @@ categories: notes
 - Government is the mechanism by which we make collective decisions. Need to support collective action.
 - All the solutions are already on the table. Science is the problem <=> Policy is the problem pendulum swing
 - "I'm not afraid of what climate change will do, I'm afraid of what we'll do to each other"
-- "It's about the stories, it's not about the science"
+- "It's about the stories, not about the science"
 - [Environmental Defense Fund][environmental defense fund]
 
 [charles david keeling]: https://en.wikipedia.org/wiki/Charles_David_Keeling

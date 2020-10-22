@@ -12,6 +12,14 @@ entries:
       - title: 2016-11-23 how to get started with djing
         url: "https://medium.com/@asantash/how-to-get-started-with-djing-495c275be5e4"
 
+  - title: algo solutions ruby reference
+    url: false
+    entries:
+      - title: dynamic programming
+        url: /algo_solutions/dynamic_programming.html
+      - title: trees
+        url: /algo_solutions/trees.html
+
 # - title: rss
   #   url: feed.xml
   
