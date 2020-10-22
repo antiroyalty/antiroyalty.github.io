@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "10/19 New Words"
+title:  "October New Words"
 date:   2020-10-19 21:20:39 -0700
 categories: words
 ---
