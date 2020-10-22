@@ -15,7 +15,7 @@ def climb_stairs(n)
 end
 
 def climb_stairs_helper(n, solved)
-    return 1 if n == 1 # one way to climb one stair
+    return 1 if n == 1 # 1 way to climb one stair
     return 2 if n == 2 # 2 ways to climb two stairs
     
     if solved.include?(n.to_s)
