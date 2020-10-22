@@ -2,12 +2,8 @@
 # https://github.com/riggraz/no-style-please#customize-the-menu
 
 entries:
-  - title: github
-    url: https://github.com/antiroyalty
-  - title: twitter
-    url: https://twitter.com/antiroyalty_
-  - title: linkedin
-    url: https://www.linkedin.com/in/asantash/
+  - title: about
+    url: /about.html
 
   - title: entries
     post_list: true
