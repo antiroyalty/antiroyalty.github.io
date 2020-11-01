@@ -6,7 +6,7 @@ date:   2020-10-22 13:18:39 -0700
 
 ### Climb Stairs
 
-```
+```ruby
 # @param {Integer} n
 # @return {Integer}
 def climb_stairs(n)
