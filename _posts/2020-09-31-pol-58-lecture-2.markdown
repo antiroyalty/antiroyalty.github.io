@@ -70,7 +70,7 @@ categories: notes
 
 - Governing platforms is tricky, and bad policy can do disproportionate harm. We don't have enough information on what is going on in these platforms to make good policy. If we want to make good policy, we need access to data to be able to understand what is going on in these platforms.
 
-- Of course everyone wants privacy, but access to the data should be expanded to researchers to be used for public benefit, not just for maximizing ad revenue.
+- Of course everyone wants privacy, but access to the data should be expanded to researchers to be used for public benefit, not just for maximizing ad revenue
 
 ### Closing thoughts
 - `Maximum ad revenue is not the same as maximum democratic benefit`
