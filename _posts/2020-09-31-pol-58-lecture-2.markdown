@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "POL 58 Lecture 2 Notes"
+title:  "POL 58 Lecture 2 Notes - platform effects"
 date:   2020-09-30 21:20:39 -0700
 categories: notes
 ---
 
 *Notes from [Stanford's Continuing Studies POL 58][pol 58] class offered in Fall 2020, lecture 2.*
 
-## Platform Effects: Filter bubbles, echo chambers, and polarization
+## Platform effects: filter bubbles, echo chambers, and polarization
 
 ### Background
 
@@ -75,9 +75,7 @@ categories: notes
 ### Closing thoughts
 - `Maximum ad revenue is not the same as maximum democratic benefit`
 
-### Resources
-
-
-[libration technology]: https://www.journalofdemocracy.org/articles/liberation-technology/
+[pol 58]: https://continuingstudies.stanford.edu/courses/liberal-arts-and-sciences/technology-and-the-2020-election-how-silicon-valley-technologies-impact-our-elections-and-shape-our-democracy/20201_POL-58
+[liberation technology]: https://www.journalofdemocracy.org/articles/liberation-technology/
 [liberation to turmoil]: https://www.journalofdemocracy.org/articles/from-liberation-to-turmoil-social-media-and-democracy/
 [can democracy survive the internet]: https://law.stanford.edu/publications/can-democracy-survive-the-internet/
