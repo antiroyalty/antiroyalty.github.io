@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "POL 58 Lecture 1 Notes"
+title:  "POL 58 Lecture 1 Notes - use of tech in elections"
 date:   2020-09-23 21:20:39 -0700
 categories: notes
 ---
