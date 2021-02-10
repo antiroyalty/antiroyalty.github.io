@@ -5,8 +5,6 @@ date:   2020-09-30 21:20:39 -0700
 categories: notes
 ---
 
-*Notes from [Stanford's Continuing Studies POL 58][pol 58] class offered in Fall 2020, lecture 2.*
-
 ## Platform effects: filter bubbles, echo chambers, and polarization
 
 ### Background
