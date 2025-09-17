@@ -1,0 +1,35 @@
+<div class="sidebar-inner">
+  <h2 style="margin:0;">Navigation</h2>
+  <ul class="side-list">
+    <li><a href="{{ '/' | relative_url }}">Home</a></li>
+    {% assign nav_items = site.nav | default: site.pages %}
+    {% for item in nav_items %}
+      {% if item.title and item.url and item.title != '404: Lost in the Berkeley Fog' and item.url != '/guestbook/' and item.url != '/email/' %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <b>Contact</b>
+  <ul class="side-list">
+    <li><a href="{{ '/email/' | relative_url }}">Email</a></li>
+    <li><a href="{{ '/guestbook/' | relative_url }}">Sign Guestbook</a></li>
+    {% if site.github_username %}<li><a href="https://github.com/{{ site.github_username }}">GitHub</a></li>{% endif %}
+  </ul>
+
+  <hr>
+  <div class="muted" style="font-size:0.85em;">
+    {% assign current_year = site.time | date: '%Y' %}
+    {% assign start_year = current_year %}
+    {% if site.posts and site.posts != empty %}
+      {% assign oldest_post = site.posts | last %}
+      {% assign start_year = oldest_post.date | date: '%Y' %}
+    {% endif %}
+    {% assign owner = site.author_name | default: site.author.name | default: site.author | default: site.title %}
+    {% if start_year == current_year %}
+      © {{ current_year }} {{ owner }}
+    {% else %}
+      © {{ start_year }}–{{ current_year }} {{ owner }}
+    {% endif %}
+  </div>
+</div>

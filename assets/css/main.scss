@@ -1,0 +1,102 @@
+---
+---
+
+@import "no-style-please"; // keep the theme base
+
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --muted: #404040;
+  --border: #c0c0c0;
+  --code-bg: #f3f3f3;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 "Times New Roman", Times, serif;
+  /* Tiled background pattern (retro) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffffff'/%3E%3Crect width='1' height='1' fill='%23e0e0e0'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Typography */
+h1, h2, h3, h4 { font-family: "Times New Roman", Times, serif; margin: 1.2rem 0 .6rem; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.4rem; }
+p, li, small { color: var(--fg); }
+small, .muted { color: var(--muted); }
+
+/* Classic link colors */
+a { color: #0000EE; text-decoration: underline; }
+a:visited { color: #551A8B; }
+a:active { color: #FF0000; }
+
+/* Layout */
+.container { width: min(100%, 1040px); margin: 0 auto; padding: 0 12px; }
+.site-main { padding: 1rem 0 2rem; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; height: 0; }
+/* Remove any theme-provided ASCII rules on <hr> */
+hr::before,
+hr::after,
+.sidebar hr::before,
+.sidebar hr::after { content: none !important; display: none !important; }
+
+/* Table layout */
+.layout-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.layout-table td { vertical-align: top; }
+.layout-table td.content { width: 100%; }
+.sidebar { width: clamp(180px, 24vw, 260px); background: #f8f8f8; border-right: 1px solid var(--border); padding: 12px; }
+.layout-table col.sidebar-col { width: clamp(180px, 24vw, 260px); }
+.layout-table col.content-col { width: auto; }
+.sidebar h2 { margin-top: 0; }
+.side-list { list-style: disc; padding-left: 1.2rem; margin: .5rem 0 1rem; }
+.content { padding: 12px; background: #ffffff; }
+
+/* Long URLs & media handling */
+.content a { overflow-wrap: anywhere; word-break: break-word; }
+.content img, .content video { max-width: 100%; height: auto; }
+pre { white-space: pre-wrap; word-wrap: break-word; }
+
+/* (Responsive stacking removed by request to keep table layout at all widths) */
+
+/* Guestbook styling */
+.guestbook-box { border: 2px groove var(--border); background: #ffffff; padding: 10px; margin: 1rem 0; }
+.guestbook-title { font-family: "Courier New", Courier, monospace; text-align: center; padding: 6px 0; margin-bottom: 8px; border-bottom: 1px dashed var(--border); background: #f8f8f8; }
+
+/* Navigation */
+.site-nav { border-bottom: 3px double var(--border); background: var(--bg); }
+.site-nav .container { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; }
+.site-title { font-weight: bold; font-size: 1.4rem; color: var(--fg); text-decoration: none; }
+.nav-list { list-style: none; margin: 0; padding: 0; }
+
+.nav-list li { display: inline; }
+/* Ensure no separators render between nav items */
+.nav-list li::before,
+.nav-list li + li::before { content: none !important; }
+
+/* Hide any top navigation bar entirely (sidebar is the primary nav) */
+.site-nav { display: none !important; }
+
+
+/* Hero */
+.hero { padding: 1rem 0 0.5rem; }
+.hero .lead { margin: .25rem 0 0.75rem; color: var(--muted); }
+.cta-row a.button { margin-right: .5rem; }
+
+/* Bracket-style links for buttons */
+.button { color: inherit; text-decoration: none; }
+.button::before { content: "["; }
+.button::after { content: "]"; }
+
+/* Posts */
+.post-list { padding-left: 1.2rem; }
+.post-list time { color: var(--muted); font-size: .9rem; }
+
+/* Code */
+pre, code { font-family: "Courier New", Courier, monospace; background: var(--code-bg); }
+code { padding: .05rem .25rem; }
+pre { padding: .75rem; overflow: auto; }

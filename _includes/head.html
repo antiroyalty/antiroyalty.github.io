@@ -24,6 +24,6 @@
 
   <!-- Fonts: use system defaults for a retro look (no web fonts) -->
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <!-- Styles (cache-busted to avoid stale CSS) -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>

@@ -1,0 +1,26 @@
+name: Build and Check
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  jekyll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Build site
+        run: bundle exec jekyll build --trace
+        env:
+          JEKYLL_ENV: production
+      - name: HTML link check
+        run: |
+          gem install html-proofer -N
+          htmlproofer ./_site --disable-external --assume-extension --check-html --allow_hash_href
+
