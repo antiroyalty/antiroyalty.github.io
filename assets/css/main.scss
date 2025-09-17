@@ -9,6 +9,18 @@
   --muted: #404040;
   --border: #c0c0c0;
   --code-bg: #f3f3f3;
+  
+  /* 90s Computer Colors */
+  --retro-cyan: #E0FFFF;
+  --retro-yellow: #FFFACD;
+  --retro-lavender: #E6E6FA;
+  --retro-mint: #F0FFF0;
+  --retro-peach: #FFE4E1;
+  --retro-gray: #F5F5F5;
+  --dialog-bg: #C0C0C0;
+  --dialog-border: #808080;
+  --dialog-highlight: #DFDFDF;
+  --dialog-shadow: #404040;
 }
 
 * { box-sizing: border-box; }
@@ -18,15 +30,37 @@ body {
   background: var(--bg);
   color: var(--fg);
   font: 16px/1.6 "Times New Roman", Times, serif;
-  /* Tiled background pattern (retro) */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Crect width='8' height='8' fill='%23ffffff'/%3E%3Crect width='1' height='1' fill='%23e0e0e0'/%3E%3C/svg%3E");
+  /* Subtle 90s geometric pattern */
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect width='20' height='20' fill='%23ffffff'/%3E%3Crect x='0' y='0' width='2' height='2' fill='%23f0f0f0'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%23f0f0f0'/%3E%3Crect x='5' y='15' width='1' height='1' fill='%23e8e8e8'/%3E%3Crect x='15' y='5' width='1' height='1' fill='%23e8e8e8'/%3E%3C/svg%3E");
   background-repeat: repeat;
+  
+  /* Subtle CRT scanlines effect */
+  position: relative;
+}
+
+/* CRT Scanlines overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    transparent 50%, 
+    rgba(0, 0, 0, 0.015) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1000;
 }
 
 /* Typography */
 h1, h2, h3, h4 { font-family: "Times New Roman", Times, serif; margin: 1.2rem 0 .6rem; }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.4rem; }
+h1 { font-size: 2rem; text-shadow: 1px 1px 0px #ccc; }
+h2 { font-size: 1.4rem; text-shadow: 1px 1px 0px #ddd; }
+h3, h4 { text-shadow: 0.5px 0.5px 0px #eee; }
 p, li, small { color: var(--fg); }
 small, .muted { color: var(--muted); }
 
@@ -87,10 +121,40 @@ pre { white-space: pre-wrap; word-wrap: break-word; }
 .hero .lead { margin: .25rem 0 0.75rem; color: var(--muted); }
 .cta-row a.button { margin-right: .5rem; }
 
-/* Bracket-style links for buttons */
-.button { color: inherit; text-decoration: none; }
-.button::before { content: "["; }
-.button::after { content: "]"; }
+/* Classic dialog box style buttons */
+.button { 
+  display: inline-block;
+  background: var(--dialog-bg);
+  border: 2px outset var(--dialog-border);
+  padding: 4px 12px;
+  margin: 2px;
+  color: var(--fg);
+  text-decoration: none;
+  font-family: "MS Sans Serif", sans-serif;
+  font-size: 11px;
+  box-shadow: 1px 1px 0px var(--dialog-shadow);
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--dialog-highlight);
+}
+
+.button:active {
+  border: 2px inset var(--dialog-border);
+  box-shadow: inset 1px 1px 1px var(--dialog-shadow);
+}
+
+/* Keep bracket style for specific cases */
+.button.bracket { 
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: inherit;
+}
+.button.bracket::before { content: "["; }
+.button.bracket::after { content: "]"; }
 
 /* Posts */
 .post-list { padding-left: 1.2rem; }
