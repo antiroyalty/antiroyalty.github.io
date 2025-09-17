@@ -1,18 +1,12 @@
+# ---- about.md ----
 ---
-layout: post
-title:  "About"
-date:   2020-10-21 21:20:39 -0700
-categories: about
+layout: default
+title: About
+nav: true
 ---
-
-Currently working as a software engineer at Coinbase. University of Waterloo SYDE alumn. Also an [Interact][interact] fellow (ask me about Interact!).
-
-- [github][github]
-- [twitter][twitter]
-- [linkedin][linkedin]
-
-
-[github]: https://github.com/antiroyalty
-[twitter]: https://twitter.com/antiroyalty_
-[linkedin]: https://www.linkedin.com/in/asantash/
-[interact]: https://joininteract.com/
+<section class="panel max-w-3xl mx-auto" data-reveal>
+  <!-- TODO: Add photo -->
+  <h2>Hello! I'm {{ site.author.name | default: site.title }}.</h2>
+  <p>I’m a Staff Software Engineer recently graduated from UC Berkeley’s Energy &amp; Resources Group. My work bridges energy modeling, data-driven controls, and full-stack web engineering.</p>
+  <p>Mission: build systems that accelerate a sustainable, techno-optimistic future.</p>
+</section>
