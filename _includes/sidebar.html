@@ -1,7 +1,6 @@
 <div class="sidebar-inner">
-  <h2 style="margin:0;">Navigation</h2>
+  <h2 style="margin:0;"><a href="{{ '/' | relative_url }}" style="text-decoration: none; color: inherit;">Home</a></h2>
   <ul class="side-list">
-    <li><a href="{{ '/' | relative_url }}">Home</a></li>
     {% assign nav_items = site.nav | default: site.pages %}
     {% for item in nav_items %}
       {% if item.title and item.url and item.title != '404: Lost in the Berkeley Fog' and item.url != '/guestbook/' and item.url != '/email/' %}
@@ -18,6 +17,16 @@
   </ul>
 
   <hr>
+  
+  <!-- Visitor Counter -->
+  <div class="visitor-counter">
+    <div style="font-weight: bold; margin-bottom: 4px;">Human Visitors</div>
+    <div class="counter-display">
+      <span id="visitor-count">Loading...</span>
+    </div>
+  </div>
+  
+  
   <div class="muted" style="font-size:0.85em;">
     {% assign current_year = site.time | date: '%Y' %}
     {% assign start_year = current_year %}
@@ -32,4 +41,17 @@
       © {{ start_year }}–{{ current_year }} {{ owner }}
     {% endif %}
   </div>
+  
+  <script>
+    // Initialize retro elements when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update visitor counter
+      const counterEl = document.getElementById('visitor-count');
+      if (counterEl && window.getVisitorCount) {
+        const count = window.getVisitorCount();
+        counterEl.textContent = count.toString().padStart(6, '0');
+      }
+      
+    });
+  </script>
 </div>
