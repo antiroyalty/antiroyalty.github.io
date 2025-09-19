@@ -1,6 +1,7 @@
 ---
 layout: default
 title: CA Grid Live
+permalink: /grid/
 ---
 
 <div class="hero">

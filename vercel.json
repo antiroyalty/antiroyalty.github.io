@@ -1,0 +1,17 @@
+{
+  "buildCommand": "bundle install && bundle exec jekyll build",
+  "outputDirectory": "_site",
+  "installCommand": "bundle install",
+  "framework": null,
+  "functions": {
+    "api/grid-data.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/grid",
+      "destination": "/grid/"
+    }
+  ]
+}

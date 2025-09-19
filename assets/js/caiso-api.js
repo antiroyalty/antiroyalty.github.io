@@ -156,19 +156,18 @@ class CAISOData {
 
   /**
    * Convert price to color (green = low, red = high)
+   * Matches legend: <$30 = green, $30-60 = yellow, >$60 = red
    */
   priceToColor(price) {
-    // Normalize price to 0-1 range (assuming $0-$100 range)
-    const normalized = Math.min(Math.max(price / 100, 0), 1);
-    
-    if (normalized < 0.5) {
-      // Green to yellow
-      const intensity = normalized * 2;
-      return `rgb(${Math.round(255 * intensity)}, 255, 0)`;
+    if (price < 30) {
+      // Low price: Green
+      return '#90EE90'; // Light green
+    } else if (price <= 60) {
+      // Medium price: Yellow
+      return '#FFD700'; // Gold
     } else {
-      // Yellow to red
-      const intensity = (normalized - 0.5) * 2;
-      return `rgb(255, ${Math.round(255 * (1 - intensity))}, 0)`;
+      // High price: Red  
+      return '#FF6347'; // Tomato red
     }
   }
 
