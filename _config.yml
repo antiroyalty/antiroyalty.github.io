@@ -39,6 +39,10 @@ theme_config:
   back_home_text: ".." # customize text for homepage link in post layout
   date_format: "%Y-%m-%d" # customize how date is formatted
   show_description: false # show blog description in home page
+  gradient:
+    - "#aef4ff"
+    - "#3fbf8c"
+    - "#ffd66b"
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -71,9 +75,3 @@ nav:
     url: /guestbook/
   - title: Email
     url: /email/
-
-theme_config:
-  gradient:
-    - "#aef4ff"
-    - "#3fbf8c"
-    - "#ffd66b"
