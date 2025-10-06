@@ -14,4 +14,4 @@ If you're new here:
 - Read [Writing](/writing/) for essays, notes, and snippets.
 - Sign the [Guestbook](/guestbook/) to say hello.
 
-Email: [mail@heyitsana.com](mailto:mail@heyitsana.com)
+Email:  ana.santasheva @ berkeley . edu
