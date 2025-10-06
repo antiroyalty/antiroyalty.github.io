@@ -1,0 +1,13 @@
+## List your projects here. Example entries below.
+## image: path under /assets/images/projects/
+
+- title: CA Grid Live
+  url: "/grid/"
+  description: Real‑time visualization of California's grid using CAISO data.
+  image: "/assets/images/projects/ca-grid-live.webp"
+
+# - title: Another Project
+#   url: "/projects/another/"
+#   description: Short one‑line description of what it is.
+#   image: "/assets/images/projects/another.webp"
+
