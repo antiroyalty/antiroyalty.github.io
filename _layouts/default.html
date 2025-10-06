@@ -2,23 +2,17 @@
 <html lang="{{ site.lang | default: 'en' }}">
   {% include head.html %}
   <body>
-    <div class="container site-main">
-      <table class="layout-table">
-        <colgroup>
-          <col class="sidebar-col">
-          <col class="content-col">
-        </colgroup>
-        <tr>
-          <td class="sidebar">
-            {% include sidebar.html %}
-          </td>
-          <td class="content">
-            {{ content }}
-          </td>
-        </tr>
-      </table>
-    </div>
-    <!-- Retro theme script -->
+    <header class="site-header">
+      {% include nav.html %}
+    </header>
+    <main class="container">
+      {{ content }}
+    </main>
+    {% include footer.html %}
     <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    <script type="module">
+      import { initReveal } from '{{ '/assets/js/animations.js' | relative_url }}';
+      try { initReveal(); } catch (e) { /* noop */ }
+    </script>
   </body>
 </html>

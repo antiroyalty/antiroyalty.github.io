@@ -1,6 +1,21 @@
----
 layout: default
 ---
-<a href="https://heyitsana.com">{{ site.theme_config.back_home_text }}</a>
-<h1>{{ page.title }}</h1>
+<a href="{{ '/' | relative_url }}">{{ site.theme_config.back_home_text }}</a>
+<header class="article-header">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: site.theme_config.date_format | default: '%Y-%m-%d' }}</time>
+  </div>
+  <hr>
+</header>
+
+{% if page.banner %}
+<figure class="post-banner">
+  <img src="{{ page.banner | relative_url }}" alt="{{ page.banner_alt | default: page.title }}">
+  {% if page.banner_caption %}
+  <figcaption>{{ page.banner_caption }}</figcaption>
+  {% endif %}
+</figure>
+{% endif %}
+
 {{ content }}
