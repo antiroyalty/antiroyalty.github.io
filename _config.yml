@@ -65,12 +65,8 @@ nav:
     url: /about/
   - title: Projects
     url: /projects/
-  - title: CA Grid Live
-    url: /grid/
   - title: Writing
     url: /writing/
-  - title: Now
-    url: /now/
   - title: Guestbook
     url: /guestbook/
   - title: Email
