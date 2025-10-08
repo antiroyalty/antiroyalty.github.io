@@ -62,7 +62,7 @@ sass:
 # Navigation (used by nav.html)
 nav:
   - title: About
-    url: /about/
+    url: /
   - title: Projects
     url: /projects/
   - title: Writing

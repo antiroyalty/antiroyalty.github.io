@@ -125,10 +125,10 @@ footer { color: var(--muted); font-size: 0.95rem; padding-top: 24px; border-top:
 .reveal-visible { opacity: 1; transform: none; filter: none; }
 
 /* About hero container (approx Tailwind example) */
-.about-hero { min-height: 90vh; display: flex; flex-direction: column; margin-top: 0; margin-bottom: 32px; position: relative; overflow: visible; }
+.about-hero { min-height: 90vh; display: flex; flex-direction: column; margin-top: 0; margin-bottom: 32px; position: relative; }
 .about-top { flex: 0 0 auto; }
-/* Place arrow just below initial viewport (with 90vh hero) */
-.about-hero__arrow { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(-10vh - 28px); display: flex; justify-content: center; align-items: center; width: 100%; margin: 0; }
+/* Keep arrow in-flow at bottom of hero so it doesn't overlap Writing */
+.about-hero__arrow { margin-top: auto; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 8px; }
 @media (min-width: 720px) {
   .about-hero { margin-top: 80px; margin-bottom: 0; }
 }

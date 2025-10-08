@@ -2,24 +2,19 @@
 layout: default
 ---
 
-{%- assign about_page = site.pages | where: 'title', 'About' | first -%}
-{%- unless about_page -%}
-  {%- assign about_page = site.pages | where_exp: 'p', "p.url == '/about/' or p.url == '/about.html' or p.path contains 'about.md' or p.path contains 'about.markdown'" | first -%}
-{%- endunless -%}
-{%- if about_page -%}
-  <div class="about-hero">
-    <div class="about-top highlighted-links">
-      {{ about_page.content | markdownify }}
-    </div>
-    <div class="about-hero__arrow">
-      <a href="#writing" class="down-arrow" aria-label="Scroll to Writing" title="Scroll to Writing">
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"></path>
-        </svg>
-      </a>
-    </div>
+{% capture about_md %}{% include about_content.md %}{% endcapture %}
+<div class="about-hero">
+  <div class="about-top highlighted-links">
+    {{ about_md | markdownify }}
   </div>
-{%- endif -%}
+  <div class="about-hero__arrow">
+    <a href="#writing" class="down-arrow" aria-label="Scroll to Writing" title="Scroll to Writing">
+      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"></path>
+      </svg>
+    </a>
+  </div>
+</div>
 
 <section id="writing" data-reveal style="margin-top: 1.5rem;">
   <h2>Writing</h2>
