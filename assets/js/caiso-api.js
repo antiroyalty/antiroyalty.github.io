@@ -78,7 +78,7 @@ class CAISOData {
         return cached.data;
       }
       
-      // Return mock data for development
+      // Return mock data for development (unified array shape)
       return {
         type: params.type,
         timestamp: new Date().toISOString(),
@@ -111,29 +111,25 @@ class CAISOData {
    * Mock data for development/testing
    */
   getMockData(type) {
-    const mockData = {
-      lmp: {
-        data: [
-          { node: 'SLAP_PGE-APND', lmp_price: 45.2, timestamp: new Date().toISOString() },
-          { node: 'SP15_EHV-APND', lmp_price: 52.1, timestamp: new Date().toISOString() },
-          { node: 'NP15_EHV-APND', lmp_price: 38.7, timestamp: new Date().toISOString() },
-          { node: 'ZP26_7_N001', lmp_price: 61.4, timestamp: new Date().toISOString() }
-        ]
-      },
-      constraints: {
-        data: [
-          { constraint_name: 'PDCI_S', shadow_price: 12.5, status: 'BINDING' },
-          { constraint_name: 'COTP2G_NG_1_UNIT', shadow_price: 0, status: 'NOT_BINDING' }
-        ]
-      },
-      systemload: {
-        data: [
-          { forecast_load: 28450, actual_load: 28890, timestamp: new Date().toISOString() }
-        ]
-      }
-    };
-
-    return mockData[type] || { data: [] };
+    const t = String(type).toLowerCase();
+    if (t === 'lmp') {
+      return [
+        { node: 'SLAP_PGE-APND', lmp_price: 45.2, timestamp: new Date().toISOString() },
+        { node: 'SP15_EHV-APND', lmp_price: 52.1, timestamp: new Date().toISOString() },
+        { node: 'NP15_EHV-APND', lmp_price: 38.7, timestamp: new Date().toISOString() },
+        { node: 'ZP26_7_N001', lmp_price: 61.4, timestamp: new Date().toISOString() }
+      ];
+    }
+    if (t === 'constraints') {
+      return [
+        { constraint_name: 'PDCI_S', shadow_price: 12.5, status: 'BINDING' },
+        { constraint_name: 'COTP2G_NG_1_UNIT', shadow_price: 0, status: 'NOT_BINDING' }
+      ];
+    }
+    if (t === 'systemload' || t === 'load') {
+      return [ { forecast_load: 28450, actual_load: 28890, timestamp: new Date().toISOString() } ];
+    }
+    return [];
   }
 
   /**

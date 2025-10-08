@@ -96,6 +96,18 @@
   color: var(--muted);
 }
 
+/* Live/Mock status badge */
+.status-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: bold;
+  color: #fff;
+  background: #6b7280; /* default */
+}
+.status-badge.live { background: #16a34a; }
+.status-badge.mock { background: #ef4444; }
+
 /* Data info panel */
 .grid-data-info {
   background: var(--retro-peach);

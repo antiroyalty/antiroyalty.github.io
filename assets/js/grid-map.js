@@ -3,6 +3,17 @@
  * Interactive map showing live grid data with retro styling
  */
 
+// Approximate coordinates for common CAISO nodes/zones
+const PNODE_COORDS = {
+  'NP15_EHV-APND': [37.7, -121.9],
+  'SP15_EHV-APND': [34.05, -118.25],
+  'ZP26_7_N001': [36.5, -119.8],
+  'DLAP_PGE-APND': [37.77, -122.27],
+  'DLAP_SCE-APND': [33.93, -117.94],
+  'DLAP_SDGE-APND': [32.8, -117.1],
+  'SLAP_PGE-APND': [37.7, -122.0]
+};
+
 class GridMap {
   constructor(containerId) {
     this.containerId = containerId;
@@ -87,6 +98,8 @@ class GridMap {
         </div>
         <div class="legend-update">
           Last updated: <span id="last-data-update">Loading...</span>
+          <br>
+          Source: <span id="data-source-status" class="status-badge">Checking…</span>
         </div>
       `;
       return div;
@@ -367,9 +380,10 @@ class GridMap {
 
     // Add price indicators
     processedData.forEach(item => {
-      // For now, distribute randomly across CA - in production, you'd have actual node locations
-      const lat = 32.5 + Math.random() * 9.5; // CA latitude range
-      const lng = -124.4 + Math.random() * 10.3; // CA longitude range
+      // Place by known PNODE coordinates; fallback to random if unknown
+      const coords = this.resolveNodeCoords(item.node);
+      const lat = coords[0];
+      const lng = coords[1];
 
       const circle = L.circleMarker([lat, lng], {
         radius: 6 + (item.intensity * 10),
@@ -392,6 +406,26 @@ class GridMap {
     });
 
     this.layers.lmpOverlay.addTo(this.map);
+  }
+
+  /**
+   * Resolve approximate coordinates for a given node name
+   */
+  resolveNodeCoords(node) {
+    if (!node) {
+      return [32.5 + Math.random() * 9.5, -124.4 + Math.random() * 10.3];
+    }
+    const key = String(node).trim().toUpperCase();
+    if (PNODE_COORDS[key]) return PNODE_COORDS[key];
+    // Try to map zones by prefix
+    if (key.startsWith('NP15')) return PNODE_COORDS['NP15_EHV-APND'];
+    if (key.startsWith('SP15')) return PNODE_COORDS['SP15_EHV-APND'];
+    if (key.startsWith('ZP26')) return PNODE_COORDS['ZP26_7_N001'];
+    if (key.includes('DLAP_PGE')) return PNODE_COORDS['DLAP_PGE-APND'];
+    if (key.includes('DLAP_SCE')) return PNODE_COORDS['DLAP_SCE-APND'];
+    if (key.includes('DLAP_SDGE')) return PNODE_COORDS['DLAP_SDGE-APND'];
+    // Fallback random within CA bounds
+    return [32.5 + Math.random() * 9.5, -124.4 + Math.random() * 10.3];
   }
 
   /**
@@ -418,6 +452,9 @@ class GridMap {
         c => c.status === 'BINDING').length;
       document.getElementById('active-constraints').textContent = activeConstraints;
     }
+
+    // Update source badge based on data origin
+    this.updateSourceBadge(lmpData);
   }
 
   /**
@@ -444,6 +481,19 @@ class GridMap {
       clearInterval(this.updateInterval);
       this.updateInterval = null;
     }
+  }
+
+  /**
+   * Update the UI badge to show Live vs Mock
+   */
+  updateSourceBadge(lmpData) {
+    const el = document.getElementById('data-source-status');
+    if (!el) return;
+    const src = (lmpData && lmpData.source) ? String(lmpData.source) : '';
+    const isLive = src.toLowerCase().includes('caiso') && !src.toLowerCase().includes('mock');
+    el.textContent = isLive ? 'Live' : 'Mock';
+    el.classList.toggle('live', isLive);
+    el.classList.toggle('mock', !isLive);
   }
 
   /**

@@ -1,7 +1,16 @@
 /**
- * Vercel Edge Function for CAISO Grid Data
+ * Vercel Function for CAISO Grid Data
  * Fetches live California grid data without CORS issues
  */
+
+const DEFAULT_LMP_NODES = [
+  'NP15_EHV-APND',
+  'SP15_EHV-APND',
+  'ZP26_7_N001',
+  'DLAP_PGE-APND',
+  'DLAP_SCE-APND',
+  'DLAP_SDGE-APND'
+];
 
 export default async function handler(req, res) {
   // Set CORS headers
@@ -24,7 +33,7 @@ export default async function handler(req, res) {
     // Build CAISO API URL based on data type
     switch (type) {
       case 'lmp':
-        caisoUrl = buildCAISOUrl('PRC_LMP', currentDate);
+        caisoUrl = buildCAISOLmpUrl(currentDate, DEFAULT_LMP_NODES);
         break;
       case 'constraints':
         caisoUrl = buildCAISOUrl('PRC_CONSTRAINT', currentDate);
@@ -33,7 +42,7 @@ export default async function handler(req, res) {
         caisoUrl = buildCAISOUrl('SLD_FCST', currentDate);
         break;
       default:
-        caisoUrl = buildCAISOUrl('PRC_LMP', currentDate);
+        caisoUrl = buildCAISOLmpUrl(currentDate, DEFAULT_LMP_NODES);
     }
 
     console.log(`Fetching CAISO data: ${type} for ${currentDate}`);
@@ -50,18 +59,25 @@ export default async function handler(req, res) {
       throw new Error(`CAISO API error: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
-    
-    // Add metadata
-    const enrichedData = {
-      type: type,
+    const raw = await response.json();
+
+    // Normalize to frontend-expected shape
+    let normalized;
+    if (type === 'lmp') {
+      normalized = normalizeLmp(raw);
+    } else if (type === 'constraints') {
+      normalized = normalizeConstraints(raw);
+    } else if (type === 'load') {
+      normalized = normalizeLoad(raw);
+    }
+
+    res.status(200).json({
+      type,
       timestamp: new Date().toISOString(),
       date: currentDate,
-      data: data,
+      data: normalized,
       source: 'CAISO OASIS API'
-    };
-
-    res.status(200).json(enrichedData);
+    });
     
   } catch (error) {
     console.error('Error fetching CAISO data:', error);
@@ -81,21 +97,26 @@ export default async function handler(req, res) {
 }
 
 /**
- * Build CAISO OASIS API URL
+ * Build CAISO OASIS API URL (generic)
  */
-function buildCAISOUrl(queryname, date) {
-  const baseUrl = 'https://oasis.caiso.com/oasisapi/SingleZip';
-  
+function buildCAISOUrl(queryname, date, extraParams = {}) {
+  const baseUrl = 'https://oasis.caiso.com/oasisapi/SingleEndpoint';
   const params = new URLSearchParams({
-    queryname: queryname,
+    queryname,
     version: queryname === 'PRC_LMP' ? '12' : '1',
-    market_run_id: 'RTM', // Real-time market
+    market_run_id: 'RTM',
     startdatetime: `${date}T00:00-0000`,
     enddatetime: `${date}T23:59-0000`,
-    format: 'JSON'
+    resultformat: '6', // JSON
+    ...extraParams
   });
-  
   return `${baseUrl}?${params.toString()}`;
+}
+
+/** Build LMP URL with required nodes */
+function buildCAISOLmpUrl(date, nodes) {
+  const extra = { node: (nodes || []).join(',') };
+  return buildCAISOUrl('PRC_LMP', date, extra);
 }
 
 /**
@@ -143,4 +164,74 @@ function getMockData(type) {
   };
 
   return mockData[type] || { data: [] };
+}
+
+/**
+ * Normalizers try to adapt OASIS JSON to the frontend shape expected
+ */
+function normalizeLmp(raw) {
+  // Attempt to extract rows with PNODE and LMP values regardless of nesting
+  const rows = deepFindRows(raw);
+  const items = rows.map(r => {
+    const lower = lowerKeys(r);
+    const node = lower.node || lower.pnode || lower.pnode_name || lower.pnodeid || lower.pnode_id || lower.pnode_name || lower.pnode || lower.pnode || lower.pnode_name;
+    const price = parseFloat(
+      lower.lmp || lower.lmp_prc || lower.lmp_price || lower.px || lower.price || lower.p || lower.mwh || lower.value
+    );
+    return { node: String(node || 'UNKNOWN'), lmp_price: isFinite(price) ? price : 0, timestamp: new Date().toISOString() };
+  }).filter(x => x.node);
+
+  // If nothing parsed, return empty array; frontend will show mocks on error path
+  return items;
+}
+
+function normalizeConstraints(raw) {
+  const rows = deepFindRows(raw);
+  return rows.map(r => {
+    const lower = lowerKeys(r);
+    return {
+      constraint_name: lower.constraint_name || lower.constraint || lower.name || 'Constraint',
+      shadow_price: parseFloat(lower.shadow_price || lower.price || 0),
+      status: (lower.status || '').toString().toUpperCase() || 'NOT_BINDING'
+    };
+  });
+}
+
+function normalizeLoad(raw) {
+  const rows = deepFindRows(raw);
+  return rows.map(r => {
+    const lower = lowerKeys(r);
+    return {
+      forecast_load: numberOrNull(lower.forecast_load || lower.load_forecast || lower.load_fcst || lower.forecast || lower.value),
+      actual_load: numberOrNull(lower.actual_load || lower.load_actual || lower.actual),
+      timestamp: new Date().toISOString()
+    };
+  });
+}
+
+function numberOrNull(v) {
+  const n = parseFloat(v);
+  return isFinite(n) ? n : null;
+}
+
+// Recursively find arrays of row-like objects inside OASIS JSON
+function deepFindRows(obj) {
+  const out = [];
+  (function walk(x) {
+    if (!x) return;
+    if (Array.isArray(x)) {
+      // If array of objects with > 1 key, treat them as rows
+      if (x.length && typeof x[0] === 'object') out.push(...x);
+      x.forEach(walk);
+    } else if (typeof x === 'object') {
+      Object.values(x).forEach(walk);
+    }
+  })(obj);
+  return out;
+}
+
+function lowerKeys(obj) {
+  const o = {};
+  for (const [k, v] of Object.entries(obj)) o[k.toLowerCase()] = v;
+  return o;
 }
