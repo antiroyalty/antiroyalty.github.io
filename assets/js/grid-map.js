@@ -111,7 +111,7 @@ class GridMap {
     dataInfo.onAdd = () => {
       const div = L.DomUtil.create('div', 'grid-data-info');
       div.innerHTML = `
-        <div class="data-title">Live Grid Data</div>
+        <div class="data-title" id="data-title">Grid Data</div>
         <div id="grid-stats">
           <div>System Load: <span id="system-load">--</span> MW</div>
           <div>Avg Price: <span id="avg-price">--</span> $/MWh</div>
@@ -494,6 +494,11 @@ class GridMap {
     el.textContent = isLive ? 'Live' : 'Mock';
     el.classList.toggle('live', isLive);
     el.classList.toggle('mock', !isLive);
+
+    const titleEl = document.getElementById('data-title');
+    if (titleEl) {
+      titleEl.textContent = isLive ? 'Live Grid Data' : 'Mock Data (Demo)';
+    }
   }
 
   /**
