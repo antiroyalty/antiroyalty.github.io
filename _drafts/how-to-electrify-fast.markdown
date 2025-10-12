@@ -17,10 +17,11 @@ Remove the bottlenecks that slow grid hookups, make new electric loads flexible 
 - Connection queue triage: use LLMs to normalize customer applications, auto-check for missing info, route jobs by complexity, and publish live timelines
 - SB 410
 
-
 2) Build the wires California has already planned, but faster
+- Improving interconnection rate
 
 3) Lock in the demand growth that is flexible by default.
+- Managing peaks is important, we can sustain more load if it's not all at peak time
 
 4) Scale end-uses that the state has already targeted
 
