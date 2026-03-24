@@ -51,3 +51,23 @@ What counts as a prohibited “expansion” that could force conversion to NEM 3
 	•	The bigger risk isn’t the battery, but adding more solar (PV capacity) in a way that exceeds the allowable expansion threshold. Many sources indicate that under NEM 1/2 grandfathering, you may increase your system size by **up to 1 kW AC **or 10% of existing system size (whichever is greater) without losing the grandfathered status.  ￼
 	•	If you expand solar beyond that threshold, it may trigger the move to NEM 3.0 (or force a new tariff) depending on how the utility and CPUC interpret the change.  ￼
 	•	In sum: adding storage only is allowed under the NEM pairing rules; adding additional solar capacity beyond modest limits is where risk of losing grandfathering arises.
+
+More questions came about -- 
+
+If I have an AC-coupled system, what does this imply about my electricity panel? Would I need to upgrade my panel by installing a battery?
+
+Turns out, because I have an AC-coupled solar system (Enphase IQ7+ microinverters), adding a battery affects my main electrical panel design more than if I had a DC-coupled system.
+
+	My Enphase microinverters convert DC → AC at each panel, so my home sees grid-synchronous AC power from the solar array.
+	•	When I add a battery (like Tesla Powerwall 3 or Enphase IQ Battery 5P), it also connects on the AC side. In my case this is in the garage near the electricity service panel.
+	•	This means both my solar and my battery are injecting power into the same AC bus that your utility meter and household circuits share.
+
+The advantage here is that this is a simple retrofit, and I don't need to rewire the PV array. But the limitation is that the panel and service conductors must be able to handle the sum of all backfeed currents from both the solar AND the battery.
+
+My main panel has a busbar rating (often 100 A, 125 A, 200 A, or 225 A, in my case it's XXX) and a main breaker (for example, 200 A). When I add generation sources, the National Electrical Code (NEC 705.12) requires that the sum of all breakers connected to the bus does not exceed 120 % of the busbar rating (the “120 % rule”).
+
+If we have a 200 A busbar with a 200 A main breaker, we can safely add up to 40 A of solar + battery breakers (200 A × 120 % − 200 A = 40 A). Each Enphase solar circuit might already use a 20 A breaker, so a new battery (often 30–50 A breaker) could exceed that 40 A allowance → triggering the need for panel upgrade or load-side tap.
+
+To review the main electricity panel’s rating, you need to open the door and read the metal label: look for “Bus rating” and “Main breaker.” (Take a photo for your installer — they’ll need it for interconnection review.)
+
+Many homes get upgraded to a new 200 A or 225 A panel when adding batteries — cost roughly $2 k–$4 k, often rolled into the battery project. If your home has an older 100 A service, PG&E might need to upgrade the service drop (additional cost and permit).
