@@ -5,7 +5,7 @@ date: 2026-03-24
 categories: research code
 ---
 
-In December 2025, I gave a talk to Berkeley's EMAC group on how I organize my research codebase. The context: I had just finished the main implementation of a fairly involved cost model for California solar+storage analysis under NEM 3.0, and I had opinions. The slides are [here](/assets/AnaSantasheva_emac_code_organization_12_2_2025.pdf).
+In December 2025, I gave a talk to Berkeley's EMAC group on how I organize my research codebase. The context: I had just finished the main implementation of a fairly involved cost model for California solar+storage analysis under NEM 3.0, and I had opinions. The slides are [here](/assets/pdf/AnaSantasheva_emac_code_organization_12_2_2025.pdf).
 
 This is the written version. The 10 things I actually do, and why.
 
