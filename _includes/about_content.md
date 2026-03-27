@@ -8,5 +8,5 @@ If you're new here:
 - Read [Writing](/writing/) for essays, notes, and snippets.
 - Sign the [Guestbook](/guestbook/) to say hello.
 
-Email:  ana.santasheva @ berkeley . edu
+Email:  ana.santasheva @ gmail . com
 
