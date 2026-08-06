@@ -1,13 +1,17 @@
+---
+---
 {
-  "name": "{{ site.title }}",
-  "short_name": "{{ site.title }}",
+  "name": "Ana Santasheva",
+  "short_name": "Ana",
+  "description": "Software, electricity systems, and physical craft.",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#173f78",
+  "background_color": "#eee7d8",
   "icons": [
     {
       "src": "/assets/img/favicon.png",
-      "sizes": "512x512",
+      "sizes": "64x64",
       "type": "image/png"
     }
   ]

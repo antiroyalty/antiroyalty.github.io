@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-06T19:44:00.531Z",
+  "sourceUpdatedAt": "2026-08-06T19:43:39.000Z",
+  "intervalLabel": "12:40 PT",
+  "source": {
+    "name": "California ISO Today’s Outlook",
+    "url": "https://www.caiso.com/todays-outlook",
+    "cadence": "5-minute averages",
+    "note": "Informational grid data. CAISO OASIS is the official market source."
+  },
+  "demand": {
+    "currentMw": 31278,
+    "hourAheadMw": 30951,
+    "dayAheadPeakMw": 41168,
+    "changeFromHourAgoMw": 1592
+  },
+  "supply": {
+    "solarMw": 20764,
+    "windMw": 1079,
+    "solarWindShare": 69.8,
+    "batteryMw": -5582,
+    "batteryState": "charging",
+    "mix": [
+      {
+        "label": "solar",
+        "mw": 20764,
+        "share": 54.3
+      },
+      {
+        "label": "wind",
+        "mw": 1079,
+        "share": 2.8
+      },
+      {
+        "label": "naturalGas",
+        "mw": 11483,
+        "share": 30
+      },
+      {
+        "label": "hydro",
+        "mw": 1588,
+        "share": 4.1
+      },
+      {
+        "label": "nuclear",
+        "mw": 2244,
+        "share": 5.9
+      },
+      {
+        "label": "batteries",
+        "mw": 0,
+        "share": 0
+      },
+      {
+        "label": "imports",
+        "mw": 0,
+        "share": 0
+      },
+      {
+        "label": "other",
+        "mw": 1112,
+        "share": 2.9
+      }
+    ]
+  }
+}

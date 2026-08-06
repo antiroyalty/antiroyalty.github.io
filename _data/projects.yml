@@ -1,13 +1,17 @@
-## List your projects here. Example entries below.
-## image: path under /assets/images/projects/
+- title: California Electricity Desk
+  url: "/#electricity-desk"
+  description: A five-minute view of demand, solar, wind, and batteries on California's grid.
+  accent: electricity
+  status: Live data
 
-- title: CA Grid Live
+- title: California Grid Map
   url: "/grid/"
-  description: Real‑time visualization of California's grid using CAISO data.
-  image: "/assets/images/projects/ca-grid-live.webp"
+  description: An experimental map of substations, transmission paths, and market signals.
+  accent: map
+  status: Prototype
 
-# - title: Another Project
-#   url: "/projects/another/"
-#   description: Short one‑line description of what it is.
-#   image: "/assets/images/projects/another.webp"
-
+- title: California Load Capacity Research
+  url: "/energy/research/2024/09/15/load-capacity-data-california-ious.html"
+  description: A practical guide to finding and interpreting distribution capacity data.
+  accent: research
+  status: Field guide

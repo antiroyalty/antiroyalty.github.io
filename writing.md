@@ -5,10 +5,14 @@ permalink: /writing/
 ---
 
 <section>
-  <h2>All Writing</h2>
+  <div class="page-intro">
+    <p class="eyebrow">Research notes + field notes</p>
+    <h1>Writing</h1>
+    <p>Notes on electricity systems, research software, climate, policy, and learning how physical things are made.</p>
+  </div>
   {% assign posts_by_year = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
   {% for year in posts_by_year %}
-    <h3 class="muted" style="margin-top:1.25rem;">{{ year.name }}</h3>
+    <h2 class="year-heading">{{ year.name }}</h2>
     <ul class="post-list">
       {% for post in year.items %}
         <li>

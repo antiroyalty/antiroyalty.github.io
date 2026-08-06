@@ -1,12 +1,7 @@
-## About
+<h1 id="home-title">Ana Santasheva</h1>
 
-Hi — I'm Ana. I build software and explore energy modeling. This site is a working notebook: short notes, experiments, and project logs.
+<p class="hero-tagline">software + energy</p>
 
-If you're new here:
+<p class="home-intro">I build research software, study how electricity moves through markets and infrastructure, and make small tools that help people see complex systems more clearly.</p>
 
-- Browse [Projects](/projects/) for some things I've built recently.
-- Read [Writing](/writing/) for essays, notes, and snippets.
-- Sign the [Guestbook](/guestbook/) to say hello.
-
-Email:  ana.santasheva @ gmail . com
-
+<p class="hero-links"><a href="/projects/">projects</a> <a href="/writing/">notebook</a></p>

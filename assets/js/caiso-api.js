@@ -1,13 +1,11 @@
 /**
- * CAISO OASIS API Integration
- * Fetches live California grid data for visualization
+ * California grid map prototype data
+ * Uses a fixed illustrative dataset until a verified market-data pipeline is added
  */
 
 class CAISOData {
   constructor() {
-    this.baseURL = '/api/grid-data'; // Use Vercel Edge Function
     this.cache = new Map();
-    this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
   }
 
   /**
@@ -35,82 +33,21 @@ class CAISOData {
   }
 
   /**
-   * Generic data fetcher with caching
+   * Return a clearly labeled illustrative dataset
    */
   async fetchData(cacheKey, params) {
-    // Check cache first
-    const cached = this.cache.get(cacheKey);
-    if (cached && (Date.now() - cached.timestamp < this.cacheTimeout)) {
-      return cached.data;
-    }
-
-    try {
-      const url = this.buildURL(params);
-      console.log('Fetching CAISO data via Vercel function:', url);
-      
-      const response = await fetch(url);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      
-      // Log if we're getting mock data due to API error
-      if (result.source && result.source.includes('Mock')) {
-        console.warn('Received mock data:', result.error);
-      }
-      
-      // Cache the result
-      this.cache.set(cacheKey, {
-        data: result,
-        timestamp: Date.now()
-      });
-
-      return result;
-    } catch (error) {
-      console.error('Error fetching CAISO data:', error);
-      
-      // Return cached data if available, even if stale
-      const cached = this.cache.get(cacheKey);
-      if (cached) {
-        console.warn('Using stale cached data due to fetch error');
-        return cached.data;
-      }
-      
-      // Return mock data for development (unified array shape)
-      return {
-        type: params.type,
-        timestamp: new Date().toISOString(),
-        data: this.getMockData(cacheKey),
-        source: 'Local Mock Data'
-      };
-    }
+    return {
+      type: params.type,
+      timestamp: null,
+      data: this.getPrototypeData(cacheKey),
+      source: 'Illustrative prototype data'
+    };
   }
 
   /**
-   * Build URL with parameters for Vercel function
+   * Fixed sample values for the map interaction prototype
    */
-  buildURL(params) {
-    const searchParams = new URLSearchParams(params);
-    return `${this.baseURL}?${searchParams.toString()}`;
-  }
-
-  /**
-   * Get current date in YYYYMMDD format
-   */
-  getCurrentDateString() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    return `${year}${month}${day}`;
-  }
-
-  /**
-   * Mock data for development/testing
-   */
-  getMockData(type) {
+  getPrototypeData(type) {
     const t = String(type).toLowerCase();
     if (t === 'lmp') {
       return [

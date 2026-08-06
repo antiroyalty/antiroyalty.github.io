@@ -15,6 +15,13 @@ export function initCursor() {
 }
 
 export function initReveal() {
+  const elements = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('reveal-visible'));
+    return;
+  }
+
+  elements.forEach(el => el.classList.add('reveal-pending'));
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -24,7 +31,7 @@ export function initReveal() {
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+  elements.forEach(el => io.observe(el));
 }
 
 export function initParallax() {

@@ -106,6 +106,7 @@
   background: #6b7280; /* default */
 }
 .status-badge.live { background: #16a34a; }
+.status-badge.prototype { background: #566fae; }
 .status-badge.mock { background: #ef4444; }
 
 /* Data info panel */
@@ -262,6 +263,7 @@
 @media (max-width: 768px) {
   .grid-map-container {
     height: 300px;
+    min-height: 300px;
   }
   
   .grid-legend,
@@ -275,7 +277,10 @@
   }
 }
 
-/* Remove Leaflet attribution for cleaner look */
+/* Keep map attribution visible and quiet */
 .leaflet-control-attribution {
-  display: none !important;
+  padding: 2px 5px !important;
+  background: rgba(255, 250, 240, 0.82) !important;
+  color: var(--muted) !important;
+  font-size: 8px !important;
 }

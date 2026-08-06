@@ -47,7 +47,7 @@ class GridMap {
       center: [36.7783, -119.4179], // California center
       zoom: 6,
       zoomControl: false, // We'll add custom controls
-      attributionControl: false,
+      attributionControl: true,
       preferCanvas: true // Better performance for animations
     });
 
@@ -55,7 +55,8 @@ class GridMap {
     const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 10,
       minZoom: 5,
-      className: 'retro-map-tiles'
+      className: 'retro-map-tiles',
+      attribution: '&copy; OpenStreetMap contributors'
     });
     
     baseLayer.addTo(this.map);
@@ -338,11 +339,11 @@ class GridMap {
   }
 
   /**
-   * Update map with live CAISO data
+   * Update map with the prototype dataset
    */
   async updateLiveData() {
     try {
-      // Fetch latest data
+      // Load the fixed illustrative values
       const [lmpData, constraintData, loadData] = await Promise.all([
         this.caisoData.getLMPData(),
         this.caisoData.getConstraintData(),
@@ -355,12 +356,10 @@ class GridMap {
       // Update statistics display
       this.updateStats(lmpData, constraintData, loadData);
       
-      // Update timestamp
-      document.getElementById('last-data-update').textContent = 
-        new Date().toLocaleTimeString();
+      document.getElementById('last-data-update').textContent = 'Illustrative sample';
 
     } catch (error) {
-      console.error('Error updating live data:', error);
+      console.error('Error updating prototype data:', error);
     }
   }
 
@@ -464,13 +463,8 @@ class GridMap {
     // Load infrastructure first
     this.loadInfrastructureData();
     
-    // Update live data immediately
+    // Load the illustrative market layer immediately
     this.updateLiveData();
-    
-    // Set up interval for updates (every 5 minutes)
-    this.updateInterval = setInterval(() => {
-      this.updateLiveData();
-    }, 5 * 60 * 1000);
   }
 
   /**
@@ -484,20 +478,22 @@ class GridMap {
   }
 
   /**
-   * Update the UI badge to show Live vs Mock
+   * Update the UI badge to show the prototype state
    */
   updateSourceBadge(lmpData) {
     const el = document.getElementById('data-source-status');
     if (!el) return;
     const src = (lmpData && lmpData.source) ? String(lmpData.source) : '';
     const isLive = src.toLowerCase().includes('caiso') && !src.toLowerCase().includes('mock');
-    el.textContent = isLive ? 'Live' : 'Mock';
+    const isPrototype = src.toLowerCase().includes('prototype');
+    el.textContent = isLive ? 'Live' : isPrototype ? 'Prototype' : 'Unavailable';
     el.classList.toggle('live', isLive);
-    el.classList.toggle('mock', !isLive);
+    el.classList.toggle('prototype', isPrototype);
+    el.classList.toggle('mock', !isLive && !isPrototype);
 
     const titleEl = document.getElementById('data-title');
     if (titleEl) {
-      titleEl.textContent = isLive ? 'Live Grid Data' : 'Mock Data (Demo)';
+      titleEl.textContent = isLive ? 'Live Grid Data' : isPrototype ? 'Map Prototype' : 'Data Unavailable';
     }
   }
 

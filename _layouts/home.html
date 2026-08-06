@@ -3,30 +3,111 @@ layout: default
 ---
 
 {% capture about_md %}{% include about_content.md %}{% endcapture %}
-<div class="about-hero">
-  <div class="about-top highlighted-links">
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="home-hero__copy highlighted-links">
     {{ about_md | markdownify }}
   </div>
-  <div class="about-hero__arrow">
-    <a href="#writing" class="down-arrow" aria-label="Scroll to Writing" title="Scroll to Writing">
-      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"></path>
-      </svg>
-    </a>
-  </div>
-</div>
+</section>
 
-<section id="writing" data-reveal style="margin-top: 1.5rem;">
-  <h2>Writing</h2>
+<section
+  id="electricity-desk"
+  class="electricity-desk"
+  data-electricity-desk
+  data-endpoint="{{ '/assets/data/electricity-desk.json' | relative_url }}"
+  data-status="loading"
+  aria-labelledby="electricity-desk-title"
+  aria-busy="true"
+>
+  <div class="desk-header">
+    <div>
+      <p class="eyebrow">California · five-minute averages</p>
+      <h2 id="electricity-desk-title">Electricity Desk</h2>
+      <p class="desk-intro">A small live instrument for watching demand, sunlight, wind, and storage move through the grid.</p>
+    </div>
+    <div class="desk-status" role="status" aria-live="polite">
+      <span class="desk-status__light" aria-hidden="true"></span>
+      <span data-field="status">Connecting</span>
+    </div>
+  </div>
+
+  <div class="desk-tiles">
+    <article class="ceramic-tile ceramic-tile--modern-blue">
+      <p class="tile-label">Demand now</p>
+      <p class="tile-value" data-field="demand">···</p>
+      <p class="tile-detail" data-field="demand-trend">Reading the latest interval</p>
+      <p class="tile-foot" data-field="forecast">Hour-ahead forecast loading</p>
+    </article>
+
+    <article class="ceramic-tile ceramic-tile--stone-gold">
+      <p class="tile-label">Sun + wind</p>
+      <p class="tile-value" data-field="solar-wind-share">···</p>
+      <p class="tile-detail">of current demand</p>
+      <p class="tile-foot" data-field="solar-wind">Generation mix loading</p>
+    </article>
+
+    <article class="ceramic-tile ceramic-tile--myrtle">
+      <p class="tile-label">Grid batteries</p>
+      <p class="tile-value" data-field="battery">···</p>
+      <p class="tile-detail" data-field="battery-state">Storage activity loading</p>
+      <p class="tile-foot">Positive values supply the grid</p>
+    </article>
+  </div>
+
+  <div class="supply-ribbon" aria-label="Current positive electricity supply mix">
+    <span class="supply-ribbon__segment is-solar" data-segment="solar"></span>
+    <span class="supply-ribbon__segment is-wind" data-segment="wind"></span>
+    <span class="supply-ribbon__segment is-gas" data-segment="gas"></span>
+    <span class="supply-ribbon__segment is-imports" data-segment="imports"></span>
+    <span class="supply-ribbon__segment is-other" data-segment="other"></span>
+  </div>
+  <div class="supply-legend" aria-hidden="true">
+    <span class="is-solar">Solar</span>
+    <span class="is-wind">Wind</span>
+    <span class="is-gas">Gas</span>
+    <span class="is-imports">Imports</span>
+    <span class="is-other">Other</span>
+  </div>
+
+  <div class="desk-source">
+    <p><strong data-field="freshness">Waiting for a verified snapshot</strong> · interval <span data-field="interval">pending</span></p>
+    <p>Source: <a href="https://www.caiso.com/todays-outlook">California ISO Today’s Outlook</a>. Informational data only. OASIS is the official market source.</p>
+  </div>
+  <noscript><p class="desk-noscript">Live values require JavaScript. The data source link remains available above.</p></noscript>
+</section>
+
+<section class="home-section" data-reveal aria-labelledby="projects-title">
+  <div class="section-heading">
+    <h2 id="projects-title">Projects</h2>
+    <a href="{{ '/projects/' | relative_url }}">All projects</a>
+  </div>
+  <div class="projects-grid projects-grid--home">
+    {% assign projects = site.data.projects | default: empty %}
+    {% for item in projects limit:3 %}
+      <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}">
+        <span class="project-motif" aria-hidden="true"></span>
+        <span class="project-tile__content">
+          {% if item.status %}<span class="project-status">{{ item.status }}</span>{% endif %}
+          <h3>{{ item.title }}</h3>
+          {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+        </span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="writing" class="home-section" data-reveal aria-labelledby="writing-title">
+  <div class="section-heading">
+    <h2 id="writing-title">Recent writing</h2>
+    <a href="{{ '/writing/' | relative_url }}">All writing</a>
+  </div>
   <ul class="post-list">
-    {% for post in site.posts %}
+    {% for post in site.posts limit:6 %}
       <li>
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site.theme_config.date_format | default: '%Y-%m-%d' }}</time>
       </li>
     {% endfor %}
   </ul>
-  <p class="muted" style="margin-top:12px;">
-    <a href="{{ '/writing/' | relative_url }}">All writing →</a>
-  </p>
 </section>
+
+<script type="module" src="{{ '/assets/js/electricity-desk.js' | relative_url }}"></script>
