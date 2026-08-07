@@ -398,6 +398,7 @@ img, video { max-width: 100%; height: auto; }
 
 .supply-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 9px 3px 0; color: var(--ceramic); font-size: 0.68rem; font-weight: 700; }
 .supply-legend span::before { display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 50%; background: currentColor; content: ""; }
+.supply-legend strong { margin-left: 2px; color: inherit; font-variant-numeric: tabular-nums; }
 .supply-legend .is-solar { color: #f0cd72; }
 .supply-legend .is-wind { color: #a9d0dd; }
 .supply-legend .is-gas { color: #df876e; }

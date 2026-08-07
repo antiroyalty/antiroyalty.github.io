@@ -53,23 +53,23 @@ layout: default
     </article>
   </div>
 
-  <div class="supply-ribbon" aria-label="Current positive electricity supply mix">
+  <div class="supply-ribbon" role="img" aria-label="Current positive electricity supply mix is loading">
     <span class="supply-ribbon__segment is-solar" data-segment="solar"></span>
     <span class="supply-ribbon__segment is-wind" data-segment="wind"></span>
     <span class="supply-ribbon__segment is-gas" data-segment="gas"></span>
     <span class="supply-ribbon__segment is-imports" data-segment="imports"></span>
     <span class="supply-ribbon__segment is-other" data-segment="other"></span>
   </div>
-  <div class="supply-legend" aria-hidden="true">
-    <span class="is-solar">Solar</span>
-    <span class="is-wind">Wind</span>
-    <span class="is-gas">Gas</span>
-    <span class="is-imports">Imports</span>
-    <span class="is-other">Other</span>
+  <div class="supply-legend" aria-label="Positive supply mix values">
+    <span class="is-solar">Solar <strong data-mix-label="solar">···</strong></span>
+    <span class="is-wind">Wind <strong data-mix-label="wind">···</strong></span>
+    <span class="is-gas">Gas <strong data-mix-label="gas">···</strong></span>
+    <span class="is-imports">Imports <strong data-mix-label="imports">···</strong></span>
+    <span class="is-other">Other <strong data-mix-label="other">···</strong></span>
   </div>
 
   <div class="desk-source">
-    <p><strong data-field="freshness">Waiting for a verified snapshot</strong> · interval <span data-field="interval">pending</span></p>
+    <p><strong data-field="freshness">Waiting for a verified snapshot</strong> · source interval <span data-field="interval">pending</span></p>
     <p>Source: <a href="https://www.caiso.com/todays-outlook">California ISO Today’s Outlook</a>. Informational data only. OASIS is the official market source.</p>
   </div>
   <noscript><p class="desk-noscript">Live values require JavaScript. The data source link remains available above.</p></noscript>

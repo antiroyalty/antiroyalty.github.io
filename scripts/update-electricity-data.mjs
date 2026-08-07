@@ -1,11 +1,13 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { validateElectricitySnapshot } from "../assets/js/electricity-desk-schema.js";
 
 const CAISO_BASE_URL = "https://www.caiso.com/outlook/current";
 const OUTPUT_PATH = path.resolve("assets/data/electricity-desk.json");
 const REQUEST_TIMEOUT_MS = 20_000;
 
-function parseCsv(text) {
+export function parseCsv(text) {
   const rows = [];
   let row = [];
   let value = "";
@@ -40,6 +42,7 @@ function parseCsv(text) {
   }
 
   const [headers, ...data] = rows;
+  if (!headers?.length) throw new Error("CSV contained no header row");
   return data.map((values) => Object.fromEntries(
     headers.map((header, index) => [header, values[index] ?? ""]),
   ));
@@ -70,8 +73,10 @@ function pacificClockMinutes(date = new Date()) {
   return Number(values.hour) * 60 + Number(values.minute);
 }
 
-function sourceTimestamp(time, now = new Date()) {
+export function sourceTimestamp(time, now = new Date()) {
+  if (!/^\d{1,2}:\d{2}$/.test(time)) throw new Error(`Invalid CAISO interval time: ${time}`);
   const [hours, minutes] = time.split(":").map(Number);
+  if (hours > 23 || minutes > 59) throw new Error(`Invalid CAISO interval time: ${time}`);
   const intervalMinutes = hours * 60 + minutes;
   const elapsedMinutes = (pacificClockMinutes(now) - intervalMinutes + 1440) % 1440;
   return new Date(now.getTime() - elapsedMinutes * 60_000).toISOString();
@@ -104,11 +109,7 @@ function mixEntry(label, value, total) {
   };
 }
 
-async function buildSnapshot() {
-  const [demandFeed, fuelFeed] = await Promise.all([
-    fetchCsv("demand.csv"),
-    fetchCsv("fuelsource.csv"),
-  ]);
+export function buildSnapshotFromFeeds(demandFeed, fuelFeed, now = new Date()) {
   const demandRows = demandFeed.rows;
   const fuelRows = fuelFeed.rows;
 
@@ -120,6 +121,9 @@ async function buildSnapshot() {
   if (!fuels) throw new Error("CAISO fuel source feed contained no current values");
 
   const demandMw = numeric(demand["Current demand"]);
+  if (!Number.isFinite(demandMw) || demandMw <= 0) {
+    throw new Error("CAISO demand feed contained an invalid current demand value");
+  }
   const currentIndex = demandRows.indexOf(demand);
   const earlierDemand = currentIndex >= 12
     ? numeric(demandRows[currentIndex - 12]?.["Current demand"])
@@ -151,11 +155,11 @@ async function buildSnapshot() {
   const headerTimestamp = Date.parse(demandFeed.lastModified);
   const verifiedSourceTimestamp = Number.isFinite(headerTimestamp)
     ? new Date(headerTimestamp).toISOString()
-    : sourceTimestamp(demand.Time);
+    : sourceTimestamp(demand.Time, now);
 
-  return {
+  return validateElectricitySnapshot({
     schemaVersion: 1,
-    generatedAt: new Date().toISOString(),
+    generatedAt: now.toISOString(),
     sourceUpdatedAt: verifiedSourceTimestamp,
     intervalLabel: `${demand.Time} PT`,
     source: {
@@ -178,20 +182,44 @@ async function buildSnapshot() {
       batteryState: batteryMw > 50 ? "discharging" : batteryMw < -50 ? "charging" : "balanced",
       mix: Object.entries(mix).map(([key, value]) => mixEntry(key, value, positiveSupply)),
     },
-  };
+  });
 }
 
-try {
-  const snapshot = await buildSnapshot();
-  await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
-  await writeFile(OUTPUT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
-  console.log(`Updated ${OUTPUT_PATH} with CAISO interval ${snapshot.intervalLabel}`);
-} catch (error) {
-  try {
-    await readFile(OUTPUT_PATH, "utf8");
-    console.error(`Live refresh failed. The previous snapshot remains intact: ${error.message}`);
-  } catch {
-    console.error(`Live refresh failed and no previous snapshot exists: ${error.message}`);
-  }
-  process.exitCode = 1;
+export async function buildSnapshot() {
+  const [demandFeed, fuelFeed] = await Promise.all([
+    fetchCsv("demand.csv"),
+    fetchCsv("fuelsource.csv"),
+  ]);
+  return buildSnapshotFromFeeds(demandFeed, fuelFeed);
 }
+
+async function writeSnapshot(snapshot) {
+  await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
+  const temporaryPath = `${OUTPUT_PATH}.${process.pid}.tmp`;
+  try {
+    await writeFile(temporaryPath, `${JSON.stringify(snapshot, null, 2)}\n`);
+    await rename(temporaryPath, OUTPUT_PATH);
+  } finally {
+    await rm(temporaryPath, { force: true });
+  }
+}
+
+async function main() {
+  try {
+    const snapshot = await buildSnapshot();
+    await writeSnapshot(snapshot);
+    console.log(`Updated ${OUTPUT_PATH} with CAISO interval ${snapshot.intervalLabel}`);
+  } catch (error) {
+    try {
+      validateElectricitySnapshot(JSON.parse(await readFile(OUTPUT_PATH, "utf8")));
+      console.error(`Live refresh failed. The previous verified snapshot remains intact: ${error.message}`);
+    } catch {
+      console.error(`Live refresh failed and no verified previous snapshot exists: ${error.message}`);
+    }
+    process.exitCode = 1;
+  }
+}
+
+const isMain = process.argv[1]
+  && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) await main();

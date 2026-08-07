@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-06T19:44:00.531Z",
-  "sourceUpdatedAt": "2026-08-06T19:43:39.000Z",
-  "intervalLabel": "12:40 PT",
+  "generatedAt": "2026-08-07T15:02:10.307Z",
+  "sourceUpdatedAt": "2026-08-07T14:58:32.000Z",
+  "intervalLabel": "07:55 PT",
   "source": {
     "name": "California ISO Today’s Outlook",
     "url": "https://www.caiso.com/todays-outlook",
@@ -10,42 +10,42 @@
     "note": "Informational grid data. CAISO OASIS is the official market source."
   },
   "demand": {
-    "currentMw": 31278,
-    "hourAheadMw": 30951,
-    "dayAheadPeakMw": 41168,
-    "changeFromHourAgoMw": 1592
+    "currentMw": 29013,
+    "hourAheadMw": 28846,
+    "dayAheadPeakMw": 40906,
+    "changeFromHourAgoMw": 973
   },
   "supply": {
-    "solarMw": 20764,
-    "windMw": 1079,
-    "solarWindShare": 69.8,
-    "batteryMw": -5582,
+    "solarMw": 13902,
+    "windMw": 1633,
+    "solarWindShare": 53.5,
+    "batteryMw": -5359,
     "batteryState": "charging",
     "mix": [
       {
         "label": "solar",
-        "mw": 20764,
-        "share": 54.3
+        "mw": 13902,
+        "share": 40.7
       },
       {
         "label": "wind",
-        "mw": 1079,
-        "share": 2.8
+        "mw": 1633,
+        "share": 4.8
       },
       {
         "label": "naturalGas",
-        "mw": 11483,
-        "share": 30
+        "mw": 10411,
+        "share": 30.5
       },
       {
         "label": "hydro",
-        "mw": 1588,
-        "share": 4.1
+        "mw": 2610,
+        "share": 7.6
       },
       {
         "label": "nuclear",
-        "mw": 2244,
-        "share": 5.9
+        "mw": 2239,
+        "share": 6.6
       },
       {
         "label": "batteries",
@@ -54,13 +54,13 @@
       },
       {
         "label": "imports",
-        "mw": 0,
-        "share": 0
+        "mw": 2269,
+        "share": 6.6
       },
       {
         "label": "other",
-        "mw": 1112,
-        "share": 2.9
+        "mw": 1107,
+        "share": 3.2
       }
     ]
   }

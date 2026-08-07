@@ -11,10 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
+      - name: Test Electricity Desk data pipeline
+        run: node --test scripts/electricity-desk.test.mjs
       - name: Build site
         run: bundle exec jekyll build --trace
         env:
@@ -23,4 +28,3 @@ jobs:
         run: |
           gem install html-proofer -N
           htmlproofer ./_site --disable-external --assume-extension --check-html --allow_hash_href
-
