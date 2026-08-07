@@ -33,7 +33,7 @@
   background: var(--dialog-bg) !important;
   color: var(--fg) !important;
   border: 1px inset var(--dialog-border) !important;
-  font-family: "MS Sans Serif", sans-serif !important;
+  font-family: var(--body-font) !important;
   font-size: 14px !important;
   font-weight: bold !important;
   line-height: 24px !important;
@@ -57,7 +57,7 @@
   background: var(--retro-sage);
   border: 2px inset var(--dialog-border);
   padding: 10px;
-  font-family: "Times New Roman", Times, serif;
+  font-family: var(--body-font);
   font-size: 11px;
   box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   min-width: 160px;
@@ -114,7 +114,7 @@
   background: var(--retro-peach);
   border: 2px inset var(--dialog-border);
   padding: 8px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--body-font);
   font-size: 10px;
   box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   min-width: 140px;
@@ -195,7 +195,7 @@
 }
 
 .leaflet-popup-content {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: var(--body-font) !important;
   font-size: 11px !important;
   margin: 8px !important;
 }
@@ -232,7 +232,7 @@
   background: #C0C0C0;
   border: 2px inset #808080;
   padding: 20px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--body-font);
   font-size: 12px;
   z-index: 1000;
   transition: opacity 0.5s ease;
@@ -255,7 +255,7 @@
   border: 2px solid #8B0000;
   padding: 8px;
   margin: 10px 0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--body-font);
   font-size: 10px;
 }
 
