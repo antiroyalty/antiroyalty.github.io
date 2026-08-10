@@ -14,12 +14,12 @@ permalink: /projects/
     {% assign projects = site.data.projects | default: empty %}
     {% for item in projects %}
       <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
-        <span class="project-motif" aria-hidden="true"></span>
         <span class="project-tile__content">
           {% if item.status %}<span class="project-status">{{ item.status }}</span>{% endif %}
           <h3>{{ item.title }}</h3>
           {% if item.description %}<p>{{ item.description }}</p>{% endif %}
         </span>
+        <span class="project-specimen project-specimen--{{ forloop.index }}" aria-hidden="true"></span>
       </a>
     {% endfor %}
   </div>
