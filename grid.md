@@ -4,99 +4,121 @@ title: California Grid Map
 permalink: /grid/
 ---
 
-<div class="hero">
-  <p class="eyebrow">Interaction prototype</p>
-  <h1>California Grid Map</h1>
-  <p class="lead">An experimental visualization of California's electrical grid and market geography.</p>
-</div>
+<section class="grid-hero" aria-labelledby="grid-page-title">
+  <p class="eyebrow">California market geography</p>
+  <h1 id="grid-page-title">California Grid Map</h1>
+  <p class="grid-lead">A live view of regional wholesale prices set against California's public high-voltage transmission network.</p>
+</section>
 
-<div id="grid-map" class="grid-map-container">
-  <div class="grid-loading">
-    Initializing map prototype<span class="retro-cursor"></span>
+<section
+  class="grid-explorer"
+  data-grid-explorer
+  data-market-endpoint="{{ '/assets/data/grid-market.json' | relative_url }}"
+  data-desk-endpoint="{{ '/assets/data/electricity-desk.json' | relative_url }}"
+  data-lines-endpoint="{{ '/assets/data/california-transmission.geojson' | relative_url }}"
+  data-substations-endpoint="{{ '/assets/data/california-substations.geojson' | relative_url }}"
+  aria-labelledby="grid-explorer-title"
+>
+  <div class="grid-summary" aria-label="Current California grid summary">
+    <article class="grid-summary-card grid-summary-card--spread">
+      <p>North-south spread</p>
+      <strong data-grid-field="spread">···</strong>
+      <span data-grid-field="spread-direction">Comparing NP15 and SP15</span>
+    </article>
+    <article class="grid-summary-card">
+      <p>System demand</p>
+      <strong data-grid-field="demand">···</strong>
+      <span data-grid-field="demand-detail">Loading the Electricity Desk</span>
+    </article>
+    <article class="grid-summary-card">
+      <p>Grid batteries</p>
+      <strong data-grid-field="battery">···</strong>
+      <span data-grid-field="battery-detail">Reading storage activity</span>
+    </article>
   </div>
-</div>
 
-<div class="grid-info">
-  <h2>About This Prototype</h2>
-  <p>This interactive map explores how several kinds of California grid information might be combined, including:</p>
-  <ul>
-    <li><strong>Locational Marginal Pricing (LMP)</strong> - Economic signals showing grid stress</li>
-    <li><strong>System Load</strong> - System-wide electricity demand</li>
-    <li><strong>Transmission Constraints</strong> - Bottlenecks in the grid infrastructure</li>
-    <li><strong>Major Substations</strong> - Key nodes in the transmission network</li>
-  </ul>
-  
-  <h3>How to Read the Map</h3>
-  <p>Price indicators are color-coded: green represents low electricity prices (under $30/MWh), yellow shows medium prices ($30-60/MWh), and red indicates high prices (over $60/MWh). Higher prices typically signal grid stress, high demand, or transmission constraints.</p>
-  
-  <p>Substations pulse gently and transmission lines show animated flow patterns. Click any element for more information.</p>
-  
-  <div class="data-note">
-    <strong>Prototype note:</strong> Market values in this map are fixed illustrative samples. They are not live and should not be used for analysis. The live Electricity Desk on the homepage uses verified CAISO snapshots.
+  <div class="grid-workspace">
+    <div class="grid-map-panel">
+      <div class="grid-toolbar">
+        <div>
+          <p class="eyebrow" id="grid-explorer-title">Public infrastructure + live prices</p>
+          <div class="grid-status" role="status" aria-live="polite">
+            <span class="grid-status__light" aria-hidden="true"></span>
+            <span data-grid-field="status">Connecting</span>
+            <span class="grid-status__time" data-grid-field="interval"></span>
+          </div>
+        </div>
+        <fieldset class="grid-layer-controls">
+          <legend>Map layers</legend>
+          <label><input type="checkbox" data-grid-layer="lower-voltage" checked> 220–287 kV</label>
+          <label><input type="checkbox" data-grid-layer="higher-voltage" checked> 345–500 kV</label>
+          <label><input type="checkbox" data-grid-layer="substations"> Substations</label>
+          <label><input type="checkbox" data-grid-layer="prices" checked> Market hubs</label>
+        </fieldset>
+      </div>
+
+      <div
+        id="grid-map"
+        class="grid-map-container"
+        role="application"
+        aria-label="Interactive map of California high-voltage transmission infrastructure and regional electricity prices"
+      >
+        <div class="grid-loading">Loading public infrastructure and CAISO prices</div>
+      </div>
+
+      <div class="grid-map-key" aria-label="Map legend">
+        <span><i class="grid-key-line grid-key-line--lower"></i>220–287 kV</span>
+        <span><i class="grid-key-line grid-key-line--higher"></i>345–500 kV</span>
+        <span><i class="grid-key-dot grid-key-dot--negative"></i>negative price</span>
+        <span><i class="grid-key-dot grid-key-dot--moderate"></i>$0–80/MWh</span>
+        <span><i class="grid-key-dot grid-key-dot--high"></i>above $80/MWh</span>
+      </div>
+    </div>
+
+    <aside class="grid-analysis" aria-live="polite">
+      <div class="grid-insight">
+        <p class="eyebrow">What the market is saying</p>
+        <h2 data-grid-field="insight-title">Reading this interval</h2>
+        <p data-grid-field="insight-summary">Waiting for a verified CAISO market snapshot.</p>
+        <p class="grid-insight__driver" data-grid-field="insight-driver"></p>
+      </div>
+
+      <div class="grid-hubs" aria-label="Regional market hubs">
+        <button type="button" data-grid-hub="NP15">
+          <span><strong>NP15</strong> Northern California</span>
+          <b data-hub-price="NP15">···</b>
+        </button>
+        <button type="button" data-grid-hub="ZP26">
+          <span><strong>ZP26</strong> Central California</span>
+          <b data-hub-price="ZP26">···</b>
+        </button>
+        <button type="button" data-grid-hub="SP15">
+          <span><strong>SP15</strong> Southern California</span>
+          <b data-hub-price="SP15">···</b>
+        </button>
+      </div>
+
+      <div class="grid-detail" data-grid-detail hidden>
+        <p class="eyebrow">Selected hub</p>
+        <h3 data-grid-detail="name">NP15</h3>
+        <p class="grid-detail__price" data-grid-detail="price">···</p>
+        <dl>
+          <div><dt>Marginal energy</dt><dd data-grid-detail="energy">···</dd></div>
+          <div><dt>Congestion</dt><dd data-grid-detail="congestion">···</dd></div>
+          <div><dt>Losses</dt><dd data-grid-detail="loss">···</dd></div>
+        </dl>
+        <p class="grid-detail__note">The three components reconcile to the locational marginal price.</p>
+      </div>
+    </aside>
   </div>
-</div>
 
-<!-- Load required libraries -->
+  <div class="grid-source-note">
+    <p><strong>How to read this:</strong> A regional price gap is a market signal, not proof that a specific line is overloaded. Select a hub to see whether energy, congestion, or modeled losses are shaping its price.</p>
+    <p>Infrastructure: <a href="https://lab.data.ca.gov/dataset/california-electric-transmission-lines">California Energy Commission</a>, approximate public geometry. Prices: <a href="https://oasis.caiso.com/oasisapi/prc_hub_lmp/PRC_HUB_LMP.html">California ISO OASIS</a>, five-minute hub LMPs. Informational data only.</p>
+  </div>
+</section>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="{{ '/assets/css/grid-map.css' | relative_url }}">
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="{{ '/assets/js/caiso-api.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/grid-map.js' | relative_url }}"></script>
-
-<script>
-let gridMap = null;
-
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('Initializing California grid map prototype...');
-  
-  // Check if required libraries are loaded
-  if (typeof L === 'undefined') {
-    console.error('Leaflet not loaded');
-    return;
-  }
-  
-  if (typeof CAISOData === 'undefined') {
-    console.error('CAISO API not loaded');
-    return;
-  }
-  
-  // Initialize the grid map
-  try {
-    gridMap = new GridMap('grid-map');
-    console.log('Grid map initialized successfully');
-    
-    // Remove loading indicator after initialization
-    setTimeout(() => {
-      const loadingEl = document.querySelector('.grid-loading');
-      if (loadingEl) {
-        loadingEl.style.opacity = '0';
-        setTimeout(() => {
-          loadingEl.style.display = 'none';
-        }, 500);
-      }
-    }, 3000);
-    
-  } catch (error) {
-    console.error('Error initializing grid map:', error);
-    
-    // Show error message
-    const container = document.getElementById('grid-map');
-    if (container) {
-      container.innerHTML = `
-        <div class="grid-error">
-          Error loading grid visualization: ${error.message}
-          <br>Check console for details.
-        </div>
-      `;
-    }
-  }
-  
-  // Clean up on page unload
-  window.addEventListener('beforeunload', () => {
-    if (gridMap) {
-      gridMap.destroy();
-    }
-  });
-});
-</script>
+<script type="module" src="{{ '/assets/js/grid-map.js' | relative_url }}"></script>

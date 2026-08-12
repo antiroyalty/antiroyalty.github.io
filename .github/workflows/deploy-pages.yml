@@ -28,10 +28,12 @@ jobs:
         with:
           ruby-version: "3.2"
           bundler-cache: true
-      - name: Test Electricity Desk data pipeline
-        run: node --test scripts/electricity-desk.test.mjs
-      - name: Refresh California grid snapshot
+      - name: Test data pipelines
+        run: npm test
+      - name: Refresh Electricity Desk snapshot
         run: node scripts/update-electricity-data.mjs
+      - name: Refresh California market snapshot
+        run: node scripts/update-grid-market-data.mjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Build Jekyll site

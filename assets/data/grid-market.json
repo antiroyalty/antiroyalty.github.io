@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-12T01:58:36.860Z",
+  "sourceUpdatedAt": "2026-08-12T01:56:50.000Z",
+  "interval": {
+    "tradingDate": "2026-08-11",
+    "hourEnding": 20,
+    "fiveMinuteInterval": 1,
+    "label": "2026-08-11 · hour ending 20 · interval 1"
+  },
+  "source": {
+    "name": "California ISO OASIS Hub LMP Prices",
+    "url": "https://oasis.caiso.com/oasisapi/prc_hub_lmp/PRC_HUB_LMP.html",
+    "cadence": "real-time five-minute interval prices",
+    "note": "Hub markers are representative market-area anchors, not physical substations."
+  },
+  "hubs": [
+    {
+      "id": "NP15",
+      "name": "NP15",
+      "region": "Northern California",
+      "coordinates": [
+        38.25,
+        -121.55
+      ],
+      "lmp": 63.60588,
+      "components": {
+        "energy": 67.26775,
+        "congestion": -0.41283,
+        "loss": -3.24903
+      }
+    },
+    {
+      "id": "ZP26",
+      "name": "ZP26",
+      "region": "Central California",
+      "coordinates": [
+        35.75,
+        -119.7
+      ],
+      "lmp": 64.07253,
+      "components": {
+        "energy": 67.26775,
+        "congestion": 0,
+        "loss": -3.19522
+      }
+    },
+    {
+      "id": "SP15",
+      "name": "SP15",
+      "region": "Southern California",
+      "coordinates": [
+        34.05,
+        -117.55
+      ],
+      "lmp": 65.01799,
+      "components": {
+        "energy": 67.26775,
+        "congestion": -0.10392,
+        "loss": -2.14584
+      }
+    }
+  ],
+  "insight": {
+    "northSouthSpread": 1.41,
+    "summary": "SP15 is $1.41/MWh higher than NP15. Prices are broadly aligned across the state.",
+    "driver": "The larger component difference is currently transmission losses."
+  }
+}

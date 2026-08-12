@@ -1,526 +1,272 @@
-/**
- * California Grid Visualization Map
- * Interactive map showing live grid data with retro styling
- */
+import { validateGridMarketSnapshot } from "./grid-market-schema.js";
 
-// Approximate coordinates for common CAISO nodes/zones
-const PNODE_COORDS = {
-  'NP15_EHV-APND': [37.7, -121.9],
-  'SP15_EHV-APND': [34.05, -118.25],
-  'ZP26_7_N001': [36.5, -119.8],
-  'DLAP_PGE-APND': [37.77, -122.27],
-  'DLAP_SCE-APND': [33.93, -117.94],
-  'DLAP_SDGE-APND': [32.8, -117.1],
-  'SLAP_PGE-APND': [37.7, -122.0]
+const explorer = document.querySelector("[data-grid-explorer]");
+const PRICE_COLORS = {
+  negative: "#547b9c",
+  low: "#66836a",
+  moderate: "#c2942f",
+  high: "#a64e3d",
 };
 
-class GridMap {
-  constructor(containerId) {
-    this.containerId = containerId;
-    this.map = null;
-    this.caisoData = new CAISOData();
-    this.layers = {
-      substations: null,
-      transmissionLines: null,
-      lmpOverlay: null
-    };
-    this.updateInterval = null;
-    
-    this.init();
-  }
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-  /**
-   * Initialize the map
-   */
-  init() {
-    this.createMap();
-    this.setupControls();
-    this.startDataUpdates();
-  }
+function money(value, digits = 2) {
+  if (!Number.isFinite(value)) return "n/a";
+  const sign = value < 0 ? "−" : "";
+  return `${sign}$${Math.abs(value).toFixed(digits)}/MWh`;
+}
 
-  /**
-   * Create the base Leaflet map
-   */
-  createMap() {
-    // Initialize map centered on California
-    this.map = L.map(this.containerId, {
-      center: [36.7783, -119.4179], // California center
-      zoom: 6,
-      zoomControl: false, // We'll add custom controls
-      attributionControl: true,
-      preferCanvas: true // Better performance for animations
-    });
+function megawatts(value, signed = false) {
+  if (!Number.isFinite(value)) return "n/a";
+  const sign = signed && value > 0 ? "+" : "";
+  return `${sign}${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value)} MW`;
+}
 
-    // Add base tile layer with retro styling
-    const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 10,
-      minZoom: 5,
-      className: 'retro-map-tiles',
-      attribution: '&copy; OpenStreetMap contributors'
-    });
-    
-    baseLayer.addTo(this.map);
+function pacificTime(timestamp) {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  }).format(new Date(timestamp));
+}
 
-    // Custom zoom control with retro styling
-    const zoomControl = L.control.zoom({
-      position: 'topright'
-    });
-    zoomControl.addTo(this.map);
+function priceColor(price) {
+  if (price < 0) return PRICE_COLORS.negative;
+  if (price < 30) return PRICE_COLORS.low;
+  if (price <= 80) return PRICE_COLORS.moderate;
+  return PRICE_COLORS.high;
+}
 
-    // Fit map to California bounds
-    const californiaBounds = [
-      [32.5, -124.4], // Southwest
-      [42.0, -114.1]  // Northeast
-    ];
-    this.map.fitBounds(californiaBounds, { padding: [20, 20] });
-  }
-
-  /**
-   * Setup map controls and info panels
-   */
-  setupControls() {
-    // Add legend control
-    const legend = L.control({ position: 'bottomleft' });
-    legend.onAdd = () => {
-      const div = L.DomUtil.create('div', 'grid-legend');
-      div.innerHTML = `
-        <div class="legend-title">CA Grid Status</div>
-        <div class="legend-item">
-          <span class="legend-color" style="background: #90EE90"></span>
-          Low Price (&lt;$30/MWh)
-        </div>
-        <div class="legend-item">
-          <span class="legend-color" style="background: #FFD700"></span>
-          Medium Price ($30-60/MWh)
-        </div>
-        <div class="legend-item">
-          <span class="legend-color" style="background: #FF6347"></span>
-          High Price (&gt;$60/MWh)
-        </div>
-        <div class="legend-update">
-          Last updated: <span id="last-data-update">Loading...</span>
-          <br>
-          Source: <span id="data-source-status" class="status-badge">Checking…</span>
-        </div>
-      `;
-      return div;
-    };
-    legend.addTo(this.map);
-
-    // Add data info control
-    const dataInfo = L.control({ position: 'topright' });
-    dataInfo.onAdd = () => {
-      const div = L.DomUtil.create('div', 'grid-data-info');
-      div.innerHTML = `
-        <div class="data-title" id="data-title">Grid Data</div>
-        <div id="grid-stats">
-          <div>System Load: <span id="system-load">--</span> MW</div>
-          <div>Avg Price: <span id="avg-price">--</span> $/MWh</div>
-          <div>Constraints: <span id="active-constraints">--</span></div>
-        </div>
-      `;
-      return div;
-    };
-    dataInfo.addTo(this.map);
-  }
-
-  /**
-   * Load static transmission infrastructure data
-   */
-  async loadInfrastructureData() {
-    try {
-      // Expanded substation data with more California substations
-      const mockSubstations = [
-        // 500kV Major Substations
-        { name: 'Midway', lat: 35.0528, lng: -119.0890, voltage: 500, type: 'major' },
-        { name: 'Vincent', lat: 34.4944, lng: -118.4261, voltage: 500, type: 'major' },
-        { name: 'Sylmar', lat: 34.3075, lng: -118.4386, voltage: 500, type: 'major' },
-        { name: 'Tesla', lat: 37.5600, lng: -121.1958, voltage: 500, type: 'major' },
-        { name: 'Round Mountain', lat: 40.2100, lng: -121.6400, voltage: 500, type: 'major' },
-        { name: 'Malin', lat: 42.0131, lng: -121.4000, voltage: 500, type: 'major' },
-        { name: 'Path 15 (Gates)', lat: 36.6500, lng: -121.1000, voltage: 500, type: 'major' },
-        { name: 'Diablo Canyon', lat: 35.2110, lng: -120.8520, voltage: 500, type: 'major' },
-        { name: 'Moss Landing', lat: 36.8020, lng: -121.7880, voltage: 500, type: 'major' },
-        { name: 'Helms', lat: 37.0000, lng: -119.2000, voltage: 500, type: 'major' },
-        
-        // 230kV Regional Substations
-        { name: 'Panoche', lat: 36.7000, lng: -120.8500, voltage: 230, type: 'regional' },
-        { name: 'Los Banos', lat: 37.0586, lng: -120.8499, voltage: 230, type: 'regional' },
-        { name: 'Tracy', lat: 37.7397, lng: -121.4252, voltage: 230, type: 'regional' },
-        { name: 'Vaca Dixon', lat: 38.3656, lng: -121.9018, voltage: 230, type: 'regional' },
-        { name: 'Rio Oso', lat: 38.9517, lng: -121.5364, voltage: 230, type: 'regional' },
-        { name: 'Table Mountain', lat: 39.4925, lng: -121.6169, voltage: 230, type: 'regional' },
-        { name: 'Metcalf', lat: 37.2431, lng: -121.7244, voltage: 230, type: 'regional' },
-        { name: 'Newark', lat: 37.5297, lng: -122.0402, voltage: 230, type: 'regional' },
-        { name: 'Pittsburg', lat: 38.0280, lng: -121.8847, voltage: 230, type: 'regional' },
-        { name: 'Olinda', lat: 33.8781, lng: -117.8531, voltage: 230, type: 'regional' },
-        { name: 'Valley', lat: 34.1808, lng: -118.3258, voltage: 230, type: 'regional' },
-        { name: 'Rinaldi', lat: 34.2547, lng: -118.5123, voltage: 230, type: 'regional' },
-        { name: 'Lugo', lat: 34.3572, lng: -117.4097, voltage: 230, type: 'regional' },
-        { name: 'San Bernardino', lat: 34.1083, lng: -117.2898, voltage: 230, type: 'regional' },
-        { name: 'Devers', lat: 33.9289, lng: -116.8097, voltage: 230, type: 'regional' },
-        { name: 'Imperial Valley', lat: 32.8431, lng: -115.3831, voltage: 230, type: 'regional' },
-        { name: 'Miguel', lat: 32.6431, lng: -116.9431, voltage: 230, type: 'regional' },
-        { name: 'Sycamore', lat: 32.9831, lng: -117.1131, voltage: 230, type: 'regional' },
-        
-        // 115kV Local Substations
-        { name: 'Fresno', lat: 36.7378, lng: -119.7871, voltage: 115, type: 'local' },
-        { name: 'Bakersfield', lat: 35.3733, lng: -119.0187, voltage: 115, type: 'local' },
-        { name: 'Stockton', lat: 37.9577, lng: -121.2908, voltage: 115, type: 'local' },
-        { name: 'Modesto', lat: 37.6391, lng: -120.9969, voltage: 115, type: 'local' },
-        { name: 'Sacramento', lat: 38.5816, lng: -121.4944, voltage: 115, type: 'local' },
-        { name: 'San Jose', lat: 37.3382, lng: -121.8863, voltage: 115, type: 'local' },
-        { name: 'Oakland', lat: 37.8044, lng: -122.2711, voltage: 115, type: 'local' },
-        { name: 'San Francisco', lat: 37.7749, lng: -122.4194, voltage: 115, type: 'local' },
-        { name: 'Santa Barbara', lat: 34.4208, lng: -119.6982, voltage: 115, type: 'local' },
-        { name: 'Ventura', lat: 34.2746, lng: -119.2290, voltage: 115, type: 'local' },
-        { name: 'Riverside', lat: 33.9533, lng: -117.3962, voltage: 115, type: 'local' },
-        { name: 'San Diego', lat: 32.7157, lng: -117.1611, voltage: 115, type: 'local' }
-      ];
-
-      // Add substations to map
-      this.layers.substations = L.layerGroup();
-      
-      mockSubstations.forEach(substation => {
-        let radius, fillColor;
-        
-        // Size and color based on voltage level
-        switch(substation.type) {
-          case 'major':
-            radius = 10;
-            fillColor = '#8B0000'; // Dark red for 500kV
-            break;
-          case 'regional':
-            radius = 7;
-            fillColor = '#DAA520'; // Golden rod for 230kV
-            break;
-          case 'local':
-            radius = 4;
-            fillColor = '#8B4513'; // Brown for 115kV
-            break;
-          default:
-            radius = 5;
-            fillColor = '#8B4513';
-        }
-        
-        const marker = L.circleMarker([substation.lat, substation.lng], {
-          radius: radius,
-          fillColor: fillColor,
-          color: '#333',
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8,
-          className: 'substation-marker'
-        });
-
-        marker.bindPopup(`
-          <div class="substation-popup">
-            <h3>${substation.name}</h3>
-            <p>Voltage: ${substation.voltage}kV</p>
-            <p>Type: ${substation.type}</p>
-          </div>
-        `);
-
-        this.layers.substations.addLayer(marker);
-      });
-
-      this.layers.substations.addTo(this.map);
-
-      // Add major transmission lines
-      this.addTransmissionLines(mockSubstations);
-
-    } catch (error) {
-      console.error('Error loading infrastructure data:', error);
-    }
-  }
-
-  /**
-   * Add transmission lines between major substations
-   */
-  addTransmissionLines(substations) {
-    this.layers.transmissionLines = L.layerGroup();
-
-    // Define major transmission connections based on actual CA grid topology
-    const connections = [
-      // 500kV Major Backbone
-      ['Midway', 'Vincent'],
-      ['Vincent', 'Sylmar'],
-      ['Tesla', 'Round Mountain'],
-      ['Tesla', 'Midway'],
-      ['Round Mountain', 'Malin'],
-      ['Tesla', 'Newark'],
-      ['Tesla', 'Metcalf'],
-      ['Midway', 'Path 15 (Gates)'],
-      ['Path 15 (Gates)', 'Tesla'],
-      ['Diablo Canyon', 'Midway'],
-      ['Moss Landing', 'Tesla'],
-      ['Moss Landing', 'Metcalf'],
-      ['Helms', 'Tesla'],
-      ['Helms', 'Midway'],
-      
-      // 230kV Regional Connections
-      ['Tesla', 'Tracy'],
-      ['Tesla', 'Pittsburg'],
-      ['Tracy', 'Vaca Dixon'],
-      ['Vaca Dixon', 'Rio Oso'],
-      ['Rio Oso', 'Table Mountain'],
-      ['Table Mountain', 'Round Mountain'],
-      ['Tesla', 'Los Banos'],
-      ['Los Banos', 'Panoche'],
-      ['Panoche', 'Path 15 (Gates)'],
-      ['Vincent', 'Valley'],
-      ['Vincent', 'Rinaldi'],
-      ['Vincent', 'Lugo'],
-      ['Lugo', 'San Bernardino'],
-      ['San Bernardino', 'Devers'],
-      ['Vincent', 'Olinda'],
-      ['Devers', 'Imperial Valley'],
-      ['Miguel', 'Sycamore'],
-      ['Sycamore', 'San Diego'],
-      
-      // 115kV Local Networks (major cities)
-      ['Tesla', 'San Jose'],
-      ['Tesla', 'Oakland'],
-      ['Oakland', 'San Francisco'],
-      ['Tesla', 'Stockton'],
-      ['Tesla', 'Modesto'],
-      ['Vaca Dixon', 'Sacramento'],
-      ['Midway', 'Fresno'],
-      ['Midway', 'Bakersfield'],
-      ['Vincent', 'Santa Barbara'],
-      ['Vincent', 'Ventura'],
-      ['Lugo', 'Riverside'],
-      ['Miguel', 'San Diego']
-    ];
-
-    connections.forEach(([from, to]) => {
-      const fromStation = substations.find(s => s.name === from);
-      const toStation = substations.find(s => s.name === to);
-
-      if (fromStation && toStation) {
-        // Line styling based on voltage levels
-        let lineColor, lineWeight;
-        const maxVoltage = Math.max(fromStation.voltage, toStation.voltage);
-        
-        if (maxVoltage >= 500) {
-          lineColor = '#8B0000'; // Dark red for 500kV
-          lineWeight = 4;
-        } else if (maxVoltage >= 230) {
-          lineColor = '#DAA520'; // Golden rod for 230kV
-          lineWeight = 3;
-        } else {
-          lineColor = '#8B4513'; // Brown for 115kV
-          lineWeight = 2;
-        }
-        
-        const line = L.polyline([
-          [fromStation.lat, fromStation.lng],
-          [toStation.lat, toStation.lng]
-        ], {
-          color: lineColor,
-          weight: lineWeight,
-          opacity: 0.7,
-          className: 'transmission-line'
-        });
-
-        line.bindPopup(`
-          <div class="transmission-popup">
-            <h4>${from} ↔ ${to}</h4>
-            <p>Voltage: ${maxVoltage}kV</p>
-            <p>Length: ${this.calculateDistance(fromStation, toStation).toFixed(1)} km</p>
-          </div>
-        `);
-
-        this.layers.transmissionLines.addLayer(line);
-      }
-    });
-
-    this.layers.transmissionLines.addTo(this.map);
-  }
-
-  /**
-   * Update map with the prototype dataset
-   */
-  async updateLiveData() {
-    try {
-      // Load the fixed illustrative values
-      const [lmpData, constraintData, loadData] = await Promise.all([
-        this.caisoData.getLMPData(),
-        this.caisoData.getConstraintData(),
-        this.caisoData.getSystemLoadData()
-      ]);
-
-      // Update LMP visualization
-      this.updateLMPVisualization(lmpData);
-      
-      // Update statistics display
-      this.updateStats(lmpData, constraintData, loadData);
-      
-      document.getElementById('last-data-update').textContent = 'Illustrative sample';
-
-    } catch (error) {
-      console.error('Error updating prototype data:', error);
-    }
-  }
-
-  /**
-   * Update LMP price visualization
-   */
-  updateLMPVisualization(lmpData) {
-    // Remove existing LMP overlay
-    if (this.layers.lmpOverlay) {
-      this.map.removeLayer(this.layers.lmpOverlay);
-    }
-
-    // Process LMP data
-    const processedData = this.caisoData.processLMPForVisualization(lmpData);
-    
-    this.layers.lmpOverlay = L.layerGroup();
-
-    // Add price indicators
-    processedData.forEach(item => {
-      // Place by known PNODE coordinates; fallback to random if unknown
-      const coords = this.resolveNodeCoords(item.node);
-      const lat = coords[0];
-      const lng = coords[1];
-
-      const circle = L.circleMarker([lat, lng], {
-        radius: 6 + (item.intensity * 10),
-        fillColor: item.color,
-        color: '#333',
-        weight: 1,
-        opacity: 0.8,
-        fillOpacity: 0.6,
-        className: 'lmp-indicator pulsing'
-      });
-
-      circle.bindPopup(`
-        <div class="lmp-popup">
-          <h4>Node: ${item.node}</h4>
-          <p>Price: $${item.price.toFixed(2)}/MWh</p>
-        </div>
-      `);
-
-      this.layers.lmpOverlay.addLayer(circle);
-    });
-
-    this.layers.lmpOverlay.addTo(this.map);
-  }
-
-  /**
-   * Resolve approximate coordinates for a given node name
-   */
-  resolveNodeCoords(node) {
-    if (!node) {
-      return [32.5 + Math.random() * 9.5, -124.4 + Math.random() * 10.3];
-    }
-    const key = String(node).trim().toUpperCase();
-    if (PNODE_COORDS[key]) return PNODE_COORDS[key];
-    // Try to map zones by prefix
-    if (key.startsWith('NP15')) return PNODE_COORDS['NP15_EHV-APND'];
-    if (key.startsWith('SP15')) return PNODE_COORDS['SP15_EHV-APND'];
-    if (key.startsWith('ZP26')) return PNODE_COORDS['ZP26_7_N001'];
-    if (key.includes('DLAP_PGE')) return PNODE_COORDS['DLAP_PGE-APND'];
-    if (key.includes('DLAP_SCE')) return PNODE_COORDS['DLAP_SCE-APND'];
-    if (key.includes('DLAP_SDGE')) return PNODE_COORDS['DLAP_SDGE-APND'];
-    // Fallback random within CA bounds
-    return [32.5 + Math.random() * 9.5, -124.4 + Math.random() * 10.3];
-  }
-
-  /**
-   * Update statistics display
-   */
-  updateStats(lmpData, constraintData, loadData) {
-    // Calculate average price
-    if (lmpData && lmpData.data && lmpData.data.length > 0) {
-      const avgPrice = lmpData.data.reduce((sum, item) => 
-        sum + parseFloat(item.lmp_price || 0), 0) / lmpData.data.length;
-      document.getElementById('avg-price').textContent = `$${avgPrice.toFixed(2)}`;
-    }
-
-    // Display system load
-    if (loadData && loadData.data && loadData.data.length > 0) {
-      const load = loadData.data[0].actual_load || loadData.data[0].forecast_load;
-      document.getElementById('system-load').textContent = 
-        load ? load.toLocaleString() : '--';
-    }
-
-    // Count active constraints
-    if (constraintData && constraintData.data) {
-      const activeConstraints = constraintData.data.filter(
-        c => c.status === 'BINDING').length;
-      document.getElementById('active-constraints').textContent = activeConstraints;
-    }
-
-    // Update source badge based on data origin
-    this.updateSourceBadge(lmpData);
-  }
-
-  /**
-   * Start automatic data updates
-   */
-  startDataUpdates() {
-    // Load infrastructure first
-    this.loadInfrastructureData();
-    
-    // Load the illustrative market layer immediately
-    this.updateLiveData();
-  }
-
-  /**
-   * Stop automatic updates
-   */
-  stopDataUpdates() {
-    if (this.updateInterval) {
-      clearInterval(this.updateInterval);
-      this.updateInterval = null;
-    }
-  }
-
-  /**
-   * Update the UI badge to show the prototype state
-   */
-  updateSourceBadge(lmpData) {
-    const el = document.getElementById('data-source-status');
-    if (!el) return;
-    const src = (lmpData && lmpData.source) ? String(lmpData.source) : '';
-    const isLive = src.toLowerCase().includes('caiso') && !src.toLowerCase().includes('mock');
-    const isPrototype = src.toLowerCase().includes('prototype');
-    el.textContent = isLive ? 'Live' : isPrototype ? 'Prototype' : 'Unavailable';
-    el.classList.toggle('live', isLive);
-    el.classList.toggle('prototype', isPrototype);
-    el.classList.toggle('mock', !isLive && !isPrototype);
-
-    const titleEl = document.getElementById('data-title');
-    if (titleEl) {
-      titleEl.textContent = isLive ? 'Live Grid Data' : isPrototype ? 'Map Prototype' : 'Data Unavailable';
-    }
-  }
-
-  /**
-   * Calculate distance between two points in kilometers
-   */
-  calculateDistance(point1, point2) {
-    const R = 6371; // Earth's radius in km
-    const dLat = (point2.lat - point1.lat) * Math.PI / 180;
-    const dLng = (point2.lng - point1.lng) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(point1.lat * Math.PI / 180) * Math.cos(point2.lat * Math.PI / 180) *
-              Math.sin(dLng/2) * Math.sin(dLng/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-  }
-
-  /**
-   * Destroy the map and clean up
-   */
-  destroy() {
-    this.stopDataUpdates();
-    if (this.map) {
-      this.map.remove();
-    }
+async function fetchJson(url, timeoutMs = 15_000) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(`${url}?_=${Date.now()}`, { cache: "no-store", signal: controller.signal });
+    if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+    return response.json();
+  } finally {
+    window.clearTimeout(timeout);
   }
 }
 
-// Export for global use
-window.GridMap = GridMap;
+class CaliforniaGridExplorer {
+  constructor(root) {
+    this.root = root;
+    this.map = null;
+    this.market = null;
+    this.layers = {};
+    this.hubMarkers = new Map();
+    this.init();
+  }
+
+  field(name) {
+    return this.root.querySelector(`[data-grid-field="${name}"]`);
+  }
+
+  setField(name, value) {
+    const element = this.field(name);
+    if (element) element.textContent = value;
+  }
+
+  async init() {
+    if (typeof window.L === "undefined") {
+      this.showUnavailable("Map library unavailable");
+      return;
+    }
+    this.createMap();
+    this.bindControls();
+
+    const infrastructure = Promise.all([
+      fetchJson(this.root.dataset.linesEndpoint, 25_000),
+      fetchJson(this.root.dataset.substationsEndpoint, 25_000),
+    ]).then(([lines, substations]) => this.renderInfrastructure(lines, substations));
+
+    const market = fetchJson(this.root.dataset.marketEndpoint)
+      .then((snapshot) => this.renderMarket(validateGridMarketSnapshot(snapshot)))
+      .catch((error) => {
+        console.error("Grid market snapshot unavailable", error);
+        this.showUnavailable("Market snapshot unavailable");
+      });
+
+    const desk = fetchJson(this.root.dataset.deskEndpoint)
+      .then((snapshot) => this.renderDesk(snapshot))
+      .catch((error) => console.error("Electricity Desk summary unavailable", error));
+
+    try {
+      await Promise.all([infrastructure, market, desk]);
+      this.root.dataset.status = "ready";
+      this.root.querySelector(".grid-loading")?.remove();
+    } catch (error) {
+      console.error("Grid infrastructure unavailable", error);
+      this.showUnavailable("Public infrastructure unavailable");
+    }
+  }
+
+  createMap() {
+    this.map = L.map("grid-map", {
+      center: [36.8, -119.5],
+      zoom: 6,
+      minZoom: 5,
+      maxZoom: 11,
+      zoomControl: false,
+      preferCanvas: true,
+    });
+    L.control.zoom({ position: "bottomright" }).addTo(this.map);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 11,
+      attribution: "&copy; OpenStreetMap contributors",
+      className: "grid-base-tiles",
+    }).addTo(this.map);
+    this.map.fitBounds([[32.45, -124.5], [42.05, -114.0]], { padding: [18, 18] });
+  }
+
+  bindControls() {
+    this.root.querySelectorAll("[data-grid-layer]").forEach((input) => {
+      input.addEventListener("change", () => {
+        const layer = this.layers[input.dataset.gridLayer];
+        if (!layer) return;
+        if (input.checked) layer.addTo(this.map);
+        else this.map.removeLayer(layer);
+      });
+    });
+    this.root.querySelectorAll("[data-grid-hub]").forEach((button) => {
+      button.addEventListener("click", () => this.selectHub(button.dataset.gridHub, true));
+    });
+  }
+
+  renderInfrastructure(lines, substations) {
+    if (lines?.type !== "FeatureCollection" || substations?.type !== "FeatureCollection") {
+      throw new TypeError("CEC infrastructure data is not valid GeoJSON");
+    }
+    const linePopup = (feature) => {
+      const props = feature.properties ?? {};
+      const title = props.TLine_Name?.trim() || props.Name?.trim() || "Transmission segment";
+      return `<div class="grid-popup"><strong>${escapeHtml(title)}</strong><dl><div><dt>Voltage</dt><dd>${escapeHtml(props.kV)} kV</dd></div><div><dt>Owner</dt><dd>${escapeHtml(props.Owner || "Not listed")}</dd></div><div><dt>Circuit</dt><dd>${escapeHtml(props.Circuit || "Not listed")}</dd></div></dl><small>Approximate CEC public geometry</small></div>`;
+    };
+    const lineOptions = (feature) => {
+      const voltage = Number(feature.properties?.kV_Sort) || 0;
+      return voltage >= 345
+        ? { color: "#9b4b3d", weight: 2.6, opacity: 0.72 }
+        : { color: "#456b79", weight: 1.35, opacity: 0.48 };
+    };
+    const lowerLines = { ...lines, features: lines.features.filter((feature) => Number(feature.properties?.kV_Sort) < 345) };
+    const higherLines = { ...lines, features: lines.features.filter((feature) => Number(feature.properties?.kV_Sort) >= 345) };
+    this.layers["lower-voltage"] = L.geoJSON(lowerLines, {
+      style: lineOptions,
+      onEachFeature: (feature, layer) => layer.bindPopup(linePopup(feature)),
+    }).addTo(this.map);
+    this.layers["higher-voltage"] = L.geoJSON(higherLines, {
+      style: lineOptions,
+      onEachFeature: (feature, layer) => layer.bindPopup(linePopup(feature)),
+    }).addTo(this.map);
+
+    this.layers.substations = L.geoJSON(substations, {
+      pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+        radius: Number(feature.properties?.Max_Voltag) >= 500 ? 4.2 : 3,
+        color: "#173f78",
+        weight: 1,
+        fillColor: "#f3eee5",
+        fillOpacity: 0.9,
+      }),
+      onEachFeature: (feature, layer) => {
+        const props = feature.properties ?? {};
+        layer.bindPopup(`<div class="grid-popup"><strong>${escapeHtml(props.Name || "Substation")}</strong><dl><div><dt>Voltage</dt><dd>${escapeHtml(props.Max_Voltag)} kV</dd></div><div><dt>Owner</dt><dd>${escapeHtml(props.Owner || "Not listed")}</dd></div><div><dt>Place</dt><dd>${escapeHtml([props.CITY, props.COUNTY].filter(Boolean).join(", ") || "Not listed")}</dd></div></dl><small>CEC / HIFLD public data</small></div>`);
+      },
+    });
+  }
+
+  renderMarket(snapshot) {
+    this.market = snapshot;
+    this.layers.prices = L.layerGroup().addTo(this.map);
+    snapshot.hubs.forEach((hub) => {
+      const color = priceColor(hub.lmp);
+      const marker = L.circleMarker(hub.coordinates, {
+        radius: 14,
+        color: "#f3eee5",
+        weight: 3,
+        fillColor: color,
+        fillOpacity: 0.96,
+        className: "grid-price-marker",
+      });
+      marker.bindTooltip(`<strong>${escapeHtml(hub.id)}</strong> ${escapeHtml(money(hub.lmp))}`, {
+        permanent: true,
+        direction: "right",
+        offset: [13, 0],
+        className: "grid-price-label",
+      });
+      marker.on("click", () => this.selectHub(hub.id));
+      marker.addTo(this.layers.prices);
+      this.hubMarkers.set(hub.id, marker);
+      const priceElement = this.root.querySelector(`[data-hub-price="${hub.id}"]`);
+      if (priceElement) priceElement.textContent = money(hub.lmp);
+    });
+
+    const spread = snapshot.insight.northSouthSpread;
+    this.setField("spread", `${spread < 0 ? "−" : ""}$${Math.abs(spread).toFixed(2)}/MWh`);
+    this.setField("spread-direction", spread === 0 ? "SP15 level with NP15" : `SP15 ${spread > 0 ? "above" : "below"} NP15`);
+    const current = this.marketAgeMinutes(snapshot) <= 45;
+    this.setField("interval", `Updated ${pacificTime(snapshot.sourceUpdatedAt)}`);
+    this.field("interval").title = snapshot.interval.label;
+    this.setField("status", current ? "Current" : "Delayed");
+    this.setField("insight-title", Math.abs(spread) < 2 ? "California is broadly aligned" : "Prices are separating across California");
+    this.setField("insight-summary", snapshot.insight.summary);
+    this.setField("insight-driver", snapshot.insight.driver);
+    this.root.dataset.marketStatus = current ? "live" : "delayed";
+  }
+
+  marketAgeMinutes(snapshot) {
+    return Math.max(0, (Date.now() - Date.parse(snapshot.sourceUpdatedAt)) / 60_000);
+  }
+
+  renderDesk(snapshot) {
+    this.setField("demand", megawatts(snapshot?.demand?.currentMw));
+    const trend = snapshot?.demand?.changeFromHourAgoMw;
+    this.setField("demand-detail", Number.isFinite(trend)
+      ? `${new Intl.NumberFormat("en-US").format(Math.abs(trend))} MW ${trend >= 0 ? "above" : "below"} one hour ago`
+      : "Hourly comparison unavailable");
+    const battery = snapshot?.supply?.batteryMw;
+    this.setField("battery", megawatts(battery, true));
+    this.setField("battery-detail", snapshot?.supply?.batteryState === "charging"
+      ? "charging from the grid"
+      : snapshot?.supply?.batteryState === "discharging"
+        ? "supplying the grid"
+        : "nearly balanced");
+  }
+
+  selectHub(id, pan = false) {
+    const hub = this.market?.hubs.find((item) => item.id === id);
+    if (!hub) return;
+    this.root.querySelectorAll("[data-grid-hub]").forEach((button) => {
+      button.classList.toggle("is-selected", button.dataset.gridHub === id);
+      button.setAttribute("aria-pressed", button.dataset.gridHub === id ? "true" : "false");
+    });
+    const detail = this.root.querySelector("[data-grid-detail]");
+    if (detail) detail.hidden = false;
+    this.root.querySelector('[data-grid-detail="name"]').textContent = `${hub.id} · ${hub.region}`;
+    this.root.querySelector('[data-grid-detail="price"]').textContent = money(hub.lmp);
+    ["energy", "congestion", "loss"].forEach((key) => {
+      this.root.querySelector(`[data-grid-detail="${key}"]`).textContent = money(hub.components[key]);
+    });
+    if (pan) {
+      this.map.flyTo(hub.coordinates, Math.max(this.map.getZoom(), 7), { duration: 0.65 });
+      this.hubMarkers.get(id)?.openTooltip();
+    }
+  }
+
+  showUnavailable(message) {
+    this.root.dataset.marketStatus = "unavailable";
+    this.setField("status", message);
+  }
+}
+
+if (explorer) new CaliforniaGridExplorer(explorer);

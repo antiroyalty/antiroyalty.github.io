@@ -18,8 +18,8 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-      - name: Test Electricity Desk data pipeline
-        run: node --test scripts/electricity-desk.test.mjs
+      - name: Test data pipelines
+        run: npm test
       - name: Build site
         run: bundle exec jekyll build --trace
         env:
