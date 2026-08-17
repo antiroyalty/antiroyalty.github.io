@@ -1,0 +1,1661 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Shower Design Preview</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Shower Design Preview" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Shower Design Preview&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  display: flex;
+  height: 6px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;dimensioned-shower&quot;&gt;
+  &lt;h3&gt;Dimensioned shower view&lt;/h3&gt;
+  &lt;div class=&quot;viz-controls&quot; aria-label=&quot;Camera views&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-view=&quot;overall&quot; aria-pressed=&quot;true&quot;&gt;Overall&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;niche&quot; aria-pressed=&quot;false&quot;&gt;Niche close-up&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;curb&quot; aria-pressed=&quot;false&quot;&gt;Curb close-up&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;trim&quot; aria-pressed=&quot;false&quot;&gt;Wall trim&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;shower-curb-stage&quot;&gt;
+      &lt;canvas aria-label=&quot;Interactive three-dimensional shower rendering measuring 78 inches long by 44 inches deep with an 11-foot ceiling, a 3-inch curb, and a 28-inch-wide by 12-inch-high by 3.5-inch-deep prefabricated Schluter niche&quot;&gt;Interactive dimensioned 3D shower rendering.&lt;/canvas&gt;
+      &lt;div class=&quot;shower-dimension-layer&quot; aria-hidden=&quot;true&quot;&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;length&quot;&gt;78″ length&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;depth&quot;&gt;44″ depth&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;height&quot;&gt;11′ ceiling&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;curb&quot;&gt;3″ curb&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-width&quot;&gt;28″ niche width&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-height&quot;&gt;12″ niche height&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-depth&quot;&gt;3½″ niche depth&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;viz-row text-small text-muted&quot; aria-label=&quot;Rendering details&quot;&gt;
+    &lt;span&gt;78 × 44 in shower&lt;/span&gt;
+    &lt;span&gt;3 in finished curb&lt;/span&gt;
+    &lt;span&gt;28 × 12 × 3½ in Schluter niche&lt;/span&gt;
+    &lt;span&gt;Vertical 2 × 4 in curb faces · short-edge bullnose&lt;/span&gt;
+    &lt;span&gt;Drag to orbit · scroll to zoom&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  #dimensioned-shower .shower-curb-stage {
+    position: relative;
+    width: 100%;
+    height: clamp(420px, 65vw, 600px);
+    overflow: hidden;
+  }
+
+  #dimensioned-shower canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+  }
+
+  #dimensioned-shower .shower-dimension-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #dimensioned-shower .shower-dimension-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    white-space: nowrap;
+    will-change: transform;
+  }
+
+  #dimensioned-shower .viz-controls {
+    margin-bottom: 12px;
+  }
+
+  #dimensioned-shower .viz-row {
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 480px) {
+    #dimensioned-shower .shower-curb-stage {
+      height: 440px;
+    }
+  }
+&lt;/style&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  import * as THREE from &#x27;https://esm.sh/three@0.160.0&#x27;;
+  import { OrbitControls } from &#x27;https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js&#x27;;
+
+  const root = document.getElementById(&#x27;dimensioned-shower&#x27;);
+  const stage = root.querySelector(&#x27;.shower-curb-stage&#x27;);
+  const canvas = root.querySelector(&#x27;canvas&#x27;);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(1);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 700);
+  const controls = new OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.07;
+  controls.minDistance = 34;
+  controls.maxDistance = 250;
+  controls.maxPolarAngle = Math.PI * 0.495;
+
+  scene.add(new THREE.HemisphereLight(0xfff8e9, 0x66706a, 2.35));
+  const fill = new THREE.DirectionalLight(0xfff3df, 2.05);
+  fill.position.set(-70, 115, -85);
+  scene.add(fill);
+  const wash = new THREE.DirectionalLight(0xdce9e2, 1.15);
+  wash.position.set(80, 70, 30);
+  scene.add(wash);
+
+  const cypressBase = new THREE.Color(&#x27;#333728&#x27;);
+  const creamBase = new THREE.Color(&#x27;#d0cbbf&#x27;);
+  const groutGreen = new THREE.MeshStandardMaterial({ color: &#x27;#989889&#x27;, roughness: 0.94 });
+  const groutCream = new THREE.MeshStandardMaterial({ color: &#x27;#b9b5aa&#x27;, roughness: 0.95 });
+  const chrome = new THREE.MeshStandardMaterial({ color: &#x27;#d6d8d5&#x27;, metalness: 0.9, roughness: 0.18 });
+  const recessShadow = new THREE.MeshStandardMaterial({ color: &#x27;#171a16&#x27;, roughness: 1 });
+  const substrate = new THREE.MeshStandardMaterial({ color: &#x27;#6f7169&#x27;, roughness: 1 });
+  const roomFloorMat = new THREE.MeshStandardMaterial({ color: &#x27;#c4bba9&#x27;, roughness: 0.92 });
+
+  function variationMaterials(base, count, roughness, metalness = 0) {
+    const mats = [];
+    for (let i = 0; i &lt; count; i += 1) {
+      const color = base.clone();
+      const light = ((i * 37) % 13 - 6) * 0.0014;
+      const sat = ((i * 19) % 7 - 3) * 0.0015;
+      color.offsetHSL(0, sat, light);
+      mats.push(new THREE.MeshStandardMaterial({ color, roughness, metalness }));
+    }
+    return mats;
+  }
+
+  const greenMats = variationMaterials(cypressBase, 17, 0.46);
+  const creamMats = variationMaterials(creamBase, 13, 0.72);
+  let tileIndex = 0;
+
+  function tileBox(width, height, depth, x, y, z, material, parent = scene) {
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+    mesh.position.set(x, y, z);
+    parent.add(mesh);
+    return mesh;
+  }
+
+  function greenMat() {
+    const mat = greenMats[tileIndex % greenMats.length];
+    tileIndex += 1;
+    return mat;
+  }
+
+  function creamMat() {
+    const mat = creamMats[tileIndex % creamMats.length];
+    tileIndex += 1;
+    return mat;
+  }
+
+  const shower = new THREE.Group();
+  scene.add(shower);
+
+  // Exterior bathroom floor.
+  tileBox(96, 0.35, 66, 0, -0.25, -33, roomFloorMat, shower);
+
+  // Shower floor: 2 x 4 tile, straight-laid with the 4-inch direction running into the shower.
+  tileBox(78.4, 0.18, 44.4, 0, -0.05, 22, groutGreen, shower);
+  const floorPeriodX = 2.1875;
+  const floorPeriodZ = 4.1875;
+  for (let x = -38.9; x &lt; 39; x += floorPeriodX) {
+    for (let z = 0.12; z &lt; 44; z += floorPeriodZ) {
+      const w = Math.min(2, 39 - x);
+      const d = Math.min(4, 44 - z);
+      if (w &gt; 0.2 &amp;&amp; d &gt; 0.2) tileBox(w, 0.15, d, x + w / 2, 0.12, z + d / 2, greenMat(), shower);
+    }
+  }
+
+  // Wall backing and cream grout planes. The back-wall layers are split around
+  // the niche so the opening is genuinely recessed rather than surface-mounted.
+  const nicheOpening = { left: -14.32, right: 14.32, bottom: 47.68, top: 60.32 };
+
+  function backWallSurround(xMin, xMax, yMin, yMax, z, depth, material) {
+    const leftWidth = nicheOpening.left - xMin;
+    const rightWidth = xMax - nicheOpening.right;
+    const centerWidth = nicheOpening.right - nicheOpening.left;
+    const bottomHeight = nicheOpening.bottom - yMin;
+    const topHeight = yMax - nicheOpening.top;
+    tileBox(leftWidth, yMax - yMin, depth, xMin + leftWidth / 2, (yMin + yMax) / 2, z, material, shower);
+    tileBox(rightWidth, yMax - yMin, depth, nicheOpening.right + rightWidth / 2, (yMin + yMax) / 2, z, material, shower);
+    tileBox(centerWidth, bottomHeight, depth, 0, yMin + bottomHeight / 2, z, material, shower);
+    tileBox(centerWidth, topHeight, depth, 0, nicheOpening.top + topHeight / 2, z, material, shower);
+  }
+
+  backWallSurround(-39.6, 39.6, 0, 132, 44.45, 0.65, substrate);
+  tileBox(0.65, 132, 44.9, -39.45, 66, 22, substrate, shower);
+  tileBox(0.65, 132, 44.9, 39.45, 66, 22, substrate, shower);
+  backWallSurround(-39.1, 39.1, 8.4, 132, 43.92, 0.16, groutCream);
+  tileBox(0.16, 123.6, 44, -38.92, 70.2, 22, groutCream, shower);
+  tileBox(0.16, 123.6, 44, 38.92, 70.2, 22, groutCream, shower);
+
+  // Alo Dust 16 x 32 wall tile, horizontal straight lay.
+  function addBackWallTile(x1, y1, x2, y2, material) {
+    const width = x2 - x1;
+    const height = y2 - y1;
+    if (width &gt; 0.2 &amp;&amp; height &gt; 0.2) {
+      tileBox(width, height, 0.16, x1 + width / 2, y1 + height / 2, 43.78, material, shower);
+    }
+  }
+
+  function addBackWallTileAroundNiche(x1, y1, x2, y2, material) {
+    const intersects = x2 &gt; nicheOpening.left &amp;&amp; x1 &lt; nicheOpening.right
+      &amp;&amp; y2 &gt; nicheOpening.bottom &amp;&amp; y1 &lt; nicheOpening.top;
+    if (!intersects) {
+      addBackWallTile(x1, y1, x2, y2, material);
+      return;
+    }
+
+    const middleLeft = Math.max(x1, nicheOpening.left);
+    const middleRight = Math.min(x2, nicheOpening.right);
+    if (x1 &lt; nicheOpening.left) addBackWallTile(x1, y1, Math.min(x2, nicheOpening.left), y2, material);
+    if (x2 &gt; nicheOpening.right) addBackWallTile(Math.max(x1, nicheOpening.right), y1, x2, y2, material);
+    if (y1 &lt; nicheOpening.bottom) addBackWallTile(middleLeft, y1, middleRight, Math.min(y2, nicheOpening.bottom), material);
+    if (y2 &gt; nicheOpening.top) addBackWallTile(middleLeft, Math.max(y1, nicheOpening.top), middleRight, y2, material);
+  }
+
+  const wallY0 = 8.25;
+  for (let y = wallY0; y &lt; 132; y += 16.25) {
+    for (let x = -38.85; x &lt; 39; x += 32.25) {
+      const w = Math.min(32, 39 - x);
+      const h = Math.min(16, 132 - y);
+      if (w &gt; 0.5 &amp;&amp; h &gt; 0.5) addBackWallTileAroundNiche(x, y, x + w, y + h, creamMat());
+    }
+    for (const side of [-1, 1]) {
+      for (let z = 0.1; z &lt; 44; z += 32.25) {
+        const d = Math.min(32, 44 - z);
+        const h = Math.min(16, 132 - y);
+        if (d &gt; 0.5 &amp;&amp; h &gt; 0.5) tileBox(0.16, h, d, side * 38.78, y + h / 2, z + d / 2, creamMat(), shower);
+      }
+    }
+  }
+
+  // Eight-inch Cypress wall base, retaining the vertical 2 x 4 straight lay.
+  tileBox(78.2, 8.2, 0.2, 0, 4.1, 43.7, groutGreen, shower);
+  for (let x = -38.85; x &lt; 39; x += 2.1875) {
+    for (let y = 0.05; y &lt; 8; y += 4.1875) {
+      const w = Math.min(2, 39 - x);
+      const h = Math.min(4, 8 - y);
+      if (w &gt; 0.2 &amp;&amp; h &gt; 0.2) tileBox(w, h, 0.16, x + w / 2, y + h / 2, 43.56, greenMat(), shower);
+    }
+  }
+  for (const side of [-1, 1]) {
+    tileBox(0.2, 8.2, 44, side * 38.7, 4.1, 22, groutGreen, shower);
+    for (let z = 0.05; z &lt; 44; z += 2.1875) {
+      for (let y = 0.05; y &lt; 8; y += 4.1875) {
+        const d = Math.min(2, 44 - z);
+        const h = Math.min(4, 8 - y);
+        if (d &gt; 0.2 &amp;&amp; h &gt; 0.2) tileBox(0.16, h, d, side * 38.56, y + h / 2, z + d / 2, greenMat(), shower);
+      }
+    }
+  }
+
+  // Niche: the 28 x 12 x 3-1/2-inch prefabricated Schluter proportions. The
+  // finished wall face is z=43.70 and the niche back is z=47.20.
+  const niche = new THREE.Group();
+  shower.add(niche);
+  tileBox(28.5, 12.5, 0.24, 0, 54, 47.52, recessShadow, niche);
+  tileBox(28.2, 12.2, 0.16, 0, 54, 47.36, groutGreen, niche);
+  for (let x = -13.65; x &lt; 13.7; x += 2.1875) {
+    for (let y = 48.25; y &lt; 59.8; y += 4.1875) {
+      const w = Math.min(2, 13.75 - x);
+      const h = Math.min(4, 59.75 - y);
+      if (w &gt; 0.2 &amp;&amp; h &gt; 0.2) tileBox(w, h, 0.15, x + w / 2, y + h / 2, 47.26, greenMat(), niche);
+    }
+  }
+
+  // Grout beds for the four 3-1/2-inch-deep tiled returns.
+  tileBox(28.2, 0.14, 3.5, 0, 47.92, 45.45, groutGreen, niche);
+  tileBox(28.2, 0.14, 3.5, 0, 60.08, 45.45, groutGreen, niche);
+  tileBox(0.14, 12, 3.5, -14.08, 54, 45.45, groutGreen, niche);
+  tileBox(0.14, 12, 3.5, 14.08, 54, 45.45, groutGreen, niche);
+
+  // Bottom and top returns: 2 x 4-inch Cypress tiles laid into the recess.
+  for (let x = -13.9; x &lt; 14; x += 2.1875) {
+    for (let z = 43.76; z &lt; 47.2; z += 4.1875) {
+      const w = Math.min(2, 14 - x);
+      const d = Math.min(4, 47.2 - z);
+      if (w &lt;= 0.2 || d &lt;= 0.2) continue;
+      tileBox(w, 0.12, d, x + w / 2, 47.98, z + d / 2, greenMat(), niche);
+      tileBox(w, 0.12, d, x + w / 2, 60.02, z + d / 2, greenMat(), niche);
+    }
+  }
+
+  // Side returns preserve the vertical straight-lay rhythm.
+  for (const side of [-1, 1]) {
+    for (let z = 43.76; z &lt; 47.2; z += 2.1875) {
+      for (let y = 48.1; y &lt; 60; y += 4.1875) {
+        const d = Math.min(2, 47.2 - z);
+        const h = Math.min(4, 60 - y);
+        if (d &gt; 0.2 &amp;&amp; h &gt; 0.2) {
+          tileBox(0.12, h, d, side * 14.02, y + h / 2, z + d / 2, greenMat(), niche);
+        }
+      }
+    }
+  }
+
+  // Rounded Cypress bullnose lip at the finished wall plane.
+  for (const y of [47.82, 60.18]) {
+    const edge = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 28.3, 16), greenMat());
+    edge.rotation.z = Math.PI / 2;
+    edge.position.set(0, y, 43.56);
+    niche.add(edge);
+  }
+  for (const x of [-14.18, 14.18]) {
+    const edge = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 12.1, 16), greenMat());
+    edge.position.set(x, 54, 43.56);
+    niche.add(edge);
+  }
+
+  // Three-inch finished curb. Both faces use one vertical 2 x 4 course,
+  // cut at the bottom so the factory short-edge bullnose remains at the top.
+  tileBox(78.4, 3, 5.1, 0, 1.5, -2.55, groutGreen, shower);
+  const curbPeriod = 2.1875;
+  for (const zFace of [-5.16, 0.06]) {
+    for (let x = -38.85; x &lt; 39; x += curbPeriod) {
+      const w = Math.min(2, 39 - x);
+      if (w &lt;= 0.3) continue;
+      tileBox(w, 3, 0.16, x + w / 2, 1.5, zFace, greenMat(), shower);
+      const bullnose = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, w, 12), greenMat());
+      bullnose.rotation.z = Math.PI / 2;
+      bullnose.position.set(x + w / 2, 3.02, zFace);
+      shower.add(bullnose);
+    }
+  }
+
+  // Curb cap follows the same two-inch rhythm and is pitched subtly inward.
+  for (let x = -38.85; x &lt; 39; x += curbPeriod) {
+    const w = Math.min(2, 39 - x);
+    if (w &lt;= 0.3) continue;
+    const outerCap = tileBox(w, 0.14, 4, x + w / 2, 3.075, -3.05, greenMat(), shower);
+    const innerCap = tileBox(w, 0.14, 0.85, x + w / 2, 3.015, -0.52, greenMat(), shower);
+    outerCap.rotation.x = -0.012;
+    innerCap.rotation.x = -0.012;
+  }
+
+  // Rain head and controls; lights do not cast shadows.
+  const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 4.2, 20), chrome);
+  pipe.position.set(0, 129.6, 21.5);
+  shower.add(pipe);
+  const rainHead = new THREE.Mesh(new THREE.CylinderGeometry(6.5, 6.5, 0.5, 48), chrome);
+  rainHead.position.set(0, 127.3, 21.5);
+  shower.add(rainHead);
+
+  const controlPlate = new THREE.Mesh(new THREE.CylinderGeometry(4.1, 4.1, 0.35, 40), chrome);
+  controlPlate.rotation.z = Math.PI / 2;
+  controlPlate.position.set(-38.35, 48, 20);
+  shower.add(controlPlate);
+  const controlHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 3.5, 24), chrome);
+  controlHandle.rotation.z = Math.PI / 2;
+  controlHandle.position.set(-37.1, 48, 20);
+  shower.add(controlHandle);
+
+  // Dimension lines remain visible over the model as the camera orbits.
+  const dimensionMaterial = new THREE.LineBasicMaterial({
+    color: &#x27;#b86b32&#x27;,
+    transparent: true,
+    opacity: 0.96,
+    depthTest: false
+  });
+  const dimensionVertices = [];
+
+  function dimensionSegment(a, b) {
+    dimensionVertices.push(...a, ...b);
+  }
+
+  // 78-inch opening length.
+  dimensionSegment([-39, 4, -10.5], [39, 4, -10.5]);
+  dimensionSegment([-39, 4, -5.3], [-39, 4, -10.5]);
+  dimensionSegment([39, 4, -5.3], [39, 4, -10.5]);
+  dimensionSegment([-39, 4, -12], [-39, 4, -9]);
+  dimensionSegment([39, 4, -12], [39, 4, -9]);
+
+  // 44-inch floor depth.
+  dimensionSegment([45, 4, 0], [45, 4, 44]);
+  dimensionSegment([39.3, 4, 0], [45, 4, 0]);
+  dimensionSegment([39.3, 4, 44], [45, 4, 44]);
+  dimensionSegment([43.5, 4, 0], [46.5, 4, 0]);
+  dimensionSegment([43.5, 4, 44], [46.5, 4, 44]);
+
+  // 11-foot ceiling height.
+  dimensionSegment([-46, 0, 0], [-46, 132, 0]);
+  dimensionSegment([-39.3, 0, 0], [-46, 0, 0]);
+  dimensionSegment([-39.3, 132, 0], [-46, 132, 0]);
+  dimensionSegment([-47.5, 0, 0], [-44.5, 0, 0]);
+  dimensionSegment([-47.5, 132, 0], [-44.5, 132, 0]);
+
+  // Three-inch finished curb height.
+  dimensionSegment([42, 0, -5.4], [42, 3, -5.4]);
+  dimensionSegment([39, 0, -5.4], [42.8, 0, -5.4]);
+  dimensionSegment([39, 3, -5.4], [42.8, 3, -5.4]);
+
+  // Niche width, height, and depth.
+  dimensionSegment([-14, 63, 42.5], [14, 63, 42.5]);
+  dimensionSegment([-14, 60.2, 42.5], [-14, 63.8, 42.5]);
+  dimensionSegment([14, 60.2, 42.5], [14, 63.8, 42.5]);
+  dimensionSegment([17, 48, 42.5], [17, 60, 42.5]);
+  dimensionSegment([14.2, 48, 42.5], [18, 48, 42.5]);
+  dimensionSegment([14.2, 60, 42.5], [18, 60, 42.5]);
+  dimensionSegment([18.5, 46, 43.7], [18.5, 46, 47.2]);
+  dimensionSegment([18.5, 46, 43.7], [18.5, 48, 43.7]);
+  dimensionSegment([18.5, 46, 47.2], [18.5, 48, 47.2]);
+
+  const dimensionGeometry = new THREE.BufferGeometry();
+  dimensionGeometry.setAttribute(&#x27;position&#x27;, new THREE.Float32BufferAttribute(dimensionVertices, 3));
+  const dimensionLines = new THREE.LineSegments(dimensionGeometry, dimensionMaterial);
+  dimensionLines.renderOrder = 1000;
+  scene.add(dimensionLines);
+
+  function syncDimensionColor() {
+    const themeColor = getComputedStyle(root).getPropertyValue(&#x27;--orange&#x27;).trim();
+    if (!themeColor) return;
+    const paired = themeColor.match(/light-dark\((rgb\([^)]+\)),\s*(rgb\([^)]+\))\)/);
+    const resolved = paired
+      ? paired[window.matchMedia(&#x27;(prefers-color-scheme: dark)&#x27;).matches ? 2 : 1]
+      : themeColor;
+    dimensionMaterial.color.set(resolved);
+  }
+  syncDimensionColor();
+  const themeObserver = new MutationObserver(syncDimensionColor);
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: [&#x27;class&#x27;, &#x27;style&#x27;, &#x27;data-theme&#x27;]
+  });
+  window.matchMedia(&#x27;(prefers-color-scheme: dark)&#x27;).addEventListener(&#x27;change&#x27;, syncDimensionColor);
+
+  let activeView = &#x27;overall&#x27;;
+  const dimensionLabels = [
+    { element: root.querySelector(&#x27;[data-dimension=&quot;length&quot;]&#x27;), position: new THREE.Vector3(0, 4, -13), views: [&#x27;overall&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;depth&quot;]&#x27;), position: new THREE.Vector3(49, 5, 22), views: [&#x27;overall&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;height&quot;]&#x27;), position: new THREE.Vector3(-50, 69, 0), views: [&#x27;overall&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;curb&quot;]&#x27;), position: new THREE.Vector3(45, 1.5, -5.4), views: [&#x27;overall&#x27;, &#x27;curb&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-width&quot;]&#x27;), position: new THREE.Vector3(0, 66, 42.2), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-height&quot;]&#x27;), position: new THREE.Vector3(20.5, 54, 42.2), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-depth&quot;]&#x27;), position: new THREE.Vector3(20.5, 45.5, 45.45), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] }
+  ];
+
+  function updateDimensionLabels() {
+    const width = stage.clientWidth;
+    const height = stage.clientHeight;
+    dimensionLabels.forEach(({ element, position, views }) =&gt; {
+      const projected = position.clone().project(camera);
+      const visible = views.includes(activeView) &amp;&amp; projected.z &gt; -1 &amp;&amp; projected.z &lt; 1;
+      element.style.opacity = visible ? &#x27;1&#x27; : &#x27;0&#x27;;
+      if (!visible) return;
+      const x = Math.max(48, Math.min(width - 48, (projected.x * 0.5 + 0.5) * width));
+      const y = Math.max(18, Math.min(height - 18, (-projected.y * 0.5 + 0.5) * height));
+      element.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+    });
+  }
+
+  const viewPresets = {
+    overall: {
+      position: new THREE.Vector3(30, 84, -215),
+      target: new THREE.Vector3(0, 57, 20)
+    },
+    niche: {
+      position: new THREE.Vector3(0, 72.5, -31),
+      target: new THREE.Vector3(0, 54, 45.5)
+    },
+    curb: {
+      position: new THREE.Vector3(24, 18, -80),
+      target: new THREE.Vector3(0, 2.5, -2)
+    },
+    trim: {
+      position: new THREE.Vector3(20, 27, -70),
+      target: new THREE.Vector3(0, 8, 42)
+    }
+  };
+
+  function setView(name) {
+    const preset = viewPresets[name];
+    activeView = name;
+    camera.position.copy(preset.position);
+    controls.target.copy(preset.target);
+    controls.update();
+    root.querySelectorAll(&#x27;[data-view]&#x27;).forEach((button) =&gt; {
+      const active = button.dataset.view === name;
+      button.setAttribute(&#x27;aria-pressed&#x27;, String(active));
+      button.classList.toggle(&#x27;btn-primary&#x27;, active);
+    });
+  }
+
+  root.querySelectorAll(&#x27;[data-view]&#x27;).forEach((button) =&gt; {
+    button.addEventListener(&#x27;click&#x27;, () =&gt; setView(button.dataset.view));
+  });
+
+  function resize() {
+    const width = Math.max(1, stage.clientWidth);
+    const height = Math.max(1, stage.clientHeight);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+
+  const observer = new ResizeObserver(resize);
+  observer.observe(stage);
+  setView(&#x27;overall&#x27;);
+  resize();
+
+  function render() {
+    controls.update();
+    renderer.render(scene, camera);
+    updateDimensionLabels();
+    requestAnimationFrame(render);
+  }
+  render();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
