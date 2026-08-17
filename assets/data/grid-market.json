@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-12T01:58:36.860Z",
-  "sourceUpdatedAt": "2026-08-12T01:56:50.000Z",
+  "generatedAt": "2026-08-17T18:49:38.388Z",
+  "sourceUpdatedAt": "2026-08-17T18:46:51.000Z",
   "interval": {
-    "tradingDate": "2026-08-11",
-    "hourEnding": 20,
-    "fiveMinuteInterval": 1,
-    "label": "2026-08-11 · hour ending 20 · interval 1"
+    "tradingDate": "2026-08-17",
+    "hourEnding": 12,
+    "fiveMinuteInterval": 11,
+    "label": "2026-08-17 · hour ending 12 · interval 11"
   },
   "source": {
     "name": "California ISO OASIS Hub LMP Prices",
@@ -23,11 +23,11 @@
         38.25,
         -121.55
       ],
-      "lmp": 63.60588,
+      "lmp": 33.06278,
       "components": {
-        "energy": 67.26775,
-        "congestion": -0.41283,
-        "loss": -3.24903
+        "energy": 34.75561,
+        "congestion": -1.29314,
+        "loss": -0.39969
       }
     },
     {
@@ -38,11 +38,11 @@
         35.75,
         -119.7
       ],
-      "lmp": 64.07253,
+      "lmp": 23.44067,
       "components": {
-        "energy": 67.26775,
-        "congestion": 0,
-        "loss": -3.19522
+        "energy": 34.75561,
+        "congestion": -9.20528,
+        "loss": -2.10967
       }
     },
     {
@@ -53,17 +53,17 @@
         34.05,
         -117.55
       ],
-      "lmp": 65.01799,
+      "lmp": 22.26686,
       "components": {
-        "energy": 67.26775,
-        "congestion": -0.10392,
-        "loss": -2.14584
+        "energy": 34.75561,
+        "congestion": -10.99426,
+        "loss": -1.49449
       }
     }
   ],
   "insight": {
-    "northSouthSpread": 1.41,
-    "summary": "SP15 is $1.41/MWh higher than NP15. Prices are broadly aligned across the state.",
-    "driver": "The larger component difference is currently transmission losses."
+    "northSouthSpread": -10.8,
+    "summary": "SP15 is $10.80/MWh lower than NP15. The market is showing strong north-south separation.",
+    "driver": "The larger component difference is currently congestion."
   }
 }

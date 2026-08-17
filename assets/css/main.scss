@@ -517,6 +517,29 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
 .post-banner img { display: block; width: 100%; border-radius: 8px; }
 .post-banner figcaption { margin-top: 7px; color: var(--muted); font-size: 0.75rem; }
 
+.post-photo-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 2rem 0;
+}
+
+.post-photo-pair img {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.post-photo-pair figcaption {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 700px) {
+  .post-photo-pair { grid-template-columns: 1fr; }
+}
+
 .button {
   display: inline-flex;
   min-height: 44px;
