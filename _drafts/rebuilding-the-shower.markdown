@@ -47,6 +47,12 @@ During demolition, I want us to document:
 - how far the wet or discolored material extends from the drain; and
 - whether the liner or wall-to-floor transitions have any penetrations or gaps.
 
+### What Michael expects demolition to reveal
+
+Michael does not expect to find evidence of a major leak behind the shower, especially because we have not seen visible water damage from the crawl space. His expectation is that we may find some spotted material near the surface when the tile comes off.
+
+The range of possible findings is still wide. In a bad case, mold can extend from the back of the tile assembly to the sheetrock and then to the studs. Water can also damage the subfloor or wall framing. I hope we do not find either of those things, but demolition is the point when “hopefully” becomes something we can verify.
+
 ## The real shower is behind the tile
 
 The first thing I learned is that tile is not really the shower.
@@ -67,15 +73,33 @@ The basic components we are considering are:
 - **KERDI-BAND** for seams and changes of plane, with **KERDI-KERECK** preformed pieces for the difficult inside and outside corners.
 - **KERDI-LINE** for the linear drain and its integrated bonding flange.
 - **KERDI-BOARD-SC** for the prefabricated foam curb.
-- **KERDI-BOARD-SN or SNLT** for a prefabricated niche.
 
 In Schluter's description of its [shower system](https://www.schluter.com/schluter-us/en_US/faq/shower-system-why-use), the waterproofing membrane sits directly below the tile and bonds to the drain at the top of the assembly. In a traditional shower-pan system, the liner sits below a mortar bed. With the bonded approach, the mortar bed does not have to become saturated before water reaches the waterproofing. Given the mold in our current shower and the possibility that water is trapped below the tile, I found that difference appealing.
 
-The system also makes the fussy places easier to inspect. Seams require an overlap. Corners get preformed corner pieces. The drain has a surface that the membrane bonds to. The niche can arrive with sealed internal corners and a KERDI-BAND frame. It is still possible to install any of these things badly, but the intended path to a continuous waterproof layer is easier for me to understand.
+The system also makes the fussy places easier to inspect. Seams require an overlap. Corners get preformed corner pieces. The drain has a surface that the membrane bonds to. A custom niche can be framed to fit the wall and then waterproofed into the same continuous assembly. It is still possible to install any of these things badly, but the intended path to a continuous waterproof layer is easier for me to understand.
 
-It is also useful that “Schluter system” does not necessarily mean that every part of the shower has to be a prefabricated foam shape. The company's [bonded waterproofing guidance](https://www.schluter.com/schluter-us/en_US/article-tiled-shower-waterproofing) shows that the membrane and integrated drain connection can be used over either a mortar base or a foam tray. That matters for our unusually long 44-by-78-inch footprint and for the existing linear-drain plumbing. We still need the installer and Schluter to confirm the exact drain, adaptor, and plumbing transition in the field. Brand compatibility is not something I want to infer from a diagram.
+It is also useful that “Schluter system” does not necessarily mean that every part of the shower has to be a prefabricated foam shape. The company's [bonded waterproofing guidance](https://www.schluter.com/schluter-us/en_US/article-tiled-shower-waterproofing) shows that the membrane and integrated drain connection can be used over either a mortar base or a foam tray. The same principle lets us custom-frame the niche while still tying its corners and perimeter into the bonded waterproofing. That flexibility matters for our unusually long 44-by-78-inch footprint and for the existing linear-drain plumbing. We still need the installer and Schluter to confirm the exact drain, adaptor, and plumbing transition in the field. Brand compatibility is not something I want to infer from a diagram.
 
 My current major lesson is that continuity between the components is what helps prevent hidden failures. It is also what I want to be able to inspect this time.
+
+## Testing the waterproofing before tile
+
+The new assembly will be inspected before the tile hides it.
+
+Michael described a wall-waterproofing inspection—what he called a wet-wall test—using half-inch tile backer board. The corners will be taped, the screws and washers will be spaced appropriately, and each fastener penetration will be covered with the sealant or waterproofing required by the selected system. The exact screws, washers, tape, and sealant need to be compatible with whichever board assembly we ultimately use.
+
+The shower base will also get an overnight flood test. The plan is to:
+
+1. Plug the drain.
+2. Add approximately 20 to 30 gallons of water, until the water is about 2 inches deep at the lowest area around the drain.
+3. Mark the perimeter and the water line.
+4. Leave the shower filled overnight.
+5. Confirm that the marked water line has not dropped.
+6. Inspect below the shower for leakage, then pull the plug and inspect the drain and the area below again while the water empties.
+
+The volume estimate makes sense for this shower. A 44-by-78-inch floor covered by 2 inches of water holds just under 30 gallons: \(44 \times 78 \times 2 \div 231 \approx 29.7\) gallons. The actual amount will depend on the sloped floor and the exact test level.
+
+This is the time I want a leak to reveal itself: while the waterproofing is visible and repairable, not after the tile and glass have been installed.
 
 ## The six-inch curb that becomes a three-inch curb
 
@@ -104,13 +128,23 @@ One width question remains open. The stock [KERDI-BOARD-SC curb](https://www.sch
 
 Six inches, in other words, is the stock size. Three inches is the design target.
 
+## Moving the linear drain away from the wall
+
+Michael suggested placing the linear drain along the short wall with the controls, but setting it 2 to 4 inches away from the wall instead of pushing it directly into the wall-floor corner.
+
+The reason is drainage at the transition. If the drain sits directly against the wall, water near that edge depends on the drain, wall tile, floor tile, and corner grout all meeting perfectly. Moving it slightly forward creates a narrow tiled strip behind the drain. That strip can be pitched back toward the drain so water does not collect against the wall or run toward the corner grout.
+
+Michael confirmed that the small strip should slope **1/4 inch per foot** toward the drain. Across a strip only 2 to 4 inches deep, that works out to approximately 1/24 to 1/12 inch of total fall. It is a subtle pitch, not a visible 1/4-inch step behind the drain.
+
+The larger shower floor can then use a single main slope toward the linear drain. Once the offset and back-strip slope are confirmed, I also want to revise the 3D model so it shows the actual drain location rather than a generic linear-drain placement.
+
 ## The niche
 
-Our first version was 36 inches wide, 24 inches high, and about 5 inches deep. In the rendering, it looked proportionate, but when compared for size in our home, it turned otu to be huge. It occupied 864 square inches of wall and pulled attention away from the tile.
+Our first version was 36 inches wide, 24 inches high, and about 5 inches deep. In the rendering, it looked proportionate, but when compared for size in our home, it turned out to be huge. It occupied 864 square inches of wall and pulled attention away from the tile.
 
-We briefly reduced it to 27 by 13 by 5 inches, which immediately felt more like storage and less like architecture. From there, we arrived at the proportions of a larger prefabricated Schluter niche: **28 inches wide, 12 inches high, and 3 1/2 inches deep**. Its face is 336 square inches, about 61 percent smaller than the original 36-by-24 opening.
+We briefly reduced it to 27 by 13 by 5 inches, which immediately felt more like storage and less like architecture. From there, we arrived at a target of **28 inches wide by 12 inches high**. Its face is 336 square inches, about 61 percent smaller than the original 36-by-24 opening. The current model shows a depth of 3 1/2 inches because it was originally based on the proportions of a prefabricated niche.
 
-The shallower depth worried me at first because the existing niche is probably closer to 5 inches deep. But 3 1/2 inches fits the bottles we use, and depth is only useful if the things in the back remain easy to see and reach. The prefabricated niche also has a different kind of value: its interior corners are already sealed, it integrates with the surrounding KERDI or KERDI-BOARD, and it includes a KERDI-BAND frame for the perimeter. That removes several custom waterproofing transitions from a part of the shower that gets direct spray.
+The shallower depth worried me at first because the existing niche is probably closer to 5 inches deep. But 3 1/2 inches fits the bottles we use, and depth is only useful if the things in the back remain easy to see and reach. A custom niche means that we are no longer tied to a prefabricated 3 1/2-inch depth. The final usable depth can be decided after the wall is open and we can see the framing and available wall thickness.
 
 The current height in the design is:
 
@@ -121,7 +155,9 @@ For people who are 5 feet 7 inches and 5 feet 8 inches tall, that puts the conte
 
 The interior will use the same Cypress green 2-by-4 tile in a vertical straight lay, including the returns. A bullnose lip will finish the exposed front edge. This turns the niche into one concentrated green detail instead of another large field of wall tile.
 
-There is one product-selection detail to verify. Schluter's current [shower-system data sheet](https://assets.schluter.com/asset/570120892212/document_2nqfpg0pi13itfso529nhmlr7f/Shower%20System%20Data%20Sheet.pdf?content-disposition=inline) lists the standard unlighted KERDI-BOARD-SN as 12 inches wide by 28 inches high. The explicitly horizontal 28-by-12 KERDI-BOARD-SNLT model includes lighting. We have not chosen a final product. Before framing, we need to confirm whether the unlighted version can be installed horizontally or whether we need a different niche.
+Michael said there is no particular need to use a prefabricated Schluter niche. A typical stud bay has roughly 14 to 14 1/2 inches of clear space. A 28-inch-wide niche spans approximately two of those bays, so he would need to frame around the 2-by-4s and the opening anyway. He considers that custom framing straightforward.
+
+The niche therefore does not need to match a Schluter niche SKU. What still matters is that its back, returns, inside corners, and perimeter are waterproofed and connected continuously to the wall system. The exact framing arrangement and final depth will be confirmed after demolition exposes the wall.
 
 ## Building the shower before building the shower
 
@@ -165,27 +201,37 @@ The model made several debates much easier:
 
 The interactive model is now a standalone page that can be opened on a phone or laptop and shared with the contractor. It is one HTML file, although it loads the Three.js library from a CDN and therefore needs an internet connection. It is not part of the site's main navigation.
 
-The model is a communication tool, not a construction drawing. It does not prove that the framing can accept the niche, that the plumbing transition is correct, that the slope meets requirements at every point, or that the selected trim pieces are available. Its job is to expose questions before tile is set. For that, it has already been more useful than a folder of inspiration photos.
+The model is a communication tool, not a construction drawing. It does not determine the niche's exact framing, prove that the plumbing transition is correct, establish the slope at every point, or confirm that the selected trim pieces are available. Its job is to expose questions before tile is set. For that, it has already been more useful than a folder of inspiration photos.
+
+## Timing and the existing glass
+
+The shower currently has a glass enclosure. Before demolition, Lons Glass in San Leandro will need to remove it. If the dimensions still work with the rebuilt curb and tile assembly, they can store it so that we have the option to reuse it. That decision belongs early in the schedule: the glass needs to be protected before demolition, and small changes to the finished curb can determine whether it fits afterward.
+
+Michael's current estimate is approximately 2 to 2 1/2 weeks for the whole project. That timeline depends on what demolition reveals, whether the framing or subfloor needs repair, the plumbing transition, the inspections, the overnight flood test, and tile installation. It is a useful planning estimate, but not yet a promise about the finish date.
 
 ## Decisions so far
 
 - Shower footprint: 44 inches by 78 inches
 - Ceiling height: 11 feet
 - Three tiled walls, with the opening on a long side
-- Linear drain, with the exact transition from the existing plumbing still to be confirmed in the field
+- Proposed linear-drain location along the short wall with the controls, offset 2 to 4 inches from the wall, with the narrow strip behind it sloped 1/4 inch per foot toward the drain
 - Approximately 3 inches of visible finished curb height, using a trimmed KERDI-BOARD-SC curb
 - Plain Florim SensiTerre Rosato porcelain wall tile in the nominal 12-by-24-inch format, in a horizontal lay
 - Cypress green 2-by-4-inch tile in a vertical straight lay on the floor, wall base, curb, and niche interior
-- Prefabricated niche proportion: 28 inches wide by 12 inches high by 3 1/2 inches deep
+- Custom-framed niche target: 28 inches wide by 12 inches high; current model depth is 3 1/2 inches, with final usable depth to be confirmed after demolition
 - Niche bottom at 48 inches and top at 60 inches above the finished shower floor
 - Ceiling-mounted rain shower head, with controls on the left wall
+- Wall-waterproofing inspection and an overnight flood test before tile installation
+- Approximately 2 to 2 1/2 weeks of construction, subject to demolition findings and inspections
 
 ## Open questions
 
 - What failed in the original shower and what demolition reveals
-- Whether the framing can accept the niche we designed
+- The niche's final usable depth and exact framing after the wall is opened
 - The final linear-drain and plumbing transition
-- How the waterproofing was inspected and flood-tested
+- The final linear-drain offset within the proposed 2-to-4-inch range
+- What the wall-waterproofing inspection and overnight flood test reveal
+- Whether the existing glass enclosure can be reused after the finished curb dimensions change
 - The tile quantities we actually ordered, including waste and bullnose pieces
 - What changed between the model and the finished shower
 - Photos of the completed assembly, including the parts that disappear behind the tile
