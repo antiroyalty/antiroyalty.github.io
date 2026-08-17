@@ -1,73 +1,109 @@
 ---
 layout: post
-title: "Cataloging the steps to add battery storage"
+title: "Trying to Add Battery Storage to My Home"
 date: 2025-10-08 12:00:00 -0700
 categories: notes
 ---
 
-Planning to add storage to my Berkeley home before the Income Tax Credit expires. All the work needs to be done before December 31, 2025 -- the battery needs to be online by this date to qualify for the income tax credits. Come along with me for the ride to figure out how I can get storage added to my hosue with solar.
+In fall 2025, I had about two months to answer what sounded like a simple question: could I add a battery to my existing solar system before the federal tax credit ended?
 
-Okay let's get into it:
+The battery never got installed. This is not an installation guide. It is a record of what I learned, what I could not resolve in time, and why I stopped the project.
 
-I was googling around for a while how to add a battery to my house, but I was crucially omitting the fact that I already had a solar system. I thought these were two independent components! Turns out, the kind of solar system (and which one) highly influences what kind of battery is feasible. Someone had to explain that to me, so in case you haven't come across that guidance yet -- it matters! TIL. 
+## Why I wanted a battery
 
-I currently have an Enphase solar system, and as I learned, this significantly influences what's feasible and economic. Turns out, Enphase solar systems are modular and use microinverters (one per panel), which means that my solar array produces AC power directly rather than DC! Very cool.
+I had two goals. I wanted to use more of the solar energy that my house produces, and I wanted backup power during an outage.
 
-<Verify in the Enphase app where it shows my solar microinverter setup>
-![Enphase microinverter details]({{ '/assets/images/posts/enphase-microinverter-details.jpg' | relative_url }})
+The backup problem is specific to my house. We have a sewer ejector pump. It moves wastewater out of the lower part of the house. When the power goes out, the pump stops. That means an outage can become a sanitation problem, not just an inconvenience.
 
-As you can see from the screenshot, the panels have an IQ7+ microinverter: https://enphase.com/store/microinverters/iq7-series/iq7plus-microinverter
+I did not yet know how much battery capacity I needed. I first needed to know how much power the pump draws while running, how much it needs when it starts, and which other circuits should stay on. That information would determine whether I needed to back up a few essential loads or most of the house.
 
-However, this architectural choice also influences *how* a battery can be integrated, what inverters are needed, and how smooth / expensive the integration will be. 
+## The system I already had
 
-For some background, (as I learned) -- Enphase solar systems have String inverters, which convert DC (from solar panels) to AC (for the house). Now usually, batteries connect on the DC side, sharing *the same inverter as the solar panel*. But as mentioned above, Enphase, by contrast, uses microinverters attached to each panel. These convert DC to AC *right at the panel*. This is super convenient for home usage because the solar output is *already* AC, but it also means we can't directly "tap" the DC from the panels to charge the battery. TIL.
+A1 Sun installed my 3 kW Enphase solar system. It has twelve IQ7+ microinverters and one gateway, and it operates under PG&E's NEM 2 tariff.
 
-The implication here is that we need an AC-coupled battery, one that connects to the AC side of my house's wiring. Ideally this could come from Enphase, or from some other third party manufacturer. 
+<figure class="post-banner post-photo-portrait">
+  <img src="{{ '/assets/img/enphase/iq7-array.webp' | relative_url }}" alt="Enphase app array view showing twelve solar panels, each labeled IQ7+">
+  <figcaption>The array view shows all twelve panels and the IQ7+ microinverter attached to each one.</figcaption>
+</figure>
 
-Now we start the research: what batteries exist on the market? And which one is right for me? The classic million-dollar question that everyone in the energy space is asking. The capital costs for this tech are so high, that right-sizing your system for your current and forward-looking consumption is a pretty tricky optimization to get right.
+I had been researching batteries as if the solar system and battery were independent products. They are not.
 
-I started by reviewing what is currently available on the market:
+Each IQ7+ converts the direct current from one solar panel into alternating current on the roof. A battery added to this system would connect on the AC side. This is called an AC-coupled system. Enphase says the [IQ7+ is compatible with its IQ Battery and IQ Gateway](https://enphase.com/store/microinverters/iq7-series/iq7plus-microinverter).
 
-Enphase IQ Battery family
+The good news was that I did not need to replace the rooftop microinverters just to add storage. The harder part was everything around the battery: the backup controls, electrical-panel connection, permits, utility application, and choice of loads to back up.
 
-| Model           | Usable Capacity | Continuous Power | Notes                                           |
-| --------------- | --------------- | ---------------- | ----------------------------------------------- |
-| IQ Battery 5P   | 5 kWh           | 3.84 kW          | Newest model; modular; stack up to ~80 kWh      |
-| IQ Battery 10   | 10.1 kWh        | 3.84 kW          | Proven, older version                           |
-| IQ Battery 3T   | 3.36 kWh        | 1.28 kW          | Compact; can combine multiples                   |
+## The three questions I needed to answer
 
-As their sales website deailed for me, staying within the Enphase battery would make for a more "seamless" integration with my existing Enphase microinverters and the Envoy gateway. Plus then I could manage them all under the same app. 
+I narrowed the project down to three questions:
 
-However, compared to the Tesla batteries, the power output per unit is pretty low -- 3.8 kW vs. Tesla's Powerwall 5 kW. Overall, that means that I'd need 2-3 units to cover full-home load. 
+1. Could I add a battery without losing NEM 2?
+2. Which Enphase battery and backup design would support the sewer pump?
+3. Could the existing electrical panel accept that design, or would it need other work?
 
-California's NEM Policy + Grandfathering Rules
-Under California’s NEM rules (and in PG&E’s NEM2 tariff), there is a concept called “NEM paired storage”. PG&E explicitly provides for “Net Energy Metering Paired Storage” as a special provision under Schedule NEM / Schedule NEM2.  ￼
-	•	The tariff includes a “special condition” (often called Special Condition 9 – NEM Paired Storage) that outlines how battery storage can be paired with an existing generating facility (your solar) without invalidating the net metering arrangement.  ￼
-	•	Crucially: Decision D.22-12-056 states that adding energy storage to a customer’s existing generating facility shall not disqualify the customer from the remainder of their 20-year transition (grandfathering) under their existing NEM tariff schedule.  ￼
-	•	In other words, the rule explicitly protects existing NEM 1 or 2 customers from losing their grandfathered status merely by adding storage (so long as the storage is appropriately paired).  ￼
-	•	Multiple industry sources confirm this interpretation: existing NEM2 systems can add battery/storage and maintain their NEM2 status, so long as the changes don’t constitute a forbidden expansion.  ￼
+I found a good answer to the first question. I did not finish the other two.
 
-What counts as a prohibited “expansion” that could force conversion to NEM 3.0
-	•	The bigger risk isn’t the battery, but adding more solar (PV capacity) in a way that exceeds the allowable expansion threshold. Many sources indicate that under NEM 1/2 grandfathering, you may increase your system size by **up to 1 kW AC **or 10% of existing system size (whichever is greater) without losing the grandfathered status.  ￼
-	•	If you expand solar beyond that threshold, it may trigger the move to NEM 3.0 (or force a new tariff) depending on how the utility and CPUC interpret the change.  ￼
-	•	In sum: adding storage only is allowed under the NEM pairing rules; adding additional solar capacity beyond modest limits is where risk of losing grandfathering arises.
+## Could I keep NEM 2?
 
-More questions came about -- 
+This was the most confusing part of the project.
 
-If I have an AC-coupled system, what does this imply about my electricity panel? Would I need to upgrade my panel by installing a battery?
+I was worried that adding storage would move the solar system from NEM 2 to the newer Net Billing Tariff, sometimes called NEM 3. PG&E customer support could not give me a firm answer by phone. The agent directed me to PG&E's Rule 21 interconnection team, so I sent the question in writing in September 2025.
 
-Turns out, because I have an AC-coupled solar system (Enphase IQ7+ microinverters), adding a battery affects my main electrical panel design more than if I had a DC-coupled system.
+PG&E's response separated a battery addition from a solar expansion. The team told me that a battery-only project, with no new panels or solar inverters, could remain on NEM 2. Its response said that storage at or below 10 kW could be added, while storage above 10 kW would need a certified power control system under the stated rules.
 
-	My Enphase microinverters convert DC → AC at each panel, so my home sees grid-synchronous AC power from the solar array.
-	•	When I add a battery (like Tesla Powerwall 3 or Enphase IQ Battery 5P), it also connects on the AC side. In my case this is in the garage near the electricity service panel.
-	•	This means both my solar and my battery are injecting power into the same AC bus that your utility meter and household circuits share.
+Here, **kW means the battery system's power**, not its energy capacity in kWh. Those two units are easy to mix up.
 
-The advantage here is that this is a simple retrofit, and I don't need to rewire the PV array. But the limitation is that the panel and service conductors must be able to handle the sum of all backfeed currents from both the solar AND the battery.
+The written answer matched the core language in [PG&E's NEM 2 tariff](https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_NEM2.pdf#page=32). The tariff says that adding energy storage does not, by itself, end the remaining NEM 2 transition period. It treats an increase in solar generation differently. An existing generating facility can generally increase its original nameplate rating by no more than 10 percent or 1 kW, whichever is greater, and remain within that modification rule.
 
-My main panel has a busbar rating (often 100 A, 125 A, 200 A, or 225 A, in my case it's XXX) and a main breaker (for example, 200 A). When I add generation sources, the National Electrical Code (NEC 705.12) requires that the sum of all breakers connected to the bus does not exceed 120 % of the busbar rating (the “120 % rule”).
+The tariff also contains a separate warning for some customers who add storage through the Self-Generation Incentive Program. Because these rules can change and the details depend on the project, I would confirm the current tariff and incentive conditions in writing before restarting the work.
 
-If we have a 200 A busbar with a 200 A main breaker, we can safely add up to 40 A of solar + battery breakers (200 A × 120 % − 200 A = 40 A). Each Enphase solar circuit might already use a 20 A breaker, so a new battery (often 30–50 A breaker) could exceed that 40 A allowance → triggering the need for panel upgrade or load-side tap.
+The answer was still useful: the battery itself was not what threatened my NEM 2 status. Adding or changing solar equipment was the more sensitive part.
 
-To review the main electricity panel’s rating, you need to open the door and read the metal label: look for “Bus rating” and “Main breaker.” (Take a photo for your installer — they’ll need it for interconnection review.)
+## A battery is not automatically backup power
 
-Many homes get upgraded to a new 200 A or 225 A panel when adding batteries — cost roughly $2 k–$4 k, often rolled into the battery project. If your home has an older 100 A service, PG&E might need to upgrade the service drop (additional cost and permit).
+My second question was not just which battery to buy. It was which system could keep the right circuits running when the grid was down.
+
+Enphase sold several battery sizes, and its batteries could work with the IQ7+ system. Staying with Enphase also meant that solar and storage could appear in the same app. But those facts did not determine the right size or the backup design.
+
+A grid-connected battery does not automatically make a house work during an outage. A backup system also needs equipment that safely separates the house from the grid and controls the local solar-and-battery system. Enphase's design for an IQ7 backup system uses an [IQ System Controller](https://enphase.com/installers/storage/gen2/systems/home-essentials-backup/iq6-iq7) for this purpose.
+
+I also had to decide what to back up. A small essential-loads system might cover the sewer pump, refrigerator, internet equipment, and a few lights. Whole-home backup would require more power and more battery capacity. I could not choose between those designs without the pump specifications and a proper load plan.
+
+## What the panel photo did—and did not—tell me
+
+I photographed the label inside the electrical panel because I expected it to answer the panel-upgrade question.
+
+<figure class="post-banner">
+  <img src="{{ '/assets/images/posts/electrical-panel-label.webp' | relative_url }}" alt="Manufacturer label inside an Eaton convertible residential electrical panel">
+  <figcaption>The enclosure label says that this Eaton convertible panel accepts a main breaker rated up to 200 A.</figcaption>
+</figure>
+
+The label says that the panel can accept a main breaker rated up to 200 A. It does not prove that the installed main breaker is 200 A. It also does not show the existing solar breaker, free breaker positions, the service rating, or how the bus is already being used.
+
+That was not enough information to say whether the battery required a panel upgrade.
+
+An installer would still need to inspect the installed breakers and service equipment, prepare a one-line electrical diagram, and choose an allowed connection method. A power control system or a different connection design can sometimes avoid a full panel replacement. I did not want to turn one simplified electrical-code calculation into a confident answer that might be wrong for this panel and permit application.
+
+## Why I stopped
+
+The federal Residential Clean Energy Credit created the deadline. The IRS says the credit covered 30 percent of qualified battery-storage costs for equipment [installed through December 31, 2025](https://www.irs.gov/credits-deductions/residential-clean-energy-credit). Property placed in service after that date did not qualify.
+
+By the time I was doing this research, I had about two months left. I still needed an installer, a final system design, a permit, a utility interconnection application, and a clear answer about the electrical work. I was not confident that I could finish all of that correctly before the deadline.
+
+So I did not install a battery.
+
+The project did not stop because batteries were incompatible with my solar system. It stopped because I could not resolve the design, permitting, and contracting questions in the time available. The tax credit made the project more attractive, but it also encouraged a schedule that was too aggressive for a long-lived piece of electrical infrastructure.
+
+## What I would do next
+
+If I restart the project, I now have a much shorter list of work:
+
+1. Record the sewer pump's model, running power, and starting power.
+2. Choose the other circuits that need backup during an outage.
+3. Photograph the main breaker, full breaker layout, solar breaker, meter, and nearby equipment.
+4. Ask installers for a one-line diagram that shows the battery, backup controller, protected loads, and panel connection.
+5. Ask each installer to state in writing how the project will be filed with PG&E and whether it changes the existing NEM 2 system.
+6. Compare battery models only after the required power, energy, and electrical design are clear.
+
+I started with a shopping question: which battery should I buy? I ended with a systems question: what has to keep working during an outage, and what equipment and approvals make that possible?
+
+That second question is slower to answer. It is also the one that matters.
