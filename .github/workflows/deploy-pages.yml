@@ -1,4 +1,4 @@
-name: Deploy site with current electricity data
+name: Deploy site
 
 on:
   push:
@@ -28,12 +28,24 @@ jobs:
         with:
           ruby-version: "3.2"
           bundler-cache: true
-      - name: Test data pipelines
-        run: npm test
       - name: Refresh Electricity Desk snapshot
+        id: refresh_electricity_desk
+        if: github.event_name != 'push'
+        continue-on-error: true
         run: node scripts/update-electricity-data.mjs
       - name: Refresh California market snapshot
+        id: refresh_grid_market
+        if: github.event_name != 'push'
+        continue-on-error: true
         run: node scripts/update-grid-market-data.mjs
+      - name: Report retained Electricity Desk snapshot
+        if: always() && steps.refresh_electricity_desk.outcome == 'failure'
+        run: echo "::warning title=Electricity Desk refresh failed::The previous snapshot was retained. Deployment will continue only if validation confirms it is usable."
+      - name: Report retained California market snapshot
+        if: always() && steps.refresh_grid_market.outcome == 'failure'
+        run: echo "::warning title=California market refresh failed::The previous snapshot was retained. Deployment will continue only if validation confirms it is usable."
+      - name: Validate data snapshots and pipelines
+        run: npm test
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Build Jekyll site

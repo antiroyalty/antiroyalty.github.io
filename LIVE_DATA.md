@@ -81,16 +81,23 @@ The GitHub Actions workflow at `.github/workflows/deploy-pages.yml` maintains pr
 - On a 15-minute schedule
 - When started manually with **Run workflow** in the repository's Actions tab
 
-Every run tests both pipelines, downloads fresh snapshots, builds the Jekyll site, and deploys the resulting Pages artifact. Scheduled starts can be a few minutes late.
+Push deployments do not contact California ISO. They validate the snapshots already in the repository, build the Jekyll site, and deploy the resulting Pages artifact. This means a temporary source outage cannot block an unrelated site change.
+
+Scheduled and manually started runs attempt to refresh both live snapshots before validation. A failed refresh leaves the previous snapshot intact and produces a warning in the workflow. The workflow then runs the full data-pipeline test suite:
+
+- If the retained snapshot is valid, the site builds and deploys with that snapshot.
+- If no valid snapshot exists, validation fails and deployment stops.
+
+Scheduled starts can be a few minutes late.
 
 To check production maintenance:
 
 1. Open the repository on GitHub.
 2. Select **Actions**.
-3. Open **Deploy site with current electricity data**.
+3. Open **Deploy site**.
 4. Confirm the latest `build` and `deploy` jobs are green.
 
-If a refresh command fails in GitHub Actions, deployment stops and the previously deployed site remains in place. The next successful scheduled or manual run restores normal updates.
+Refresh failures remain visible as warnings even when a verified previous snapshot allows deployment to continue. A failed `Validate data snapshots and pipelines` step means the fallback snapshot itself is missing or invalid and deployment has correctly stopped.
 
 ## Freshness labels
 
@@ -132,7 +139,7 @@ Do not replace a live snapshot with hand-entered values. If a feed changes, upda
 
 ### GitHub Actions has stopped updating production
 
-Check the workflow's latest failed step first. Common causes are a temporary California ISO outage, a source-format change, or a Jekyll build failure. Use **Run workflow** after resolving the error to refresh production immediately.
+Check the workflow's latest failed step first. A refresh warning with a successful deployment usually indicates a temporary California ISO outage and requires no immediate action. A validation failure may indicate a source-format change or invalid fallback snapshot. A later build failure is independent of the live-data refresh. Use **Run workflow** after resolving the error to refresh production immediately.
 
 ## Maintenance map
 
