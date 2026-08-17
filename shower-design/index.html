@@ -1014,9 +1014,9 @@ html&gt;body{padding:0}&lt;/style&gt;
   scene.add(wash);
 
   const cypressBase = new THREE.Color(&#x27;#333728&#x27;);
-  const creamBase = new THREE.Color(&#x27;#d0cbbf&#x27;);
+  const rosatoBase = new THREE.Color(&#x27;#bda18f&#x27;);
   const groutGreen = new THREE.MeshStandardMaterial({ color: &#x27;#989889&#x27;, roughness: 0.94 });
-  const groutCream = new THREE.MeshStandardMaterial({ color: &#x27;#b9b5aa&#x27;, roughness: 0.95 });
+  const groutRosato = new THREE.MeshStandardMaterial({ color: &#x27;#aaa198&#x27;, roughness: 0.95 });
   const chrome = new THREE.MeshStandardMaterial({ color: &#x27;#d6d8d5&#x27;, metalness: 0.9, roughness: 0.18 });
   const recessShadow = new THREE.MeshStandardMaterial({ color: &#x27;#171a16&#x27;, roughness: 1 });
   const substrate = new THREE.MeshStandardMaterial({ color: &#x27;#6f7169&#x27;, roughness: 1 });
@@ -1035,7 +1035,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   }
 
   const greenMats = variationMaterials(cypressBase, 17, 0.46);
-  const creamMats = variationMaterials(creamBase, 13, 0.72);
+  const rosatoMats = variationMaterials(rosatoBase, 13, 0.72);
   let tileIndex = 0;
 
   function tileBox(width, height, depth, x, y, z, material, parent = scene) {
@@ -1051,8 +1051,8 @@ html&gt;body{padding:0}&lt;/style&gt;
     return mat;
   }
 
-  function creamMat() {
-    const mat = creamMats[tileIndex % creamMats.length];
+  function rosatoMat() {
+    const mat = rosatoMats[tileIndex % rosatoMats.length];
     tileIndex += 1;
     return mat;
   }
@@ -1075,7 +1075,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
   }
 
-  // Wall backing and cream grout planes. The back-wall layers are split around
+  // Wall backing and Rosato grout planes. The back-wall layers are split around
   // the niche so the opening is genuinely recessed rather than surface-mounted.
   const nicheOpening = { left: -14.32, right: 14.32, bottom: 47.68, top: 60.32 };
 
@@ -1094,11 +1094,11 @@ html&gt;body{padding:0}&lt;/style&gt;
   backWallSurround(-39.6, 39.6, 0, 132, 44.45, 0.65, substrate);
   tileBox(0.65, 132, 44.9, -39.45, 66, 22, substrate, shower);
   tileBox(0.65, 132, 44.9, 39.45, 66, 22, substrate, shower);
-  backWallSurround(-39.1, 39.1, 8.4, 132, 43.92, 0.16, groutCream);
-  tileBox(0.16, 123.6, 44, -38.92, 70.2, 22, groutCream, shower);
-  tileBox(0.16, 123.6, 44, 38.92, 70.2, 22, groutCream, shower);
+  backWallSurround(-39.1, 39.1, 8.4, 132, 43.92, 0.16, groutRosato);
+  tileBox(0.16, 123.6, 44, -38.92, 70.2, 22, groutRosato, shower);
+  tileBox(0.16, 123.6, 44, 38.92, 70.2, 22, groutRosato, shower);
 
-  // Alo Dust 16 x 32 wall tile, horizontal straight lay.
+  // Plain SensiTerre Rosato 12 x 24 wall tile, horizontal straight lay.
   function addBackWallTile(x1, y1, x2, y2, material) {
     const width = x2 - x1;
     const height = y2 - y1;
@@ -1124,17 +1124,17 @@ html&gt;body{padding:0}&lt;/style&gt;
   }
 
   const wallY0 = 8.25;
-  for (let y = wallY0; y &lt; 132; y += 16.25) {
-    for (let x = -38.85; x &lt; 39; x += 32.25) {
-      const w = Math.min(32, 39 - x);
-      const h = Math.min(16, 132 - y);
-      if (w &gt; 0.5 &amp;&amp; h &gt; 0.5) addBackWallTileAroundNiche(x, y, x + w, y + h, creamMat());
+  for (let y = wallY0; y &lt; 132; y += 12.25) {
+    for (let x = -38.85; x &lt; 39; x += 24.25) {
+      const w = Math.min(24, 39 - x);
+      const h = Math.min(12, 132 - y);
+      if (w &gt; 0.5 &amp;&amp; h &gt; 0.5) addBackWallTileAroundNiche(x, y, x + w, y + h, rosatoMat());
     }
     for (const side of [-1, 1]) {
-      for (let z = 0.1; z &lt; 44; z += 32.25) {
-        const d = Math.min(32, 44 - z);
-        const h = Math.min(16, 132 - y);
-        if (d &gt; 0.5 &amp;&amp; h &gt; 0.5) tileBox(0.16, h, d, side * 38.78, y + h / 2, z + d / 2, creamMat(), shower);
+      for (let z = 0.1; z &lt; 44; z += 24.25) {
+        const d = Math.min(24, 44 - z);
+        const h = Math.min(12, 132 - y);
+        if (d &gt; 0.5 &amp;&amp; h &gt; 0.5) tileBox(0.16, h, d, side * 38.78, y + h / 2, z + d / 2, rosatoMat(), shower);
       }
     }
   }

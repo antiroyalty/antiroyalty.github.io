@@ -129,7 +129,7 @@ Once we had enough dimensions, I built a small [interactive 3D model of the show
 
 The model uses the shower's real dimensions as its coordinate system: **78 inches long, 44 inches wide, and 132 inches high**. It has three tiled walls, an opening along one long side, a ceiling rain head, controls on the left wall, a linear drain, and the 3-inch visible curb.
 
-The tile layouts are also modeled rather than represented by a single flat color. The cream Ann Sacks Alo Dust wall tile is laid horizontally in a 16-by-32-inch module. The Cypress green 2-by-4 tile is laid vertically on the shower floor, the 8-inch-high wall band, the curb, and inside the niche. Grout joints are represented at approximately 3/16 inch, so a change in orientation changes the visual rhythm instead of just changing a label.
+The tile layouts are also modeled rather than represented by a single flat color. The plain [Florim SensiTerre Rosato](https://www.florim.com/en/products/all-collections/sensiterre/rosato) porcelain wall tile is laid horizontally in its nominal 12-by-24-inch format. Florim lists the metric size as 30 by 60 centimeters. We chose the plain Rosato surface, not the more textured Grana Rosato. The Cypress green 2-by-4 tile is laid vertically on the shower floor, the 8-inch-high wall band, the curb, and inside the niche. Grout joints are represented at approximately 3/16 inch, so a change in orientation changes the visual rhythm instead of just changing a label.
 
 ### How the tool works
 
@@ -141,11 +141,11 @@ Dimension markers are HTML labels projected from points in the 3D scene. This le
 
 In an early version, I changed the niche label from 3 1/2 inches deep to 5 inches deep. I moved the green back tile. From the front, it still looked flat.
 
-The problem was that I had changed the nominal depth without changing the whole wall assembly. The cream wall tiles and backing plane still ran across the niche opening, so the back and side returns were visually collapsed behind a flat surface. The dimension label said one thing while the geometry said another.
+The problem was that I had changed the nominal depth without changing the whole wall assembly. The field tiles and backing plane still ran across the niche opening, so the back and side returns were visually collapsed behind a flat surface. The dimension label said one thing while the geometry said another.
 
 Fixing it required treating the niche as an actual void:
 
-- cut an opening through the wall backing, grout field, and cream tile field;
+- cut an opening through the wall backing, grout field, and porcelain tile field;
 - move the niche back surface behind the wall plane by the full modeled depth;
 - add visible top, bottom, left, and right tiled returns;
 - add the bullnose lip at the wall face; and
@@ -159,7 +159,7 @@ The model made several debates much easier:
 
 - A 36-by-24-inch niche was too dominant; 28 by 12 felt proportional.
 - The curb looked disconnected when its green tile ran horizontally. Returning it to the same vertical straight lay as the shower floor made the materials feel intentional.
-- An 8-inch green band at the bottom of the three walls reads as a base, while a taller band begins to compete with the cream field tile.
+- An 8-inch green band at the bottom of the three walls reads as a base, while a taller band begins to compete with the Rosato field tile.
 - A 3-inch visible curb feels low and ordinary in the room, despite the fact that the stock foam curb begins at 6 inches.
 - The niche needed to be modeled as a real recess before we could judge its depth.
 
@@ -174,13 +174,13 @@ The model is a communication tool, not a construction drawing. It does not prove
 - Three tiled walls, with the opening on a long side
 - Linear drain, with the exact transition from the existing plumbing still to be confirmed in the field
 - Approximately 3 inches of visible finished curb height, using a trimmed KERDI-BOARD-SC curb
-- Ann Sacks Alo Dust 16-by-32-inch wall tile in a horizontal lay
+- Plain Florim SensiTerre Rosato porcelain wall tile in the nominal 12-by-24-inch format, in a horizontal lay
 - Cypress green 2-by-4-inch tile in a vertical straight lay on the floor, wall base, curb, and niche interior
 - Prefabricated niche proportion: 28 inches wide by 12 inches high by 3 1/2 inches deep
 - Niche bottom at 48 inches and top at 60 inches above the finished shower floor
 - Ceiling-mounted rain shower head, with controls on the left wall
 
-## What remains open
+## Open questions
 
 - What failed in the original shower and what demolition reveals
 - Whether the framing can accept the niche we designed
