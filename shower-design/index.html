@@ -909,27 +909,31 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;div class=&quot;viz-controls&quot; aria-label=&quot;Camera views&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-view=&quot;overall&quot; aria-pressed=&quot;true&quot;&gt;Overall&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;niche&quot; aria-pressed=&quot;false&quot;&gt;Niche close-up&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;drain&quot; aria-pressed=&quot;false&quot;&gt;Drain + controls&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;curb&quot; aria-pressed=&quot;false&quot;&gt;Curb close-up&lt;/button&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;trim&quot; aria-pressed=&quot;false&quot;&gt;Wall trim&lt;/button&gt;
   &lt;/div&gt;
   &lt;div class=&quot;card&quot;&gt;
     &lt;div class=&quot;shower-curb-stage&quot;&gt;
-      &lt;canvas aria-label=&quot;Interactive three-dimensional shower rendering measuring 78 inches long by 44 inches deep with an 11-foot ceiling, a 3-inch curb, and a 28-inch-wide by 12-inch-high by 3.5-inch-deep prefabricated Schluter niche&quot;&gt;Interactive dimensioned 3D shower rendering.&lt;/canvas&gt;
+      &lt;canvas aria-label=&quot;Interactive three-dimensional shower rendering measuring 78 inches long by 44 inches deep with an 11-foot ceiling, a 3-inch curb, a custom 28-inch-wide by 14-inch-high niche, and a brushed stainless steel Schluter linear drain along the left control wall&quot;&gt;Interactive dimensioned 3D shower rendering.&lt;/canvas&gt;
       &lt;div class=&quot;shower-dimension-layer&quot; aria-hidden=&quot;true&quot;&gt;
         &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;length&quot;&gt;78″ length&lt;/span&gt;
         &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;depth&quot;&gt;44″ depth&lt;/span&gt;
         &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;height&quot;&gt;11′ ceiling&lt;/span&gt;
         &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;curb&quot;&gt;3″ curb&lt;/span&gt;
         &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-width&quot;&gt;28″ niche width&lt;/span&gt;
-        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-height&quot;&gt;12″ niche height&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-height&quot;&gt;14″ niche height&lt;/span&gt;
         &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;niche-depth&quot;&gt;3½″ niche depth&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;drain-length&quot;&gt;35 7⁄16″ × 2 29⁄32″ drain&lt;/span&gt;
+        &lt;span class=&quot;viz-badge shower-dimension-label&quot; data-dimension=&quot;drain-offset&quot;&gt;2″ finished-wall gap&lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;viz-row text-small text-muted&quot; aria-label=&quot;Rendering details&quot;&gt;
     &lt;span&gt;78 × 44 in shower&lt;/span&gt;
     &lt;span&gt;3 in finished curb&lt;/span&gt;
-    &lt;span&gt;28 × 12 × 3½ in Schluter niche&lt;/span&gt;
+    &lt;span&gt;28 × 14 × 3½ in custom niche&lt;/span&gt;
+    &lt;span&gt;KERDI-LINE SOLID · 35 7⁄16 × 2 29⁄32 in · brushed stainless steel&lt;/span&gt;
     &lt;span&gt;Vertical 2 × 4 in curb faces · short-edge bullnose&lt;/span&gt;
     &lt;span&gt;Drag to orbit · scroll to zoom&lt;/span&gt;
   &lt;/div&gt;
@@ -1018,6 +1022,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   const groutGreen = new THREE.MeshStandardMaterial({ color: &#x27;#989889&#x27;, roughness: 0.94 });
   const groutRosato = new THREE.MeshStandardMaterial({ color: &#x27;#aaa198&#x27;, roughness: 0.95 });
   const chrome = new THREE.MeshStandardMaterial({ color: &#x27;#d6d8d5&#x27;, metalness: 0.9, roughness: 0.18 });
+  const brushedStainless = new THREE.MeshStandardMaterial({ color: &#x27;#bfc4c3&#x27;, metalness: 0.88, roughness: 0.32 });
   const recessShadow = new THREE.MeshStandardMaterial({ color: &#x27;#171a16&#x27;, roughness: 1 });
   const substrate = new THREE.MeshStandardMaterial({ color: &#x27;#6f7169&#x27;, roughness: 1 });
   const roomFloorMat = new THREE.MeshStandardMaterial({ color: &#x27;#c4bba9&#x27;, roughness: 0.92 });
@@ -1063,6 +1068,58 @@ html&gt;body{padding:0}&lt;/style&gt;
   // Exterior bathroom floor.
   tileBox(96, 0.35, 66, 0, -0.25, -33, roomFloorMat, shower);
 
+  // Schluter KERDI-LINE 90 cm channel with SOLID (A) brushed stainless steel
+  // grate. The visible grate is 35-7/16 inches long, leaving approximately
+  // 4-1/4 inches at each end of the 44-inch wall. A 2-inch tile strip remains
+  // between the finished wall and the near edge of the drain.
+  const drainSpec = {
+    length: 35.4375,
+    width: 2.91,
+    wallGap: 2,
+    centerZ: 22
+  };
+  drainSpec.xMax = 39 - drainSpec.wallGap;
+  drainSpec.xMin = drainSpec.xMax - drainSpec.width;
+  drainSpec.centerX = (drainSpec.xMin + drainSpec.xMax) / 2;
+  drainSpec.zMin = drainSpec.centerZ - drainSpec.length / 2;
+  drainSpec.zMax = drainSpec.centerZ + drainSpec.length / 2;
+
+  function addFloorTilePiece(x1, z1, x2, z2, material) {
+    const w = x2 - x1;
+    const d = z2 - z1;
+    if (w &lt;= 0.2 || d &lt;= 0.2) return;
+    const centerX = x1 + w / 2;
+    const behindDrain = x1 &gt;= drainSpec.xMax - 0.001;
+    const slope = behindDrain ? 0.25 / 12 : 0;
+    const tile = tileBox(
+      w,
+      0.15,
+      d,
+      centerX,
+      0.12 + Math.max(0, centerX - drainSpec.xMax) * slope,
+      z1 + d / 2,
+      material,
+      shower
+    );
+    if (behindDrain) tile.rotation.z = Math.atan(slope);
+  }
+
+  function addFloorTileAroundDrain(x1, z1, x2, z2, material) {
+    const intersects = x2 &gt; drainSpec.xMin &amp;&amp; x1 &lt; drainSpec.xMax
+      &amp;&amp; z2 &gt; drainSpec.zMin &amp;&amp; z1 &lt; drainSpec.zMax;
+    if (!intersects) {
+      addFloorTilePiece(x1, z1, x2, z2, material);
+      return;
+    }
+
+    const middleLeft = Math.max(x1, drainSpec.xMin);
+    const middleRight = Math.min(x2, drainSpec.xMax);
+    if (x1 &lt; drainSpec.xMin) addFloorTilePiece(x1, z1, Math.min(x2, drainSpec.xMin), z2, material);
+    if (x2 &gt; drainSpec.xMax) addFloorTilePiece(Math.max(x1, drainSpec.xMax), z1, x2, z2, material);
+    if (z1 &lt; drainSpec.zMin) addFloorTilePiece(middleLeft, z1, middleRight, Math.min(z2, drainSpec.zMin), material);
+    if (z2 &gt; drainSpec.zMax) addFloorTilePiece(middleLeft, Math.max(z1, drainSpec.zMax), middleRight, z2, material);
+  }
+
   // Shower floor: 2 x 4 tile, straight-laid with the 4-inch direction running into the shower.
   tileBox(78.4, 0.18, 44.4, 0, -0.05, 22, groutGreen, shower);
   const floorPeriodX = 2.1875;
@@ -1071,13 +1128,18 @@ html&gt;body{padding:0}&lt;/style&gt;
     for (let z = 0.12; z &lt; 44; z += floorPeriodZ) {
       const w = Math.min(2, 39 - x);
       const d = Math.min(4, 44 - z);
-      if (w &gt; 0.2 &amp;&amp; d &gt; 0.2) tileBox(w, 0.15, d, x + w / 2, 0.12, z + d / 2, greenMat(), shower);
+      if (w &gt; 0.2 &amp;&amp; d &gt; 0.2) addFloorTileAroundDrain(x, z, x + w, z + d, greenMat());
     }
   }
 
+  // Brushed stainless steel frame, dark drainage reveal, and solid center grate.
+  tileBox(drainSpec.width, 0.08, drainSpec.length, drainSpec.centerX, 0.25, drainSpec.centerZ, brushedStainless, shower);
+  tileBox(2.53, 0.05, drainSpec.length - 0.34, drainSpec.centerX, 0.31, drainSpec.centerZ, recessShadow, shower);
+  tileBox(1.84, 0.08, drainSpec.length - 0.72, drainSpec.centerX, 0.36, drainSpec.centerZ, brushedStainless, shower);
+
   // Wall backing and Rosato grout planes. The back-wall layers are split around
   // the niche so the opening is genuinely recessed rather than surface-mounted.
-  const nicheOpening = { left: -14.32, right: 14.32, bottom: 47.68, top: 60.32 };
+  const nicheOpening = { left: -14.32, right: 14.32, bottom: 47.68, top: 62.32 };
 
   function backWallSurround(xMin, xMax, yMin, yMax, z, depth, material) {
     const leftWidth = nicheOpening.left - xMin;
@@ -1159,25 +1221,25 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
   }
 
-  // Niche: the 28 x 12 x 3-1/2-inch prefabricated Schluter proportions. The
+  // Custom-framed niche: the current design is 28 x 14 x 3-1/2 inches. The
   // finished wall face is z=43.70 and the niche back is z=47.20.
   const niche = new THREE.Group();
   shower.add(niche);
-  tileBox(28.5, 12.5, 0.24, 0, 54, 47.52, recessShadow, niche);
-  tileBox(28.2, 12.2, 0.16, 0, 54, 47.36, groutGreen, niche);
+  tileBox(28.5, 14.5, 0.24, 0, 55, 47.52, recessShadow, niche);
+  tileBox(28.2, 14.2, 0.16, 0, 55, 47.36, groutGreen, niche);
   for (let x = -13.65; x &lt; 13.7; x += 2.1875) {
-    for (let y = 48.25; y &lt; 59.8; y += 4.1875) {
+    for (let y = 48.25; y &lt; 61.8; y += 4.1875) {
       const w = Math.min(2, 13.75 - x);
-      const h = Math.min(4, 59.75 - y);
+      const h = Math.min(4, 61.75 - y);
       if (w &gt; 0.2 &amp;&amp; h &gt; 0.2) tileBox(w, h, 0.15, x + w / 2, y + h / 2, 47.26, greenMat(), niche);
     }
   }
 
   // Grout beds for the four 3-1/2-inch-deep tiled returns.
   tileBox(28.2, 0.14, 3.5, 0, 47.92, 45.45, groutGreen, niche);
-  tileBox(28.2, 0.14, 3.5, 0, 60.08, 45.45, groutGreen, niche);
-  tileBox(0.14, 12, 3.5, -14.08, 54, 45.45, groutGreen, niche);
-  tileBox(0.14, 12, 3.5, 14.08, 54, 45.45, groutGreen, niche);
+  tileBox(28.2, 0.14, 3.5, 0, 62.08, 45.45, groutGreen, niche);
+  tileBox(0.14, 14, 3.5, -14.08, 55, 45.45, groutGreen, niche);
+  tileBox(0.14, 14, 3.5, 14.08, 55, 45.45, groutGreen, niche);
 
   // Bottom and top returns: 2 x 4-inch Cypress tiles laid into the recess.
   for (let x = -13.9; x &lt; 14; x += 2.1875) {
@@ -1186,16 +1248,16 @@ html&gt;body{padding:0}&lt;/style&gt;
       const d = Math.min(4, 47.2 - z);
       if (w &lt;= 0.2 || d &lt;= 0.2) continue;
       tileBox(w, 0.12, d, x + w / 2, 47.98, z + d / 2, greenMat(), niche);
-      tileBox(w, 0.12, d, x + w / 2, 60.02, z + d / 2, greenMat(), niche);
+      tileBox(w, 0.12, d, x + w / 2, 62.02, z + d / 2, greenMat(), niche);
     }
   }
 
   // Side returns preserve the vertical straight-lay rhythm.
   for (const side of [-1, 1]) {
     for (let z = 43.76; z &lt; 47.2; z += 2.1875) {
-      for (let y = 48.1; y &lt; 60; y += 4.1875) {
+      for (let y = 48.1; y &lt; 62; y += 4.1875) {
         const d = Math.min(2, 47.2 - z);
-        const h = Math.min(4, 60 - y);
+        const h = Math.min(4, 62 - y);
         if (d &gt; 0.2 &amp;&amp; h &gt; 0.2) {
           tileBox(0.12, h, d, side * 14.02, y + h / 2, z + d / 2, greenMat(), niche);
         }
@@ -1204,15 +1266,15 @@ html&gt;body{padding:0}&lt;/style&gt;
   }
 
   // Rounded Cypress bullnose lip at the finished wall plane.
-  for (const y of [47.82, 60.18]) {
+  for (const y of [47.82, 62.18]) {
     const edge = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 28.3, 16), greenMat());
     edge.rotation.z = Math.PI / 2;
     edge.position.set(0, y, 43.56);
     niche.add(edge);
   }
   for (const x of [-14.18, 14.18]) {
-    const edge = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 12.1, 16), greenMat());
-    edge.position.set(x, 54, 43.56);
+    const edge = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 14.1, 16), greenMat());
+    edge.position.set(x, 55, 43.56);
     niche.add(edge);
   }
 
@@ -1250,13 +1312,15 @@ html&gt;body{padding:0}&lt;/style&gt;
   rainHead.position.set(0, 127.3, 21.5);
   shower.add(rainHead);
 
+  // Controls are mounted on the left wall as seen from the shower entrance,
+  // above the same short wall as the linear drain.
   const controlPlate = new THREE.Mesh(new THREE.CylinderGeometry(4.1, 4.1, 0.35, 40), chrome);
   controlPlate.rotation.z = Math.PI / 2;
-  controlPlate.position.set(-38.35, 48, 20);
+  controlPlate.position.set(38.35, 48, 20);
   shower.add(controlPlate);
   const controlHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 3.5, 24), chrome);
   controlHandle.rotation.z = Math.PI / 2;
-  controlHandle.position.set(-37.1, 48, 20);
+  controlHandle.position.set(37.1, 48, 20);
   shower.add(controlHandle);
 
   // Dimension lines remain visible over the model as the camera orbits.
@@ -1299,15 +1363,26 @@ html&gt;body{padding:0}&lt;/style&gt;
   dimensionSegment([39, 3, -5.4], [42.8, 3, -5.4]);
 
   // Niche width, height, and depth.
-  dimensionSegment([-14, 63, 42.5], [14, 63, 42.5]);
-  dimensionSegment([-14, 60.2, 42.5], [-14, 63.8, 42.5]);
-  dimensionSegment([14, 60.2, 42.5], [14, 63.8, 42.5]);
-  dimensionSegment([17, 48, 42.5], [17, 60, 42.5]);
+  dimensionSegment([-14, 65, 42.5], [14, 65, 42.5]);
+  dimensionSegment([-14, 62.2, 42.5], [-14, 65.8, 42.5]);
+  dimensionSegment([14, 62.2, 42.5], [14, 65.8, 42.5]);
+  dimensionSegment([17, 48, 42.5], [17, 62, 42.5]);
   dimensionSegment([14.2, 48, 42.5], [18, 48, 42.5]);
-  dimensionSegment([14.2, 60, 42.5], [18, 60, 42.5]);
+  dimensionSegment([14.2, 62, 42.5], [18, 62, 42.5]);
   dimensionSegment([18.5, 46, 43.7], [18.5, 46, 47.2]);
   dimensionSegment([18.5, 46, 43.7], [18.5, 48, 43.7]);
   dimensionSegment([18.5, 46, 47.2], [18.5, 48, 47.2]);
+
+  // Linear drain length and the tiled strip between the drain and left wall.
+  dimensionSegment([30.5, 1.25, drainSpec.zMin], [30.5, 1.25, drainSpec.zMax]);
+  dimensionSegment([29.6, 1.25, drainSpec.zMin], [31.4, 1.25, drainSpec.zMin]);
+  dimensionSegment([29.6, 1.25, drainSpec.zMax], [31.4, 1.25, drainSpec.zMax]);
+  dimensionSegment([drainSpec.xMax, 1.25, 2.2], [39, 1.25, 2.2]);
+  dimensionSegment([drainSpec.xMax, 0.6, 2.2], [drainSpec.xMax, 1.9, 2.2]);
+  dimensionSegment([39, 0.6, 2.2], [39, 1.9, 2.2]);
+  dimensionSegment([drainSpec.xMin, 1.25, 41.5], [drainSpec.xMax, 1.25, 41.5]);
+  dimensionSegment([drainSpec.xMin, 0.6, 41.5], [drainSpec.xMin, 1.9, 41.5]);
+  dimensionSegment([drainSpec.xMax, 0.6, 41.5], [drainSpec.xMax, 1.9, 41.5]);
 
   const dimensionGeometry = new THREE.BufferGeometry();
   dimensionGeometry.setAttribute(&#x27;position&#x27;, new THREE.Float32BufferAttribute(dimensionVertices, 3));
@@ -1338,9 +1413,11 @@ html&gt;body{padding:0}&lt;/style&gt;
     { element: root.querySelector(&#x27;[data-dimension=&quot;depth&quot;]&#x27;), position: new THREE.Vector3(49, 5, 22), views: [&#x27;overall&#x27;] },
     { element: root.querySelector(&#x27;[data-dimension=&quot;height&quot;]&#x27;), position: new THREE.Vector3(-50, 69, 0), views: [&#x27;overall&#x27;] },
     { element: root.querySelector(&#x27;[data-dimension=&quot;curb&quot;]&#x27;), position: new THREE.Vector3(45, 1.5, -5.4), views: [&#x27;overall&#x27;, &#x27;curb&#x27;] },
-    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-width&quot;]&#x27;), position: new THREE.Vector3(0, 66, 42.2), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
-    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-height&quot;]&#x27;), position: new THREE.Vector3(20.5, 54, 42.2), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
-    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-depth&quot;]&#x27;), position: new THREE.Vector3(20.5, 45.5, 45.45), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] }
+    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-width&quot;]&#x27;), position: new THREE.Vector3(0, 68, 42.2), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-height&quot;]&#x27;), position: new THREE.Vector3(20.5, 55, 42.2), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;niche-depth&quot;]&#x27;), position: new THREE.Vector3(20.5, 45.5, 45.45), views: [&#x27;overall&#x27;, &#x27;niche&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;drain-length&quot;]&#x27;), position: new THREE.Vector3(28.5, 16, 22), views: [&#x27;overall&#x27;, &#x27;drain&#x27;] },
+    { element: root.querySelector(&#x27;[data-dimension=&quot;drain-offset&quot;]&#x27;), position: new THREE.Vector3(38, 4.2, 2.2), views: [&#x27;drain&#x27;] }
   ];
 
   function updateDimensionLabels() {
@@ -1359,12 +1436,16 @@ html&gt;body{padding:0}&lt;/style&gt;
 
   const viewPresets = {
     overall: {
-      position: new THREE.Vector3(30, 84, -215),
+      position: new THREE.Vector3(-30, 84, -215),
       target: new THREE.Vector3(0, 57, 20)
     },
     niche: {
-      position: new THREE.Vector3(0, 72.5, -31),
-      target: new THREE.Vector3(0, 54, 45.5)
+      position: new THREE.Vector3(0, 74.5, -31),
+      target: new THREE.Vector3(0, 55, 45.5)
+    },
+    drain: {
+      position: new THREE.Vector3(-22, 56, -44),
+      target: new THREE.Vector3(34, 27, 22)
     },
     curb: {
       position: new THREE.Vector3(24, 18, -80),

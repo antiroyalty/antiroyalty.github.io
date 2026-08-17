@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Designing a Shower Before Rebuilding It"
-date: 2026-08-17
+date: 2026-08-17 12:00:00 -0700
 categories: notes home
 ---
 
@@ -47,9 +47,9 @@ During demolition, I want us to document:
 - how far the wet or discolored material extends from the drain; and
 - whether the liner or wall-to-floor transitions have any penetrations or gaps.
 
-### What Michael expects demolition to reveal
+### What our contractor expects demolition to reveal
 
-Michael does not expect to find evidence of a major leak behind the shower, especially because we have not seen visible water damage from the crawl space. His expectation is that we may find some spotted material near the surface when the tile comes off.
+Our contractor at Busk Bros does not expect to find evidence of a major leak behind the shower. We have not seen visible water damage from the crawl space. He expects that we may find some spotted material near the surface when the tile comes off.
 
 The range of possible findings is still wide. In a bad case, mold can extend from the back of the tile assembly to the sheetrock and then to the studs. Water can also damage the subfloor or wall framing. I hope we do not find either of those things, but demolition is the point when “hopefully” becomes something we can verify.
 
@@ -84,9 +84,9 @@ My current major lesson is that continuity between the components is what helps 
 
 ## Testing the waterproofing before tile
 
-The new assembly will be inspected before the tile hides it.
+The new assembly will be inspected before the tile hides it. We have not selected the wall backer or waterproofing system yet.
 
-Michael described a wall-waterproofing inspection—what he called a wet-wall test—using half-inch tile backer board. The corners will be taped, the screws and washers will be spaced appropriately, and each fastener penetration will be covered with the sealant or waterproofing required by the selected system. The exact screws, washers, tape, and sealant need to be compatible with whichever board assembly we ultimately use.
+Our contractor described how he would inspect a possible half-inch tile-backer-board assembly. He called this a wet-wall test. The corners would be taped, the screws and washers would be spaced appropriately, and each fastener penetration would be covered. The exact fasteners, tape, sealant, and inspection steps must match the system we select.
 
 The shower base will also get an overnight flood test. The plan is to:
 
@@ -128,34 +128,36 @@ One width question remains open. The stock [KERDI-BOARD-SC curb](https://www.sch
 
 Six inches, in other words, is the stock size. Three inches is the design target.
 
-## Moving the linear drain away from the wall
+## Moving the linear drain two inches from the wall
 
-Michael suggested placing the linear drain along the short wall with the controls, but setting it 2 to 4 inches away from the wall instead of pushing it directly into the wall-floor corner.
+Our contractor suggested placing the linear drain along the short wall with the controls. He proposed setting it 2 to 4 inches from the wall instead of placing it directly in the wall-floor corner.
 
 The reason is drainage at the transition. If the drain sits directly against the wall, water near that edge depends on the drain, wall tile, floor tile, and corner grout all meeting perfectly. Moving it slightly forward creates a narrow tiled strip behind the drain. That strip can be pitched back toward the drain so water does not collect against the wall or run toward the corner grout.
 
-Michael confirmed that the small strip should slope **1/4 inch per foot** toward the drain. Across a strip only 2 to 4 inches deep, that works out to approximately 1/24 to 1/12 inch of total fall. It is a subtle pitch, not a visible 1/4-inch step behind the drain.
+Our contractor confirmed that the small strip should slope **1/4 inch per foot** toward the drain. Across a 2-inch strip, that is approximately 1/24 inch of total fall. It is a subtle pitch, not a visible 1/4-inch step behind the drain.
 
-The larger shower floor can then use a single main slope toward the linear drain. Once the offset and back-strip slope are confirmed, I also want to revise the 3D model so it shows the actual drain location rather than a generic linear-drain placement.
+I chose 2 inches as the design target because it matches the short dimension of the 2-by-4-inch floor tile. It also keeps the strip narrow. This is not a universal Schluter requirement. Schluter says that [KERDI-LINE can be installed against a wall or at an intermediate location](https://www.schluter.com/schluter-us/en_US/Shower-System/Drains/Schluter%C2%AE-KERDI-LINE/p/KERDI_LINE). The exact gap depends on the drain body, grate, waterproofing flange, wall finish, and tile cuts.
+
+The larger shower floor can use a single main slope toward the linear drain. The 3D model now measures the 2-inch gap from the finished wall surface to the near edge of the visible drain frame. The installer still needs to confirm that distance after we select the exact drain assembly.
 
 ## The niche
 
 Our first version was 36 inches wide, 24 inches high, and about 5 inches deep. In the rendering, it looked proportionate, but when compared for size in our home, it turned out to be huge. It occupied 864 square inches of wall and pulled attention away from the tile.
 
-We briefly reduced it to 27 by 13 by 5 inches, which immediately felt more like storage and less like architecture. From there, we arrived at a target of **28 inches wide by 12 inches high**. Its face is 336 square inches, about 61 percent smaller than the original 36-by-24 opening. The current model shows a depth of 3 1/2 inches because it was originally based on the proportions of a prefabricated niche.
+We briefly reduced it to 27 by 13 by 5 inches, which immediately felt more like storage and less like architecture. From there, we arrived at a target of **28 inches wide by 14 inches high**. Its face is 392 square inches, about 55 percent smaller than the original 36-by-24 opening. The current model shows a depth of 3 1/2 inches because it was originally based on the proportions of a prefabricated niche.
 
 The shallower depth worried me at first because the existing niche is probably closer to 5 inches deep. But 3 1/2 inches fits the bottles we use, and depth is only useful if the things in the back remain easy to see and reach. A custom niche means that we are no longer tied to a prefabricated 3 1/2-inch depth. The final usable depth can be decided after the wall is open and we can see the framing and available wall thickness.
 
 The current height in the design is:
 
 - **48 inches from the finished shower floor to the bottom of the niche**
-- **60 inches from the finished shower floor to the top**
+- **62 inches from the finished shower floor to the top**
 
-For people who are 5 feet 7 inches and 5 feet 8 inches tall, that puts the contents below eye level but high enough that nobody needs to crouch. The bottom ledge is around chest height. This is not a code-derived number; it is an ergonomic choice. Before framing, I want to tape a 28-by-12 rectangle on the wall, put our actual bottles against it, and make sure it feels natural.
+For people who are 5 feet 7 inches and 5 feet 8 inches tall, that puts the contents below eye level but high enough that nobody needs to crouch. The bottom ledge is around chest height. This is not a code-derived number; it is an ergonomic choice. Before framing, I want to tape a 28-by-14 rectangle on the wall, put our actual bottles against it, and make sure it feels natural.
 
 The interior will use the same Cypress green 2-by-4 tile in a vertical straight lay, including the returns. A bullnose lip will finish the exposed front edge. This turns the niche into one concentrated green detail instead of another large field of wall tile.
 
-Michael said there is no particular need to use a prefabricated Schluter niche. A typical stud bay has roughly 14 to 14 1/2 inches of clear space. A 28-inch-wide niche spans approximately two of those bays, so he would need to frame around the 2-by-4s and the opening anyway. He considers that custom framing straightforward.
+Our contractor said there is no particular need to use a prefabricated Schluter niche. A typical stud bay has roughly 14 to 14 1/2 inches of clear space. A 28-inch-wide niche spans approximately two of those bays, so he would need to frame around the 2-by-4s and the opening anyway. He considers that custom framing straightforward.
 
 The niche therefore does not need to match a Schluter niche SKU. What still matters is that its back, returns, inside corners, and perimeter are waterproofed and connected continuously to the wall system. The exact framing arrangement and final depth will be confirmed after demolition exposes the wall.
 
@@ -163,7 +165,7 @@ The niche therefore does not need to match a Schluter niche SKU. What still matt
 
 Once we had enough dimensions, I built a small [interactive 3D model of the shower]({{ '/shower-design/' | relative_url }}) in HTML and JavaScript. The goal was not photorealism. I wanted a tool that would make proportion mistakes obvious and let us have concrete conversations with the contractor.
 
-The model uses the shower's real dimensions as its coordinate system: **78 inches long, 44 inches wide, and 132 inches high**. It has three tiled walls, an opening along one long side, a ceiling rain head, controls on the left wall, a linear drain, and the 3-inch visible curb.
+The model uses the shower's real dimensions as its coordinate system: **78 inches long, 44 inches wide, and 132 inches high**. It has three tiled walls, an opening along one long side, a ceiling rain head, controls on the left wall, a linear drain with a 2-inch wall gap, and the 3-inch visible curb.
 
 The tile layouts are also modeled rather than represented by a single flat color. The plain [Florim SensiTerre Rosato](https://www.florim.com/en/products/all-collections/sensiterre/rosato) porcelain wall tile is laid horizontally in its nominal 12-by-24-inch format. Florim lists the metric size as 30 by 60 centimeters. We chose the plain Rosato surface, not the more textured Grana Rosato. The Cypress green 2-by-4 tile is laid vertically on the shower floor, the 8-inch-high wall band, the curb, and inside the niche. Grout joints are represented at approximately 3/16 inch, so a change in orientation changes the visual rhythm instead of just changing a label.
 
@@ -173,27 +175,12 @@ The page uses Three.js to draw the geometry in a browser. Inches are used direct
 
 Dimension markers are HTML labels projected from points in the 3D scene. This lets the measurements stay crisp and readable while the model rotates. It also means that the labels and the actual geometry are separate systems—which led to the most useful bug in the project.
 
-### The flat-niche bug
-
-In an early version, I changed the niche label from 3 1/2 inches deep to 5 inches deep. I moved the green back tile. From the front, it still looked flat.
-
-The problem was that I had changed the nominal depth without changing the whole wall assembly. The field tiles and backing plane still ran across the niche opening, so the back and side returns were visually collapsed behind a flat surface. The dimension label said one thing while the geometry said another.
-
-Fixing it required treating the niche as an actual void:
-
-- cut an opening through the wall backing, grout field, and porcelain tile field;
-- move the niche back surface behind the wall plane by the full modeled depth;
-- add visible top, bottom, left, and right tiled returns;
-- add the bullnose lip at the wall face; and
-- anchor the depth dimension from the wall face to the niche back, rather than positioning a floating label nearby.
-
-The lesson was delightfully blunt: **labels are not geometry**. If a dimension matters, it has to exist in the construction of the model, not only in the annotation.
 
 ### What the model helped us decide
 
 The model made several debates much easier:
 
-- A 36-by-24-inch niche was too dominant; 28 by 12 felt proportional.
+- A 36-by-24-inch niche was too dominant; 28 by 14 felt proportional.
 - The curb looked disconnected when its green tile ran horizontally. Returning it to the same vertical straight lay as the shower floor made the materials feel intentional.
 - An 8-inch green band at the bottom of the three walls reads as a base, while a taller band begins to compete with the Rosato field tile.
 - A 3-inch visible curb feels low and ordinary in the room, despite the fact that the stock foam curb begins at 6 inches.
@@ -205,21 +192,21 @@ The model is a communication tool, not a construction drawing. It does not deter
 
 ## Timing and the existing glass
 
-The shower currently has a glass enclosure. Before demolition, Lons Glass in San Leandro will need to remove it. If the dimensions still work with the rebuilt curb and tile assembly, they can store it so that we have the option to reuse it. That decision belongs early in the schedule: the glass needs to be protected before demolition, and small changes to the finished curb can determine whether it fits afterward.
+The shower currently has a glass enclosure. Before demolition, a glass shop will need to remove it. If the dimensions still work with the rebuilt curb and tile assembly, they can store it so that we have the option to reuse it. That decision belongs early in the schedule: the glass needs to be protected before demolition, and small changes to the finished curb can determine whether it fits afterward.
 
-Michael's current estimate is approximately 2 to 2 1/2 weeks for the whole project. That timeline depends on what demolition reveals, whether the framing or subfloor needs repair, the plumbing transition, the inspections, the overnight flood test, and tile installation. It is a useful planning estimate, but not yet a promise about the finish date.
+The contractor currently estimates approximately 2 to 2 1/2 weeks for the whole project. That timeline depends on what demolition reveals, whether the framing or subfloor needs repair, the plumbing transition, the inspections, the overnight flood test, and tile installation. It is a useful planning estimate, but not yet a promise about the finish date.
 
 ## Decisions so far
 
 - Shower footprint: 44 inches by 78 inches
 - Ceiling height: 11 feet
 - Three tiled walls, with the opening on a long side
-- Proposed linear-drain location along the short wall with the controls, offset 2 to 4 inches from the wall, with the narrow strip behind it sloped 1/4 inch per foot toward the drain
+- Linear-drain design target along the short wall with the controls, with a 2-inch finished-wall gap and a narrow strip sloped 1/4 inch per foot toward the drain
 - Approximately 3 inches of visible finished curb height, using a trimmed KERDI-BOARD-SC curb
 - Plain Florim SensiTerre Rosato porcelain wall tile in the nominal 12-by-24-inch format, in a horizontal lay
 - Cypress green 2-by-4-inch tile in a vertical straight lay on the floor, wall base, curb, and niche interior
-- Custom-framed niche target: 28 inches wide by 12 inches high; current model depth is 3 1/2 inches, with final usable depth to be confirmed after demolition
-- Niche bottom at 48 inches and top at 60 inches above the finished shower floor
+- Custom-framed niche target: 28 inches wide by 14 inches high; current model depth is 3 1/2 inches, with final usable depth to be confirmed after demolition
+- Niche bottom at 48 inches and top at 62 inches above the finished shower floor
 - Ceiling-mounted rain shower head, with controls on the left wall
 - Wall-waterproofing inspection and an overnight flood test before tile installation
 - Approximately 2 to 2 1/2 weeks of construction, subject to demolition findings and inspections
@@ -229,7 +216,7 @@ Michael's current estimate is approximately 2 to 2 1/2 weeks for the whole proje
 - What failed in the original shower and what demolition reveals
 - The niche's final usable depth and exact framing after the wall is opened
 - The final linear-drain and plumbing transition
-- The final linear-drain offset within the proposed 2-to-4-inch range
+- Whether the selected drain assembly and field conditions support the 2-inch finished-wall gap shown in the model
 - What the wall-waterproofing inspection and overnight flood test reveal
 - Whether the existing glass enclosure can be reused after the finished curb dimensions change
 - The tile quantities we actually ordered, including waste and bullnose pieces
