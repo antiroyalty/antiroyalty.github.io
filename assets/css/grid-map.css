@@ -248,10 +248,12 @@
 
 .grid-popup strong {
   color: var(--ink);
-  font-family: "East Sea Dokdo", cursive;
-  font-size: 1.8rem;
-  font-weight: 400;
-  line-height: 0.9;
+  font-family: var(--heading-font);
+  font-size: 1.15rem;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
 }
 
 .grid-popup dl {

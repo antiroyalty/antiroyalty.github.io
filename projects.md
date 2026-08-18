@@ -7,7 +7,7 @@ permalink: /projects/
 <section>
   <div class="page-intro">
     <p class="eyebrow">Tools, maps, and working models</p>
-    <h1>Projects</h1>
+    <h1 class="script-heading">Projects</h1>
     <p>Experiments that make electricity systems, infrastructure, and research software easier to inspect.</p>
   </div>
   <div class="projects-grid">
