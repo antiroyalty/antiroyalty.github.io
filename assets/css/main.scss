@@ -539,28 +539,6 @@ img, video { max-width: 100%; height: auto; }
 .case-question-list strong { color: var(--ink); font-size: 0.92rem; }
 .case-question-list span { color: var(--muted); font-size: 0.86rem; line-height: 1.55; }
 
-.case-section--split {
-  display: grid;
-  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
-  gap: clamp(40px, 8vw, 100px);
-  max-width: 980px;
-}
-
-.case-section--split p { margin-top: 0; line-height: 1.7; }
-.case-section--split p + p { margin-top: 1.2rem; }
-
-.case-note {
-  max-width: 920px;
-  margin: 0 0 clamp(80px, 10vw, 120px);
-  padding: 30px 0 32px 28px;
-  border-top: 1px solid rgba(30, 78, 140, 0.22);
-  border-bottom: 1px solid rgba(30, 78, 140, 0.22);
-  border-left: 7px solid #9aaca0;
-}
-
-.case-note h2 { margin-top: 0; }
-.case-note > p:last-child { max-width: 760px; margin-bottom: 0; line-height: 1.7; }
-
 .year-heading { margin: 2.7rem 0 0.7rem; color: var(--blue-deep); font-size: 1.1rem; letter-spacing: 0.08em; }
 
 .guestbook-box {
@@ -671,7 +649,7 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
   .desk-header, .section-heading { display: block; }
   .desk-status { margin-top: 16px; }
   .section-heading > a { display: inline-block; margin-top: 8px; }
-  .case-hero, .case-section--split { grid-template-columns: 1fr; }
+  .case-hero { grid-template-columns: 1fr; }
   .case-hero { align-items: start; }
   .case-facts { max-width: 520px; }
   .tile-value { font-size: 2.2rem; }
@@ -681,7 +659,6 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
   .project-tile__content { padding-right: 34px; }
   .case-question-list li { grid-template-columns: 32px minmax(0, 1fr); gap: 9px 14px; }
   .case-question-list span { grid-column: 2; }
-  .case-note { padding-left: 20px; }
   .post-list li { display: block; }
   .post-list time { display: block; margin-top: 4px; }
 }

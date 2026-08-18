@@ -62,31 +62,9 @@ explorer_url: "https://electrify-california.vercel.app/"
     </ol>
   </section>
 
-  <section class="case-section case-section--split" aria-labelledby="case-method-title">
-    <div>
-      <p class="eyebrow">Method</p>
-      <h2 id="case-method-title">A window into the research, not a new calculator</h2>
-    </div>
-    <div>
-      <p>The browser does not run an optimization or calculate a new tariff. It selects and explains results that the research model has already produced.</p>
-      <p>Each release records the research commit, paper run, scenario, tariff snapshot, source files, and file hashes. The application rejects incomplete, inconsistent, unpublished, or modified results.</p>
-    </div>
+  <section class="case-section" aria-labelledby="case-about-title">
+    <h2 id="case-about-title">About</h2>
+    <p>Electrify California is a companion to my research on household electrification, solar, storage, and utility rates in California. It presents results that the research model has already produced. The site does not run a new optimization or create an individual bill forecast.</p>
+    <p>The live application is a research preview while I prepare the first versioned results release. Each published release will identify the model run, scenario, tariff snapshot, source files, and file hashes used to produce its results. The examples describe representative modeled households rather than individual homes.</p>
   </section>
-
-  <section class="case-section case-section--split" aria-labelledby="case-role-title">
-    <div>
-      <p class="eyebrow">My role</p>
-      <h2 id="case-role-title">Research, modeling, and product design</h2>
-    </div>
-    <div>
-      <p>I developed the underlying California solar and storage research and designed this companion to make its household-level implications easier to inspect.</p>
-      <p>The project combines energy modeling, tariff and billing logic, reproducible data releases, runtime validation, and an accessible interactive interface.</p>
-    </div>
-  </section>
-
-  <aside class="case-note" aria-labelledby="case-status-title">
-    <p class="eyebrow">Current status</p>
-    <h2 id="case-status-title">The interface is ready for its first research release.</h2>
-    <p>The live application remains a research preview until the first pinned results pass the publication checks. Results describe a representative modeled household. They are not an individual bill forecast or installation recommendation.</p>
-  </aside>
 </article>
