@@ -1,3 +1,9 @@
+- title: Electrify California
+  url: "/projects/electrify-california/"
+  description: Explore how electrification, solar, storage, and California utility rates shape modeled household costs.
+  accent: paper
+  status: Research preview
+
 - title: California Electricity Desk
   url: "/#electricity-desk"
   description: A five-minute view of demand, solar, wind, and batteries on California's grid.

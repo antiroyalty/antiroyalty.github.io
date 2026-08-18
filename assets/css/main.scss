@@ -468,11 +468,98 @@ img, video { max-width: 100%; height: auto; }
 .project-specimen--1 { background-position: 100% 0; transform: rotate(2deg); }
 .project-specimen--2 { background-position: 0 100%; transform: rotate(-2deg); }
 .project-specimen--3 { background-position: 50% 100%; transform: rotate(1deg); }
+.project-specimen--4 { background-position: 100% 100%; transform: rotate(-1deg); }
 .project-tile:hover .project-specimen { transform: translateY(-3px) rotate(0); }
 
 .page-intro { max-width: 760px; margin: 25px 0 52px; }
 .page-intro h1 { margin: 0 0 1rem; }
 .page-intro > p:last-child { font-size: 1.15rem; }
+
+.project-case-study { margin-top: 18px; }
+
+.case-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.7fr);
+  gap: clamp(42px, 8vw, 104px);
+  align-items: end;
+  padding: clamp(48px, 7vw, 82px) 0 clamp(45px, 6vw, 70px);
+  border-top: 2px solid var(--blue-deep);
+  border-bottom: 1px solid rgba(30, 78, 140, 0.26);
+}
+
+.case-hero h1 { margin: 0 0 1rem; }
+.case-lead { max-width: 760px; margin: 0; font-size: clamp(1.12rem, 2.2vw, 1.42rem); line-height: 1.5; }
+.case-actions { min-height: 44px; margin-top: 2rem; }
+
+.case-status {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 8px 13px;
+  border: 1px solid rgba(30, 78, 140, 0.28);
+  color: var(--blue-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.case-facts { margin: 0; border-top: 1px solid rgba(30, 78, 140, 0.22); }
+.case-facts div { padding: 15px 0 16px; border-bottom: 1px solid rgba(30, 78, 140, 0.22); }
+.case-facts dt { color: var(--blue-deep); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.case-facts dd { margin: 5px 0 0; color: var(--ink); font-size: 0.86rem; line-height: 1.45; }
+
+.case-section {
+  max-width: 920px;
+  margin: clamp(82px, 11vw, 132px) 0;
+}
+
+.case-section h2 { max-width: 820px; margin-top: 0; }
+.case-section > p:not(.eyebrow) { max-width: 760px; font-size: 1rem; line-height: 1.7; }
+
+.case-question-list {
+  margin: 42px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(30, 78, 140, 0.22);
+  list-style: none;
+  counter-reset: case-question;
+}
+
+.case-question-list li {
+  display: grid;
+  grid-template-columns: 38px minmax(190px, 0.55fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: baseline;
+  padding: 21px 0 22px;
+  border-bottom: 1px solid rgba(30, 78, 140, 0.22);
+  counter-increment: case-question;
+}
+
+.case-question-list li::before { color: var(--blue-deep); font-size: 0.72rem; font-weight: 800; content: "0" counter(case-question); }
+.case-question-list strong { color: var(--ink); font-size: 0.92rem; }
+.case-question-list span { color: var(--muted); font-size: 0.86rem; line-height: 1.55; }
+
+.case-section--split {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
+  gap: clamp(40px, 8vw, 100px);
+  max-width: 980px;
+}
+
+.case-section--split p { margin-top: 0; line-height: 1.7; }
+.case-section--split p + p { margin-top: 1.2rem; }
+
+.case-note {
+  max-width: 920px;
+  margin: 0 0 clamp(80px, 10vw, 120px);
+  padding: 30px 0 32px 28px;
+  border-top: 1px solid rgba(30, 78, 140, 0.22);
+  border-bottom: 1px solid rgba(30, 78, 140, 0.22);
+  border-left: 7px solid #9aaca0;
+}
+
+.case-note h2 { margin-top: 0; }
+.case-note > p:last-child { max-width: 760px; margin-bottom: 0; line-height: 1.7; }
 
 .year-heading { margin: 2.7rem 0 0.7rem; color: var(--blue-deep); font-size: 1.1rem; letter-spacing: 0.08em; }
 
@@ -584,11 +671,17 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
   .desk-header, .section-heading { display: block; }
   .desk-status { margin-top: 16px; }
   .section-heading > a { display: inline-block; margin-top: 8px; }
+  .case-hero, .case-section--split { grid-template-columns: 1fr; }
+  .case-hero { align-items: start; }
+  .case-facts { max-width: 520px; }
   .tile-value { font-size: 2.2rem; }
   .project-tile { grid-template-columns: 5px minmax(0, 1fr); gap: 18px; width: 100%; min-height: 210px; padding-right: 0; }
   .project-tile:hover { padding-right: 0; padding-left: 0; transform: none; }
   .project-specimen { position: absolute; right: -22px; bottom: -35px; z-index: 0; width: 105px; opacity: 0.34; }
   .project-tile__content { padding-right: 34px; }
+  .case-question-list li { grid-template-columns: 32px minmax(0, 1fr); gap: 9px 14px; }
+  .case-question-list span { grid-column: 2; }
+  .case-note { padding-left: 20px; }
   .post-list li { display: block; }
   .post-list time { display: block; margin-top: 4px; }
 }
