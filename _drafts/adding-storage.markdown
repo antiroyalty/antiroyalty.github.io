@@ -7,17 +7,19 @@ categories: notes
 
 In fall 2025, I had about two months to work out whether I could add a battery to my existing solar system before the federal tax credit ended.
 
-I did not get the battery installed. I spent those two months learning how storage would fit into the solar and electrical systems already in the house. This post records where I got and what I would need to do if I return to the project.
+I did not get the battery installed, but I did spend those two months learning how storage would fit into the solar and electrical systems already in the house. This post records what I learned, where I got stuck, and what I would need to do if I return to the project.
 
-## Why I wanted a battery
+## No battery, no toilet flush
 
-I wanted a battery for two reasons: to use more of the solar energy that the house produces and to have backup power during an outage.
+I wanted a battery primarily for one reason: 
 
 The house has a sewer ejector pump that moves wastewater out of the lower level. The pump stops when the power goes out. I wanted enough backup power to keep it available during an outage.
 
-I did not yet know how much battery capacity I needed. I first needed to know how much power the pump draws while running, how much it needs when it starts, and which other circuits should stay on. That information would determine whether I needed to back up a few essential loads or most of the house.
+The other benefits of using more of our solar energy (we have solar panels) and backup during a power outage were great but definitely secondary to being able to remove waste from our home. Having the sewer ejector overflow is absolutely no fun, and we've had that experience before.
 
-## The system I already had
+I didn't know how exactly much battery capacity I would need, or what is available on the market. I also didn't know whether it would be possible with the type of solar that I have, nor whether it'd even be possible without a panel upgrade. I first needed to know how much power the pump draws while running, how much it needs when it starts, and which other circuits should stay on.
+
+## We have solar at home
 
 The 2019 A1 Sun installation agreement describes my Enphase solar system as 4.44 kW DC. It has twelve LG370 solar modules, twelve IQ7+ microinverters, and one IQ Envoy monitoring unit. The matching PG&E agreement lists the system as 4.0 kW CEC-AC. The DC number comes from the solar modules. The CEC-AC number estimates output after conversion to AC. The system operates under PG&E's NEM 2 tariff.
 
