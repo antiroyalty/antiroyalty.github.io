@@ -5,27 +5,25 @@ date: 2026-08-18 12:00:00 -0700
 categories: notes
 ---
 
-I was recently reviewing an EnergySage quote for five solar-and-battery options. Every offer showed a shorter payback period with a battery than with solar alone. The solar-and-battery estimates ranged from 6.1 to 7.6 years, compared with 6.8 to 9.6 years for solar alone.
+I was recently reviewing an EnergySage comparison with five quotes for solar and battery storage. All five quotes showed a shorter payback period with a battery than with solar alone. The solar-and-battery estimates ranged from 6.1 to 7.6 years, while the solar-only estimates ranged from 6.8 to 9.6 years.
 
-That result was surprising. In my research on residential solar and storage in California, a battery can reduce annual bills without earning back its installed cost.
+This was interesting to me because I have been researching the cost of residential solar and storage in California. In my results, adding a battery can save money on the electric bill, but the savings are usually not enough to recover the cost of the battery.
 
-I first thought the difference came from simple payback rather than net present value. Net present value discounts future savings because a dollar received years from now is worth less than a dollar today. After I worked through the quote, I found a larger difference: EnergySage and my model were not answering the same question.
+At first, I thought the difference was probably simple payback versus net present value. Simple payback counts how many years of savings it takes to recover the original cost. Net present value also accounts for the fact that a dollar saved fifteen years from now is worth less than a dollar saved today.
 
-The installer prices in the quote are still useful. I would not use its 25-year savings estimates without rebuilding the calculation from the underlying assumptions.
+That was part of the difference, but it was not all of it. I started working backwards from the EnergySage numbers to understand what else was happening.
 
-## The same battery value appears in all five quotes
+## Working backwards from the five quotes
 
-The five installers gave different prices for solar and storage. EnergySage then reported separate 25-year savings estimates for solar alone and for solar with a battery.
+The five installers proposed different prices for both solar and storage. EnergySage then showed how much the homeowner would supposedly save over 25 years with solar alone, and with solar plus a battery.
 
-I removed the installer names and labeled the offers A through E. I calculated the value assigned to the battery in two steps:
+To isolate the battery, I first subtracted the solar-only savings from the solar-and-battery savings. This gave me the *added net savings* shown for storage. Then I added the battery price back in, since that cost had already been subtracted from the final savings number.
 
-`added net savings = solar-and-battery savings − solar-only savings`
-
-`implied gross battery value = added net savings + battery price`
-
-For example, quote A becomes:
+For example, the first quote showed $157,071 in savings with solar and storage, compared with $77,481 for solar alone. The battery itself cost $14,500:
 
 `($157,071 − $77,481) + $14,500 = $94,090`
+
+I removed the installer names and repeated the same calculation for all five quotes:
 
 | Quote | Battery price | Added net savings | Implied gross battery value |
 | --- | ---: | ---: | ---: |
@@ -35,65 +33,81 @@ For example, quote A becomes:
 | D | $12,995 | $81,108 | $94,103 |
 | E | $14,500 | $79,444 | $93,944 |
 
-The implied gross value ranges from $93,944 to $94,119. The difference between the highest and lowest result is only $175, or about 0.2 percent.
+The answer was basically the same every time. EnergySage assigned the battery between $93,944 and $94,119 in gross value across the five quotes. That is a range of only $175, or about 0.2 percent.
 
-This does not reveal EnergySage's full internal model. It does show that the long-term battery benefit is nearly identical across all five offers. The platform appears to calculate one property-level battery value, then subtract each installer's battery price.
+I cannot see EnergySage's internal calculation, so I can't say exactly how it produced this number. But the consistency is useful information! The installers proposed different equipment at different prices, while the quote appears to use one shared estimate of the battery's value for the property. It then subtracts each installer's battery price.
 
-## A high escalation rate puts most of the value in later years
+## The 7.1 percent assumption is doing a lot
 
-The fine print says that EnergySage uses a 7.1 percent annual energy-cost inflation estimate. It attributes the estimate to the ten-year California average from the U.S. Energy Information Administration.
+The next place I looked was the fine print. EnergySage says that it assumes electricity costs increase by 7.1 percent each year, based on the previous ten years of California electricity prices from the U.S. Energy Information Administration.
 
-I originally called this a nominal discount rate. That was wrong. The [EIA publishes electricity prices in nominal dollars](https://www.eia.gov/tools/faqs/faq.php?id=13&t=5), which means the prices are not adjusted for inflation. EnergySage uses the historical price change as an electricity-price escalation rate. The rate increases future avoided bills. It does not reduce future dollars to their present value.
+I originally described this as a nominal discount rate, which was incorrect. The [EIA publishes electricity prices in nominal dollars](https://www.eia.gov/tools/faqs/faq.php?id=13&t=5), meaning that its historical prices are not adjusted for inflation. EnergySage is taking the historical increase in those prices and using it as an annual electricity-price escalation rate.
 
-If a rate of $0.40 per kWh rises by 7.1 percent each year, it reaches about $0.74 in year 10 and $2.08 in year 25:
+That distinction matters. A discount rate reduces future savings to their value today. An escalation rate does the opposite: it makes each future electric bill larger.
 
-`$0.40 × 1.071^24 = $2.08 per kWh`
+To see how much 7.1 percent compounds, I started with electricity at $0.40 per kWh:
 
-The recent rate increases in California were real. They may continue. The difficult assumption is that the same average increase continues, compounds, and applies for 25 years.
+- Year 2: `$0.40 × 1.071 = $0.428 per kWh`
+- Year 10: `$0.40 × 1.071^9 = $0.74 per kWh`
+- Year 25: `$0.40 × 1.071^24 = $2.08 per kWh`
 
-The quote reports 25-year cash savings and a simple payback period. Those measures do not discount the later savings. A high escalation rate therefore gives the last years of the estimate a large effect on the result.
+California electricity prices genuinely increased a lot during the previous decade, and they may keep increasing. But carrying that same 7.1 percent increase forward for another 25 years makes electricity more than five times as expensive by the end of the calculation.
 
-## The fine print leaves out the tariff rules that give a battery value
+This assumption has an especially large effect because the quote reports simple payback and 25-year cash savings. The savings in those later years are not discounted back to their present value. As a result, a large share of the battery's value arrives far into the future, when the model assumes that electricity is extremely expensive.
 
-The quote also says that its calculation does not account for time-of-use rates or utility net-billing policies.
+## The quote leaves out the tariff details
 
-These are not minor details for a battery in California. A time-of-use rate changes the price of electricity during the day. A net-billing tariff changes the credit for electricity exported to the grid. Under California's current [Net Billing Tariff](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing), export credits vary by hour. A battery can store solar energy when export credits are low, then supply the home when grid electricity costs more.
+Another part of the fine print surprised me. The quote says that its calculation does not account for time-of-use rates or utility net-billing policies.
 
-The result is different under one-to-one net metering. If an exported kWh receives the same credit as a kWh used later, the battery adds little bill value. It can even reduce value because some energy is lost during charging and discharging.
+Those are two of the most important inputs for valuing a battery in California! A time-of-use rate changes the price of electricity depending on the hour. A net-billing tariff determines how much the utility pays for solar electricity exported to the grid.
 
-EnergySage's own [battery-savings guide](https://www.energysage.com/energy-storage/how-much-can-you-save-batteries/) explains that battery savings depend on net metering and time-varying rates. The exported quote omits both, but still assigns about $94,000 of gross value to the battery. It does not provide enough information to reproduce that value from the household's tariff and energy use.
+Under California's current [Net Billing Tariff](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing), solar exported during the middle of the day is usually worth less than electricity purchased from the grid. A battery can store that solar energy and use it later, when electricity is more expensive. The difference between those prices is one of the main ways that a battery produces bill savings.
 
-## The quote shows one battery purchase across 25 years
+Under one-to-one net metering, the result can be very different. If the utility gives me the same credit for an exported kWh that I would pay to use a kWh later, I gain little by putting that energy through a battery. I may even lose value because some energy is lost while charging and discharging.
 
-I also checked the fine print for a battery replacement assumption.
+EnergySage's own [guide to battery savings](https://www.energysage.com/energy-storage/how-much-can-you-save-batteries/) says that net metering and time-varying rates are important. But the exported quote excludes both of them and still assigns about $94,000 in gross value to the battery. Without the tariff and hourly energy-use assumptions, I could not reproduce that result.
 
-The quote does not say that the battery will physically last 25 years. It shows one battery purchase at installation and then reports solar-and-battery savings over 25 years. It does not show a replacement cost, battery degradation, declining usable capacity, or an end-of-life assumption.
+## What happens after the first battery?
 
-I cannot inspect EnergySage's private calculation. I can only audit what the quote presents. In the displayed calculation, the original battery is treated as if it continues to produce savings across the full 25-year period without another battery purchase.
+The third issue was the 25-year time horizon. The quote charges for one battery at the beginning, then reports the savings from solar and storage over the next 25 years.
 
-That is a favorable assumption. The [2024 Annual Technology Baseline](https://atb.nlr.gov/electricity/2024/residential_battery_storage) uses a 15-year lifetime for residential batteries. It includes battery-augmentation costs to maintain rated capacity during that period. Many home-battery warranties cover ten to fifteen years. A 25-year estimate should state what happens when the first battery reaches the end of its useful life.
+To be precise, the quote does not say that the physical battery will last for 25 years. It also does not show a replacement cost, battery degradation, declining usable capacity, or the year when the first battery reaches the end of its life. In the accounting visible to the homeowner, one initial battery continues producing savings for the full 25 years without another battery purchase.
 
-## Annual bill savings do not prove that a battery is cost-effective
+That seems generous to me. In our research, we use a 15-year battery life with no degradation, which is already on the optimistic side. The [2024 Annual Technology Baseline](https://atb.nlr.gov/electricity/2024/residential_battery_storage) also uses a 15-year lifetime for residential batteries and includes battery-augmentation costs to maintain capacity. Many home-battery warranties cover ten to fifteen years.
 
-My research asks whether the battery's bill savings exceed its installed cost. I tested a 13.5 kWh battery added to a fixed 7.6 kW solar system. The battery reduced the annual bill by about $1,037 before accounting for its purchase price.
+If a savings estimate runs for 25 years, I would want to know what it assumes after year 10 or 15. Does the homeowner replace the battery? Does its usable capacity decline? Do the savings stop? None of those assumptions were visible in this quote.
 
-Over 15 years, discounted at 7 percent, those annual savings have a present value of about $9,445:
+## Saving money each year is not the same as breaking even
+
+The EnergySage result and my research initially looked contradictory, but they were also describing different parts of the calculation.
+
+I ran our dispatch model with a fixed 7.6 kW solar system and a 13.5 kWh battery. In that example, the battery reduced the electric bill by about $1,037 per year. That is a real operational benefit! But it is the gross bill reduction before paying for the battery.
+
+Over a 15-year life, discounted at 7 percent, those annual savings are worth about $9,445 today. The present-value factor is 9.108:
 
 `$1,037 × 9.108 = $9,445`
 
-The factor 9.108 is the present-value annuity factor for 15 years at 7 percent. The modeled installed battery cost was about $19,719, based on the NREL cost benchmark. The resulting net value was negative:
+The installed battery cost in our model was about $19,719, based on the NREL cost benchmark. After including that cost, the net value was negative:
 
 `$9,445 − $19,719 = −$10,274`
 
-The battery could save money on each bill and still fail to recover its capital cost. Under these assumptions, the installed cost would need to fall to about $701 per kWh for the battery to break even.
+So, "the battery saves $1,037 per year" does not mean that the battery is cost-effective. The savings still have to be compared with the upfront cost.
 
-EnergySage's five battery prices ranged from $10,900 to $14,650. Those prices were lower than the benchmark in my model. However, the exported comparison did not include enough battery specifications for me to confirm each system's usable capacity, power, or equipment scope. I could not compare those prices with my model until I knew the storage capacity and equipment included.
+I also checked the result per kWh of battery capacity. The battery saved about $77 per kWh of capacity each year:
 
-## What I would use the quote for
+`$1,037 ÷ 13.5 kWh = $77 per kWh per year`
 
-EnergySage gives a homeowner a useful way to compare installer prices, equipment, reviews, and years in business. Its long-term savings number needs a separate check.
+Over 15 years, that produces a break-even installed cost of about $701 per kWh:
 
-For a solar-and-battery investment, I would ask for these inputs:
+`$77 × 9.108 = $701 per kWh`
+
+The five EnergySage battery prices ranged from $10,900 to $14,650, which was lower than the battery price in our model. However, the exported comparison did not provide enough detail about usable capacity, power, or included equipment. I could not make an equivalent price comparison without those specifications.
+
+## What I would still use the quote for
+
+I do not think the EnergySage comparison is useless. It collects installer prices, proposed equipment, reviews, and company history in one place. That can be very helpful when choosing who to contact.
+
+I would treat the long-term savings and payback estimates as a starting point, not as the final financial result. Before relying on them, I would want to see:
 
 - The battery's usable capacity, output power, efficiency, and expected degradation.
 - The household's hourly imports and exports.
@@ -103,6 +117,6 @@ For a solar-and-battery investment, I would ask for these inputs:
 - The equipment, electrical work, and backup hardware included in the price.
 - The annual cash flows used to calculate payback and long-term savings.
 
-I expected the difference between the EnergySage quote and my research to come mainly from simple payback versus net present value. That explained part of it. The larger issue was that the two calculations used different time horizons, tariff detail, future-price assumptions, and battery-life assumptions.
+I went into this expecting simple payback versus net present value to explain the difference between the EnergySage quote and our research. It explained some of it. The rest came from the 25-year time horizon, the 7.1 percent electricity-price increase, the missing tariff details, and the lack of a visible battery replacement.
 
-The quote can help compare offers. It is not enough, by itself, to show that a battery will pay for itself.
+The quote gave me useful information about the five offers. I would still rebuild the savings calculation before deciding whether any one of the batteries would actually pay for itself.

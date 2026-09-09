@@ -69,6 +69,8 @@ nav:
     url: /
   - title: Projects
     url: /projects/
+  - title: Resume
+    url: /resume/
   - title: Writing
     url: /writing/
   - title: Guestbook

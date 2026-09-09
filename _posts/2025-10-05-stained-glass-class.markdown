@@ -5,66 +5,66 @@ date: 2025-10-05 12:00:00 -0700
 categories: notes
 ---
 
-In fall 2025, I took a stained-glass class through the Berkeley Art Studio.
+In fall 2025, I took a stained-glass class through the <a href="https://artstudio.berkeley.edu">Berkeley Art Studio</a>. At the time was enrolled at Cal as a PhD student, but these classes are also open to the general public.
 
-We started by drawing a design on cardstock. We colored it lightly where that helped, numbered each piece, and cut the drawing apart. Those paper pieces became templates for the glass.
+It was an 8 week series of classes, gradually building up in difficulty. Our first project was a mini suncatcher completed end-to-end in one day. A few weeks later, we worked towards completing a larger project.
 
-My design was a bird. I planned to use red and burgundy glass for most of its body, with blue and green pieces around its head, tail, and legs. The drawing divided the bird into more than thirty numbered pieces.
+For any new stained glass design, the process started by drawing our design of choice on paper. We colored it where that helped to match the glass colors, and numbered each piece (essential). After this, we had to procure the appropriate amount of glass, in each color, corresonding to my design. I had a field day browsing <a href="https://stainedglassgarden.com">Stained Glass Garden</a>, a stained glass store in North Berkeley. Latex gloves were essential, as tiny shards of glass became inevitable when handling so much of it. 
+
+This also leads to dispelling another myth of stained glass art: we don't actually stain the glass! There's glass *painting*, but making stained glass art actually involves picking out pre-colored peices of glass and soldering them together. This means that we can work with a lot of different colors, and also that creating these distinct colors of glass sometimes also yields different textures! There can be clear translucent red, milky opaque white, iridescent purple, mirror, and everything in between.
+
+Coming back to the studio with glass in hand, the next step was to cut the drawing apart. Those numbered paper pieces became templates for cutting the glass. Using a glue stick, we stuck the paper pieces onto the glass of the right color, trying to stay close to the edges of the glass, or lining up the straight edges with straight edges of the glass so the cuts would be easier to make, and less wasteful of the overall large piece of glass. 
+
+My design inspiration at the time with Slavic folklore. It was related to the themes for my wedding invitations at the time -- I felt inspired by the rich colors and curved lines of older Russian folklore. I picked out a design of a bird, then simplified the colors and number of distinct glass pieces, and drew up the image. I planned to use red and burgundy glass for most of its body, with blue and green pieces around its head, tail, and legs. Even though I tried to simplify the design, ultimately the drawing divided the bird into more than thirty numbered pieces. For a ~second piece, that was quite a lot!
 
 <figure class="post-banner post-photo-portrait">
   <img src="{{ '/assets/img/stained-glass/original-bird-design.webp' | relative_url }}" alt="Numbered drawing of a bird beside red and burgundy glass covered with paper templates">
   <figcaption>The numbered bird drawing and some of the paper templates arranged on the first sheets of glass.</figcaption>
 </figure>
 
-Then we started scoring and breaking the glass.
+Then we started scoring and cutting the glass.
 
-The first surprise was the broken glass itself. I was intentionally breaking sheets of glass, so of course shards collected around the work area. Still, I had never chosen to put myself in that situation before.
-
-The work was meditative. It was less precise than drawing or painting, and cleaner than ceramics. But it also required me to give myself over to the material. Each sheet cut and split differently. Each one had its own colors, textures, and small variations.
-
-You have to give the glass somewhere to go.
+For anyone who's baked before, glass scoring is not unlike scoring an unbaked loaf of bread! You never actually "cut" all the way through the glass. Instead, the idea is to "suggest" a convenient place for the glass to break by slightly scoring it, and then "bend" the glass, and hope that it takes your suggestion and breaks along the scored line. Just like we have with paper or wood, glass for stained glass has fibers, and if you can manage to get it to break along those fibers, you get a clean break. Otherwise, you might need to spend time prying it apart with plyers. And of course, then you have to deal with potentially working in a pile of glass shards.
 
 ## Designing for how glass breaks
 
-The first design constraint was size. The drawing had to fit on the cardstock, and every part had to fit within the glass sheets I had available.
+The first design constraint was size. The drawing had to fit on the paper and thus within each glass pane.
 
-The harder constraint was shape. I could not draw narrow points, sharp turns, or lines that met at extreme angles and expect the glass to behave like paper.
-
-The difficult shapes are often *inner curves*. Think of a crescent moon. The outside edge is a gentle curve. The curve around the moon's face turns inward. That second curve is the hard one.
+In hindsight it's obvious, but at the time I didn't realize how limited I would be in the shapes I could make. Because glass typically breaks along a line, you can't really get it to break at deep curves - the inside edge of a crecent moon is pretty hard to pull off! You also can't do narrow points, cut-out curners. You basically can't cut glass the way you cut paper. Each "cut" on the glass needs to go along the full length of the glass pane.
 
 <figure class="post-banner post-photo-portrait">
   <img src="{{ '/assets/img/stained-glass/cutting-red-glass.webp' | relative_url }}" alt="Curved paper templates arranged on red glass beside a ruler, marker, and glass cutter">
   <figcaption>Curved paper templates positioned on red glass before scoring.</figcaption>
 </figure>
 
-A glass cutter does not slice through a sheet. It makes a shallow fissure called a scoreline. When pressure is applied on both sides, the crack can run along that line. [Bullseye Glass describes the process clearly in its glass-cutting guide](https://www.bullseyeglass.com/glass-cutting-basics/).
+Going back to what I was saying earlier, a glass cutter doesn't slice through a sheet. It makes a shallow fissure called a scoreline. When pressure is applied on both sides, the crack can run along that line. [Bullseye Glass describes the process clearly in its glass-cutting guide](https://www.bullseyeglass.com/glass-cutting-basics/).
 
-The important part is that the crack still needs a path to an edge. It does not work like scissors. I could not cut partway into a sheet, pull back, and continue from another direction.
+The important part is that the crack still needs a path to an edge. It does not work like scissors. You basically can't cut partway into a sheet, pull back, and continue from another direction.
 
 This is why a deep inner curve is difficult. The glass may follow the score, or it may take a more direct route to the edge. If it takes that route through the part I wanted to keep, the piece splits in two.
 
-This is where I started to personify the glass. A sheet could "choose" or "prefer" one direction. The language was not scientifically precise, but it matched the experience of working with it. I could draw the route I wanted. I could make that route easier to follow. I could not force the material to forget what it was.
+This is where I started to personify the glass. A sheet could "choose" or "prefer" one direction. I could draw the route I wanted and I could make that route easier to follow, but it is up to the glass for whether it wants to go that way.
 
 ## Scoring and breaking
 
-A clean break starts with a clean score. I had to use consistent pressure and speed, then follow through. If my hand wavered or I changed my mind halfway across the glass, the break became much less predictable.
+Having a clean score is the surest way to get a clean break. Sometimes scoring it means you start out a little wobbly, and then end off super strong. You have to use consistent pressure and speed, then follow through. If my hand wavered or I changed my mind halfway across the glass, the break became much less predictable.
 
-There was no useful way to rush this part. Scoring the same path again could not repair a poor first pass. It could make the break worse and damage the cutter wheel. I had to decide where the line would go, take a breath, and make it.
+There was no useful way to rush this part. Scoring the same path again could not repair a poor first pass. It could make the break worse and damage the cutter wheel. If I did waver, the best bet would be to start at the "good side" where my scoring was clean, and hope that the glass continued to break along that line.
 
-After scoring, I used pliers to run the break along the line. On a large piece, I could hold one side with a tool and the other with my hand. On a small piece, I needed a tool on both sides. There was not enough glass to hold safely or firmly with my fingers.
+After scoring, you would use either pliers or splitters to run the break along the line. On a large piece, I could hold one side with a tool and the other with my hand. On a small piece, I needed a tool on both sides. There was not enough glass to hold safely or firmly with my fingers.
 
 ## Grinding the edges
 
-Cutting got each piece close to its paper template. A diamond glass grinder handled the final fit.
+Cutting got each piece close to its paper template, but even with an extremely close cut, you have to use a diamond glass grinder to get the final fit.
 
-I smoothed every edge enough to remove sharp, uneven areas. I also used the grinder to deepen some inner curves that I could not cut cleanly. It could correct a lot, but it was a slow substitute for a good score. Removing a large amount of glass at the grinder took ages.
+The idea is to smooth every edge enough to remove sharp, uneven areas. The grinder was also the only other tool at my disposal to clear out some of those inner curves. It could correct a lot, but it was a slow substitute for a good score. Removing a large amount of glass at the grinder takes ages and kicks up a lot of glass dust particles that are terrible to breathe, so you want to get your cut to be as close to the ideal line as possible.
 
 <figure class="post-banner post-photo-portrait">
   <img src="{{ '/assets/img/stained-glass/grinding-glass.webp' | relative_url }}" alt="A person wearing gloves uses a stained-glass grinder at a studio workbench">
   <figcaption>Grinding the edges at the studio after cutting.</figcaption>
 </figure>
 
-The grinder also made the difference between looking careful and being careful very clear. Its instructions call for proper eye protection. If I use one again, I will wear goggles and follow the studio's guidance for respiratory protection. Breathing through my nose is not a safety system.
+With the grinder, I'm using wraparound Dewalt safety goggles, an n95 mask, a scarf, and usually covered in a long jean trechcoat to prevent little glass shards from landing on my skin and clothing. Even if your skin is protected, you don't want to track it onto your couch or bed through your clothing. 
 
 ## Foiling the pieces
 
@@ -77,12 +77,6 @@ I finished foiling the pieces for my original design. I did not move on to flux 
   <figcaption>The unfinished bird on its work board. Some pieces had copper foil around their edges, while others still carried their numbered paper templates.</figcaption>
 </figure>
 
-By then, the main problem with my design was clear: more than thirty pieces was too many for my first project.
+By then, the main problem with my design was clear: more than thirty pieces was too many for my first project! Heh
 
-A line is cheap to draw on paper. In stained glass, each new line creates another physical piece. That piece has to be traced, scored, broken out, fitted, ground, and wrapped in foil. I had not only drawn a picture. I had drawn a long list of small tasks, and the number of tasks became overwhelming.
-
-The design may still be possible. It is too complex for me right now.
-
-Rather than force it, I started a smaller picture-frame project. It has fewer pieces and gives me a better chance to complete the whole process once before returning to the original design.
-
-The first piece is unfinished, but it still changed how I design. I now know that every line has a material cost. The glass needs somewhere to go, and sometimes the project does too. For now, the right direction is smaller.
+I lost steam on that particular project, but rather than force it, I started a smaller picture-frame project. It has fewer pieces and gives me a better chance to complete the whole process once before returning to the original design. I plan to return to finishing the bird when my soldering skills are more refined: right now I'm honing that part of the process.
