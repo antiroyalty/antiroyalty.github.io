@@ -7,7 +7,7 @@
   --body-font: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --mono-font: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   --heading-font: "Avenir Next Condensed", "Arial Narrow", "Bricolage Grotesque", sans-serif;
-  --page-background: #f5e8e2;
+  --page-background: #f5f3eb;
   --linen: #eee7d8;
   --linen-deep: #ddd3c0;
   --ceramic: #f6f0df;
@@ -93,9 +93,9 @@ body {
   inset: 0 calc(50% - 50vw);
   z-index: -1;
   background:
-    radial-gradient(ellipse 850px 620px at calc(100% + 80px) 8%, rgba(224, 175, 158, 0.1), transparent 72%),
-    radial-gradient(ellipse 900px 760px at -140px 68%, rgba(228, 182, 170, 0.08), transparent 74%),
-    linear-gradient(180deg, rgba(255, 250, 245, 0.22), rgba(255, 247, 241, 0.08));
+    radial-gradient(ellipse 850px 620px at calc(100% + 80px) 8%, rgba(220, 212, 190, 0.08), transparent 72%),
+    radial-gradient(ellipse 900px 760px at -140px 68%, rgba(224, 218, 199, 0.06), transparent 74%),
+    linear-gradient(180deg, rgba(255, 254, 249, 0.22), rgba(255, 253, 245, 0.08));
   content: "";
   pointer-events: none;
 }

@@ -92,6 +92,7 @@ class CaliforniaGridExplorer {
     }
     this.createMap();
     this.bindControls();
+    this.loadAreaBoundary();
 
     const infrastructure = Promise.all([
       fetchJson(this.root.dataset.linesEndpoint, 25_000),
@@ -169,6 +170,40 @@ class CaliforniaGridExplorer {
       className: "grid-base-tiles",
     }).addTo(this.map);
     this.map.fitBounds([[32.45, -124.5], [42.05, -114.0]], { padding: [18, 18] });
+    // Keep the reference area below transmission lines and hub markers.
+    this.map.createPane("caiso-area");
+    this.map.getPane("caiso-area").style.zIndex = 350;
+    this.map.getPane("caiso-area").style.pointerEvents = "none";
+  }
+
+  async loadAreaBoundary() {
+    const control = this.root.querySelector('[data-grid-layer="caiso-area"]');
+    try {
+      const area = await fetchJson(this.root.dataset.areaEndpoint);
+      if (area?.type !== "FeatureCollection" || !Array.isArray(area.features) || !area.features.length
+        || area.features.some((feature) => feature.properties?.NAME !== "CALISO"
+          || !["Polygon", "MultiPolygon"].includes(feature.geometry?.type))) {
+        throw new TypeError("CAISO reference area is not valid polygon GeoJSON");
+      }
+      this.layers["caiso-area"] = L.geoJSON(area, {
+        pane: "caiso-area",
+        interactive: false,
+        style: { color: "#665b78", weight: 2, opacity: 0.85, dashArray: "6 5", fillColor: "#80718f", fillOpacity: 0.07 },
+        attribution: '<a href="https://www.arcgis.com/home/item.html?id=147c83114a3f4ff8a82225e3d6c24857">CEC / CAISO / BANC · 2021</a>',
+      });
+      if (control.checked) this.layers["caiso-area"].addTo(this.map);
+      control.disabled = false;
+      this.setField("area-status", "Dashed boundary: approximate CAISO balancing area, from CEC’s retired 2021 geometry. It is a historical reference, not a current operational boundary or a price zone.");
+      const source = document.createElement("a");
+      source.href = "https://www.arcgis.com/home/item.html?id=147c83114a3f4ff8a82225e3d6c24857";
+      source.textContent = " Boundary source ↗";
+      this.field("area-status").append(source);
+    } catch (error) {
+      console.error("CAISO reference boundary unavailable", error);
+      control.checked = false;
+      control.disabled = true;
+      this.setField("area-status", "CAISO reference boundary unavailable. Other map layers remain available.");
+    }
   }
 
   bindControls() {

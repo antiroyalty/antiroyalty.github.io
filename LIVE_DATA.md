@@ -13,6 +13,10 @@ The hub node IDs are `TH_NP15_GEN-APND`, `TH_SP15_GEN-APND`, and `TH_ZP26_GEN-AP
 
 Infrastructure remains static reference geometry in `assets/data/california-transmission.geojson` and `assets/data/california-substations.geojson`. It contains no operational loading measurements.
 
+The optional CAISO area layer uses `assets/data/caiso-area-reference.geojson`. It contains the `CALISO` features from the [CEC balancing authority dataset](https://www.arcgis.com/home/item.html?id=147c83114a3f4ff8a82225e3d6c24857), credited to CEC, CAISO, and BANC. The source is marked retired. Its geometry was last edited on August 3, 2021. The page labels it as historical reference geography, not a current operational boundary or a price zone. The export uses WGS84, a 0.001-degree simplification tolerance, and five decimal places. Source details are also stored in the GeoJSON metadata. Boundary loading fails independently of infrastructure and market data.
+
+The grid page uses the control-room photograph hosted on [CAISO’s market operations page](https://www.caiso.com/market-operations). It includes visible California ISO copyright credit and a source link. The image loads lazily from CAISO; the caption and text remain readable if the remote image is unavailable.
+
 CAISO covers most of California, not the whole state. Today's Outlook demand excludes charging batteries and dispatchable pump loads. Solar plus wind can therefore exceed 100% of reported demand. These data are informational, not billing or settlement records.
 
 ## Snapshot and history files
