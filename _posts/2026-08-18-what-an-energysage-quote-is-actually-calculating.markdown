@@ -5,7 +5,7 @@ date: 2026-08-18 12:00:00 -0700
 categories: notes
 ---
 
-I was recently reviewing an EnergySage comparison with five quotes for solar and battery storage. All five quotes showed a shorter payback period with a battery than with solar alone. The solar-and-battery estimates ranged from 6.1 to 7.6 years, while the solar-only estimates ranged from 6.8 to 9.6 years.
+I was recently reviewing an EnergySage comparison generated on July 10, 2026, with five quotes for solar and battery storage. All five quotes showed a shorter payback period with a battery than with solar alone. The solar-and-battery estimates ranged from 6.1 to 7.6 years, while the solar-only estimates ranged from 6.8 to 9.6 years.
 
 This was interesting, and suspicious to me; I've been researching the cost of residential solar and storage in California at Energy and Resources Group, Berkeley, part of the Energy, Modeling, Analysis and Controls Group (EMAC). In my tentative results, adding a battery can save money on the electric bill, but the savings are usually not enough to recover the cost of the battery... so I started investigating.
 
@@ -17,7 +17,12 @@ That was part of the difference, but not all of it. I started working backwards 
 
 In the quote, five installers proposed different prices for both solar and storage. EnergySage then showed how much the homeowner would supposedly save over 25 years with solar alone, and with solar plus a battery.
 
-<Add a screenshot of the quote>
+<figure class="post-banner">
+  <div class="energysage-quote-crop">
+    <img src="{{ '/assets/img/energysage/quote-cash-savings-and-payback.png' | relative_url }}" alt="EnergySage comparison showing cash savings and payback periods for five quotes, with solar and battery payback shorter than solar-only payback in every quote">
+  </div>
+  <figcaption>The exported comparison showed shorter cash payback for solar plus battery in all five quotes. <a href="{{ '/assets/pdf/energysage/solar-battery-quote-redacted.pdf' | relative_url }}">View the complete privacy-redacted quote (PDF).</a></figcaption>
+</figure>
 
 To isolate the battery, I first subtracted the solar-only savings from the solar-and-battery savings. This gave me the *added net savings* shown for storage. Then I added the battery price back in, since that cost had already been subtracted from the final savings number.
 
@@ -42,6 +47,11 @@ The five quotes look like five separate financial projections, but they're mostl
 ## The 7.1 percent assumption is doing a lot
 
 Looking at the fine print: EnergySage assumes that electricity prices will increase by 7.1 percent every year. It bases this number on the previous ten years of California electricity prices reported by the U.S. Energy Information Administration.
+
+<figure class="post-banner">
+  <img src="{{ '/assets/img/energysage/quote-fine-print.png' | relative_url }}" alt="EnergySage fine print stating that the calculation uses 7.1 percent energy cost inflation and does not account for time-of-use rates or utility net-billing policies">
+  <figcaption>The quote says it assumes 7.1 percent annual energy-cost inflation. It also says the estimate excludes time-of-use rates and utility net-billing policies.</figcaption>
+</figure>
 
 Basically, each year, the model makes electricity 7.1% more expensive. That also means that the electricity avoided by adopting solar + storage is 7.1% more valuable. Because the increase compounds, electricity priced at $0.40/kWh today reaches about $2.08 per kWh in year 25.
 
@@ -97,6 +107,11 @@ The `25.3 × S` figure is the present value. The 2.5 figure compares EnergySage'
 In this example, the cash-savings headline is about 2.5 times the present value. The 7 percent discount rate is only an example, but the underlying problem does not depend on that exact rate. EnergySage is mixing money from different years without translating it into one common year's dollars.
 
 The result is also heavily back-loaded. About 61 percent of the nominal savings arrive during years 16 through 25. About 35 percent arrive during the final five years alone. Most of the displayed value therefore depends on electricity prices far in the future.
+
+<figure class="post-banner post-photo-portrait">
+  <img src="{{ '/assets/img/energysage/quote-cumulative-savings.png' | relative_url }}" alt="EnergySage cumulative cash-savings graph with several curves rising most sharply near the end of the 25-year period">
+  <figcaption>The comparison's cumulative cash-savings curves rise fastest near the end of the 25-year window.</figcaption>
+</figure>
 
 ## The quote leaves out the tariff details
 

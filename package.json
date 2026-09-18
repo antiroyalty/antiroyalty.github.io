@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test scripts/*.test.mjs",
+    "update:electricity": "node scripts/update-electricity-data.mjs",
+    "validate:data": "node scripts/sync-grid-state.mjs validate assets/data",
     "update:grid-market": "node scripts/update-grid-market-data.mjs"
   }
 }

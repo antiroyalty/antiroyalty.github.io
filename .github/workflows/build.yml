@@ -2,9 +2,9 @@ name: Build and Check
 
 on:
   push:
-    branches: ["*"]
+    branches-ignore: ["grid-data"]
   pull_request:
-    branches: ["*"]
+    branches-ignore: ["grid-data"]
 
 jobs:
   jekyll:
