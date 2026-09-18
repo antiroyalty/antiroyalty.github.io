@@ -8,7 +8,7 @@ import {
   sourceTimestamp,
 } from "./update-electricity-data.mjs";
 
-test("the committed snapshot matches schema version 1", async () => {
+test("the committed snapshot matches a supported schema", async () => {
   const snapshot = JSON.parse(await readFile("assets/data/electricity-desk.json", "utf8"));
   assert.equal(validateElectricitySnapshot(snapshot), snapshot);
 });
@@ -69,7 +69,7 @@ test("feed rows produce a validated snapshot with an hourly comparison", () => {
     now,
   );
 
-  assert.equal(snapshot.intervalLabel, "13:00 PT");
+  assert.equal(snapshot.intervalLabel, "2026-08-06 13:00 PT");
   assert.equal(snapshot.sourceUpdatedAt, "2026-08-06T20:00:00.000Z");
   assert.equal(snapshot.demand.currentMw, 11_200);
   assert.equal(snapshot.demand.changeFromHourAgoMw, 1_200);

@@ -1,89 +1,85 @@
-import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mkdtemp, writeFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+import { setTimeout as delay } from "node:timers/promises";
 import { validateGridMarketSnapshot } from "../assets/js/grid-market-schema.js";
+import { parseCsv } from "./lib/csv.mjs";
+import { dayIntervals, pacificDate, shiftDate } from "./lib/intervals.mjs";
+import { saveRecords, writeHistoryIndex } from "./lib/data-store.mjs";
 
-const SOURCE_URL = "https://oasis.caiso.com/oasisapi/prc_hub_lmp/PRC_HUB_LMP.html";
-const OUTPUT_PATH = path.resolve("assets/data/grid-market.json");
-const REQUEST_TIMEOUT_MS = 20_000;
+const SOURCE_URL = "https://oasis.caiso.com/oasisapi/SingleZip";
+const run = promisify(execFile);
 const HUB_METADATA = {
-  NP15: { name: "NP15", region: "Northern California", coordinates: [38.25, -121.55] },
-  ZP26: { name: "ZP26", region: "Central California", coordinates: [35.75, -119.7] },
-  SP15: { name: "SP15", region: "Southern California", coordinates: [34.05, -117.55] },
+  NP15: { name: "NP15", region: "Northern California", coordinates: [38.25, -121.55], node: "TH_NP15_GEN-APND" },
+  ZP26: { name: "ZP26", region: "Central California", coordinates: [35.75, -119.7], node: "TH_ZP26_GEN-APND" },
+  SP15: { name: "SP15", region: "Southern California", coordinates: [34.05, -117.55], node: "TH_SP15_GEN-APND" },
 };
-
-function cleanHtml(html) {
-  return html
-    .replaceAll("&minus;", "-")
-    .replaceAll("&nbsp;", " ")
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-export function parseHubPriceHtml(html) {
-  const text = cleanHtml(html);
-  const intervalMatch = text.match(/for\s+(\d{4}-\d{2}-\d{2})\s*,\s*Hour\s+(\d+)\s*,\s*Interval\s+(\d+)/i);
-  if (!intervalMatch) throw new Error("CAISO hub feed contained no interval metadata");
-
-  const hubs = Object.keys(HUB_METADATA).map((id) => {
-    const row = text.match(new RegExp(`${id}\\s*\\$\\s*(-?\\d+(?:\\.\\d+)?)\\s*\\$\\s*(-?\\d+(?:\\.\\d+)?)\\s*\\$\\s*(-?\\d+(?:\\.\\d+)?)\\s*\\$\\s*(-?\\d+(?:\\.\\d+)?)`, "i"));
-    if (!row) throw new Error(`CAISO hub feed contained no ${id} record`);
-    return {
-      id,
-      ...HUB_METADATA[id],
-      lmp: Number(row[1]),
-      components: {
-        energy: Number(row[2]),
-        congestion: Number(row[3]),
-        loss: Number(row[4]),
-      },
-    };
-  });
-
-  return {
-    tradingDate: intervalMatch[1],
-    hourEnding: Number(intervalMatch[2]),
-    fiveMinuteInterval: Number(intervalMatch[3]),
-    hubs,
-  };
-}
-
-function pacificOffsetMinutes(date) {
-  const offsetName = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Los_Angeles",
-    timeZoneName: "shortOffset",
-  }).formatToParts(date).find((part) => part.type === "timeZoneName")?.value;
-  const match = offsetName?.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
-  if (!match) throw new Error("Could not resolve the Pacific time offset");
-  const minutes = Number(match[2]) * 60 + Number(match[3] ?? 0);
-  return match[1] === "+" ? minutes : -minutes;
-}
+const COMPONENTS = { LMP: "lmp", MCE: "energy", MCC: "congestion", MCL: "loss", MGHG: "ghg" };
 
 export function intervalTimestamp(parsed) {
-  const [year, month, day] = parsed.tradingDate.split("-").map(Number);
-  const localClockAsUtc = Date.UTC(
-    year,
-    month - 1,
-    day,
-    parsed.hourEnding - 1,
-    parsed.fiveMinuteInterval * 5,
-  );
-  const offset = pacificOffsetMinutes(new Date(Date.UTC(year, month - 1, day, 12)));
-  return new Date(localClockAsUtc - offset * 60_000).toISOString();
+  const minutes = (parsed.hourEnding - 1) * 60 + (parsed.fiveMinuteInterval - 1) * 5;
+  const label = `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+  const candidates = dayIntervals(parsed.tradingDate).filter((slot) => slot.label === label);
+  if (candidates.length !== 1) throw new Error("Ambiguous market clock; use OASIS UTC interval timestamps");
+  return candidates[0].timestamp;
+}
+
+export function parseMarketRows(rows, now = new Date()) {
+  const intervals = new Map();
+  const nodes = Object.fromEntries(Object.entries(HUB_METADATA).map(([id, hub]) => [hub.node, id]));
+  for (const row of rows) {
+    const id = nodes[row.NODE];
+    const component = COMPONENTS[row.LMP_TYPE];
+    if (!id || row.MARKET_RUN_ID !== "RTM") throw new Error("Unexpected market or price node");
+    if (!component) {
+      throw new Error(`Unexpected price component: ${row.LMP_TYPE}`);
+    }
+    const start = Date.parse(row.INTERVALSTARTTIME_GMT);
+    const end = Date.parse(row.INTERVALENDTIME_GMT);
+    if (!Number.isFinite(start) || end - start !== 300_000 || start % 300_000 !== 0) throw new Error("Invalid OASIS UTC interval");
+    if (end > now.getTime()) continue;
+    if (typeof row.VALUE !== "string" || row.VALUE.trim() === "" || !Number.isFinite(Number(row.VALUE))) throw new Error("Missing or invalid market price");
+    const timestamp = new Date(start).toISOString();
+    if (row.OPR_DT !== pacificDate(new Date(start))) throw new Error("Trading date disagrees with UTC interval");
+    const interval = intervals.get(timestamp) ?? {
+      intervalTimeUtc: timestamp, intervalEndUtc: new Date(end).toISOString(), tradingDate: row.OPR_DT,
+      hourEnding: Number(row.OPR_HR), fiveMinuteInterval: Number(row.OPR_INTERVAL), prices: {},
+    };
+    const prices = interval.prices[id] ?? {};
+    if (component in prices && prices[component] !== Number(row.VALUE)) throw new Error("Conflicting duplicate market price");
+    prices[component] = Number(row.VALUE);
+    interval.prices[id] = prices;
+    intervals.set(timestamp, interval);
+  }
+  const records = [];
+  for (const interval of intervals.values()) {
+    // A partially published interval is not a complete three-hub comparison. Retry on the next run.
+    if (!Object.keys(HUB_METADATA).every((id) => Object.values(COMPONENTS).every((key) => Number.isFinite(interval.prices[id]?.[key])))) continue;
+    interval.hubs = Object.entries(HUB_METADATA).map(([id, metadata]) => ({
+      id, ...metadata, lmp: interval.prices[id].lmp,
+      components: { energy: interval.prices[id].energy, congestion: interval.prices[id].congestion, loss: interval.prices[id].loss, ghg: interval.prices[id].ghg },
+    }));
+    records.push(buildGridMarketSnapshot(interval, now));
+  }
+  return records.sort((a, b) => a.intervalTimeUtc.localeCompare(b.intervalTimeUtc));
 }
 
 function price(value) {
   return `$${Math.abs(value).toFixed(2)}/MWh`;
 }
 
-export function buildGridMarketSnapshot(parsed, now = new Date(), sourceUpdatedAt = intervalTimestamp(parsed)) {
+export function buildGridMarketSnapshot(parsed, now = new Date(), sourceUpdatedAt = parsed.intervalTimeUtc ?? intervalTimestamp(parsed)) {
   const byId = Object.fromEntries(parsed.hubs.map((hub) => [hub.id, hub]));
   const northSouthSpread = Number((byId.SP15.lmp - byId.NP15.lmp).toFixed(2));
   const direction = northSouthSpread > 0 ? "higher" : northSouthSpread < 0 ? "lower" : "level with";
-  const congestionDifference = byId.SP15.components.congestion - byId.NP15.components.congestion;
-  const lossDifference = byId.SP15.components.loss - byId.NP15.components.loss;
-  const driver = Math.abs(congestionDifference) >= Math.abs(lossDifference) ? "congestion" : "transmission losses";
+  const componentDifferences = ["energy", "congestion", "loss", "ghg"].map((key) => ({
+    name: { energy: "energy", congestion: "congestion", loss: "transmission losses", ghg: "greenhouse gas costs" }[key],
+    magnitude: Math.abs(byId.SP15.components[key] - byId.NP15.components[key]),
+  }));
+  const driver = componentDifferences.sort((a, b) => b.magnitude - a.magnitude)[0].name;
   const alignment = Math.abs(northSouthSpread) < 2
     ? "Prices are broadly aligned across the state."
     : Math.abs(northSouthSpread) < 10
@@ -91,7 +87,9 @@ export function buildGridMarketSnapshot(parsed, now = new Date(), sourceUpdatedA
       : "The market is showing strong north-south separation.";
 
   return validateGridMarketSnapshot({
-    schemaVersion: 1,
+    schemaVersion: 2,
+    intervalTimeUtc: sourceUpdatedAt,
+    intervalEndUtc: parsed.intervalEndUtc ?? new Date(Date.parse(sourceUpdatedAt) + 300_000).toISOString(),
     generatedAt: now.toISOString(),
     sourceUpdatedAt,
     interval: {
@@ -101,7 +99,9 @@ export function buildGridMarketSnapshot(parsed, now = new Date(), sourceUpdatedA
       label: `${parsed.tradingDate} · hour ending ${parsed.hourEnding} · interval ${parsed.fiveMinuteInterval}`,
     },
     source: {
-      name: "California ISO OASIS Hub LMP Prices",
+      report: "PRC_INTVL_LMP",
+      market: "RTM",
+      name: "California ISO OASIS Interval LMP",
       url: SOURCE_URL,
       cadence: "real-time five-minute interval prices",
       note: "Hub markers are representative market-area anchors, not physical substations.",
@@ -119,57 +119,67 @@ export function buildGridMarketSnapshot(parsed, now = new Date(), sourceUpdatedA
   });
 }
 
-async function fetchHubPrices() {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-  try {
-    const response = await fetch(`${SOURCE_URL}?_=${Date.now()}`, {
-      headers: { "User-Agent": "Ana-Santasheva-California-Grid-Map/1.0" },
-      signal: controller.signal,
-    });
-    if (!response.ok) throw new Error(`CAISO hub feed returned HTTP ${response.status}`);
-    return {
-      html: await response.text(),
-      lastModified: response.headers.get("last-modified"),
-    };
-  } finally {
-    clearTimeout(timeout);
-  }
+export function marketUrl(date) {
+  const slots = dayIntervals(date);
+  const format = (time) => time.slice(0, 16).replaceAll("-", "") + "-0000";
+  const start = slots[0].timestamp;
+  const end = new Date(Date.parse(slots.at(-1).timestamp) + 300_000).toISOString();
+  const params = new URLSearchParams({ queryname: "PRC_INTVL_LMP", version: "3", market_run_id: "RTM",
+    node: Object.values(HUB_METADATA).map((hub) => hub.node).join(","),
+    startdatetime: format(start), enddatetime: format(end), resultformat: "6" });
+  return `${SOURCE_URL}?${params}`;
 }
 
-async function writeSnapshot(snapshot) {
-  await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
-  const temporaryPath = `${OUTPUT_PATH}.${process.pid}.tmp`;
-  try {
-    await writeFile(temporaryPath, `${JSON.stringify(snapshot, null, 2)}\n`);
-    await rename(temporaryPath, OUTPUT_PATH);
-  } finally {
-    await rm(temporaryPath, { force: true });
-  }
-}
-
-async function main() {
-  try {
-    const feed = await fetchHubPrices();
-    const parsed = parseHubPriceHtml(feed.html);
-    const headerTimestamp = Date.parse(feed.lastModified);
-    const sourceUpdatedAt = Number.isFinite(headerTimestamp)
-      ? new Date(headerTimestamp).toISOString()
-      : intervalTimestamp(parsed);
-    const snapshot = buildGridMarketSnapshot(parsed, new Date(), sourceUpdatedAt);
-    await writeSnapshot(snapshot);
-    console.log(`Updated ${OUTPUT_PATH} with ${snapshot.interval.label}`);
-  } catch (error) {
-    try {
-      validateGridMarketSnapshot(JSON.parse(await readFile(OUTPUT_PATH, "utf8")));
-      console.error(`Grid market refresh failed. The previous verified snapshot remains intact: ${error.message}`);
-    } catch {
-      console.error(`Grid market refresh failed and no verified previous snapshot exists: ${error.message}`);
+export async function fetchMarketRows(date) {
+  let response;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    response = await fetch(marketUrl(date), { signal: AbortSignal.timeout(60_000) });
+    if (response.status !== 429 && response.status < 500) break;
+    if (attempt < 2) {
+      const retrySeconds = Number(response.headers.get("retry-after"));
+      await response.body?.cancel();
+      await delay(Math.max(10_000, Math.min(60_000, retrySeconds * 1000 || 10_000 * (attempt + 1))));
     }
-    process.exitCode = 1;
   }
+  if (!response.ok) throw new Error(`OASIS returned HTTP ${response.status}`);
+  const directory = await mkdtemp(path.join(tmpdir(), "caiso-market-"));
+  try {
+    const file = path.join(directory, "response.zip");
+    await writeFile(file, Buffer.from(await response.arrayBuffer()));
+    // Read entries to stdout, never extract server-provided paths into the filesystem.
+    const { stdout: listing } = await run("unzip", ["-Z1", file], { maxBuffer: 1_000_000 });
+    const names = listing.trim().split("\n");
+    if (!names.length || names.some((name) => !/^[a-zA-Z0-9_.-]+\.csv$/.test(name))) {
+      throw new Error("OASIS returned no CSV data (the report may be unavailable)");
+    }
+    const rows = [];
+    for (const name of names) {
+      const { stdout } = await run("unzip", ["-p", file, name], { maxBuffer: 16_000_000 });
+      rows.push(...parseCsv(stdout));
+    }
+    return rows;
+  } finally { await rm(directory, { recursive: true, force: true }); }
 }
 
-const isMain = process.argv[1]
-  && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
-if (isMain) await main();
+export async function updateMarket({ dates, dataDir = "assets/data", now = new Date(), fetcher = fetchMarketRows } = {}) {
+  const today = pacificDate(now);
+  const failures = [];
+  let requestCount = 0;
+  for (const date of dates ?? [shiftDate(today, -1), today]) {
+    // OASIS throttles rapid report downloads. Tests inject an in-memory fetcher.
+    if (fetcher === fetchMarketRows && requestCount > 0) await delay(10_000);
+    requestCount += 1;
+    try {
+      const records = parseMarketRows(await fetcher(date), now);
+      await saveRecords("market", date, records, dataDir);
+      console.log(`Market ${date}: saved ${records.length} verified intervals`);
+    } catch (error) { failures.push(`${date}: ${error.message}`); }
+  }
+  await writeHistoryIndex(dataDir);
+  if (failures.length) throw new Error(failures.join("; "));
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try { await updateMarket({ dates: process.argv.slice(2).length ? process.argv.slice(2) : undefined }); }
+  catch (error) { console.error(`Market refresh failed; existing verified files retained: ${error.message}`); process.exitCode = 1; }
+}
