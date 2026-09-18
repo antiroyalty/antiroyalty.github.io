@@ -7,7 +7,7 @@ permalink: /grid/
 <section class="grid-hero" aria-labelledby="grid-page-title">
   <p class="eyebrow">California market geography</p>
   <h1 id="grid-page-title">California Grid Map</h1>
-  <p class="grid-lead">A live view of regional wholesale prices set against California's public high-voltage transmission network.</p>
+  <p class="grid-lead">Explore five-minute wholesale prices, demand, and generation alongside California's public high-voltage transmission network.</p>
 </section>
 
 <section
@@ -18,9 +18,26 @@ permalink: /grid/
   data-lines-endpoint="{{ '/assets/data/california-transmission.geojson' | relative_url }}"
   data-substations-endpoint="{{ '/assets/data/california-substations.geojson' | relative_url }}"
   data-area-endpoint="{{ '/assets/data/caiso-area-reference.geojson' | relative_url }}"
+  data-history-endpoint="{{ '/assets/data/history/' | relative_url }}"
   aria-labelledby="grid-explorer-title"
 >
-  <div class="grid-summary" aria-label="Current California grid summary">
+  <section class="grid-time-controls" aria-labelledby="grid-time-title">
+    <div class="grid-date-navigation">
+      <h2 id="grid-time-title">Explore an interval</h2>
+      <div class="grid-date-actions">
+        <button type="button" data-timeline="previous" aria-label="Previous available day" disabled>←</button>
+        <label>Pacific date <input type="date" data-timeline="date" disabled></label>
+        <button type="button" data-timeline="next" aria-label="Next available day" disabled>→</button>
+        <button type="button" data-timeline="latest" aria-pressed="true">Latest available</button>
+      </div>
+    </div>
+    <p class="grid-history-note" data-timeline="available">Loading available dates…</p>
+    <label class="grid-interval-label" for="grid-interval-slider" data-timeline="selection">Loading interval history…</label>
+    <input id="grid-interval-slider" class="grid-interval-slider" data-timeline="range" type="range" min="0" max="287" step="1" value="0" disabled aria-describedby="grid-timeline-help">
+    <p class="grid-history-note" id="grid-timeline-help">Move the slider or use arrow keys to step through five-minute intervals. Hover over a chart to preview; click or tap to select.</p>
+  </section>
+
+  <div class="grid-summary" aria-label="Selected California grid interval">
     <article class="grid-summary-card grid-summary-card--spread">
       <p>North-south spread</p>
       <strong data-grid-field="spread">···</strong>
@@ -79,7 +96,7 @@ permalink: /grid/
       <p class="grid-area-note" data-grid-field="area-status" role="status">Loading the approximate CAISO reference boundary.</p>
     </div>
 
-    <aside class="grid-analysis" aria-live="polite">
+    <aside class="grid-analysis">
       <div class="grid-insight">
         <p class="eyebrow">What the market is saying</p>
         <h2 data-grid-field="insight-title">Reading this interval</h2>
@@ -116,6 +133,22 @@ permalink: /grid/
       </div>
     </aside>
   </div>
+
+  <section class="grid-history" aria-labelledby="grid-history-title">
+    <p class="eyebrow">One day, one shared timeline</p>
+    <h2 id="grid-history-title">How the day unfolds</h2>
+    <p class="grid-history-note" data-timeline="coverage" role="status"></p>
+    <div class="grid-event-presets" aria-label="Events observed on the selected day">
+      <button type="button" data-event-preset="negative" disabled><strong>Negative prices</strong><small>Loading…</small></button>
+      <button type="button" data-event-preset="spread" disabled><strong>Largest north–south spread</strong><small>Loading…</small></button>
+      <button type="button" data-event-preset="ramp" disabled><strong>Evening ramp</strong><small>Loading…</small></button>
+    </div>
+    <p class="grid-history-note">Presets use observed intervals on this date. Evening ramp finds the largest one-hour rise in demand minus solar and wind, ending from 16:00–21:00. Partial days may miss larger events.</p>
+    <label class="grid-interval-label" for="grid-chart-slider" data-timeline="chart-selection">Selected interval</label>
+    <input id="grid-chart-slider" class="grid-interval-slider" data-timeline="chart-range" type="range" min="0" max="287" step="1" value="0" disabled aria-describedby="grid-timeline-help">
+    <div class="grid-history-charts" data-timeline="charts"></div>
+    <p class="grid-history-note">All times are Pacific. Gaps are unrecorded or unavailable measurements; lines never bridge them. Demand excludes battery charging and dispatchable pumping. Signed solar and wind measurements are retained.</p>
+  </section>
 
   <div class="grid-source-note">
     <p><strong>How to read this:</strong> A regional price gap is a market signal, not proof that a specific line is overloaded. Select a hub to see whether energy, congestion, or modeled losses are shaping its price.</p>

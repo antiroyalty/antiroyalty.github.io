@@ -7,6 +7,9 @@ What are you looking for in the next person you hire to your team?
 What do software engineers misunderstand about working with hardware engineers?
 
 What belongs to the edge, what belongs to the cloud, and how has your answer changed?
+- data collection at the edge, 
+- need a local optimization engine, need a little embedded time series database, and wouldnt it be nice if you could iterate on the economic model
+- so you get very close to bringing everything down from the cloud to have it run on the edge
 
 What do your best engineers do that you didn't know to look for when you started hiring?
 

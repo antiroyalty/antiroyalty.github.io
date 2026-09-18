@@ -17,6 +17,20 @@ The optional CAISO area layer uses `assets/data/caiso-area-reference.geojson`. I
 
 The grid page uses the control-room photograph hosted on [CAISO’s market operations page](https://www.caiso.com/market-operations). It includes visible California ISO copyright credit and a source link. The image loads lazily from CAISO; the caption and text remain readable if the remote image is unavailable.
 
+## Linked history explorer
+
+The grid page reads `assets/data/history/index.json` and fetches only the selected Pacific date. Previous and next controls move between available dates. Both datasets are validated before use. They join by exact UTC interval keys. Missing measurements remain unavailable, and chart paths stop at each gap. Future slots are distinguished from elapsed missing slots. Pacific days retain their actual 276, 288, or 300 five-minute intervals across daylight-saving changes.
+
+The shared sliders support keyboard input. Chart hover previews an interval; leaving restores the selection. Clicking or tapping a chart pins an interval. Map hub labels, price components, summary values, chart cursors, and readouts share that selection. Selecting history pauses automatic movement to the newest interval. The Latest available button resumes it. Background requests use a generation counter so a slower response cannot replace a newer date selection. Archive failures are isolated by dataset and reported beside the charts.
+
+Event presets are calculated from observed records on the selected date, with the earliest interval winning ties:
+
+- Negative prices selects the lowest negative price across the three hubs.
+- Largest north–south spread selects the largest absolute SP15 minus NP15 price difference.
+- Evening ramp selects the largest positive one-hour rise in demand minus solar and wind, ending between 16:00 and 21:00 Pacific. All 13 five-minute observations must be present.
+
+Presets remain disabled when no qualifying observations exist. These are events within the loaded archive, not a catalogue of historic emergencies. Partial days can miss larger events. No historical backfill is performed by the browser.
+
 CAISO covers most of California, not the whole state. Today's Outlook demand excludes charging batteries and dispatchable pump loads. Solar plus wind can therefore exceed 100% of reported demand. These data are informational, not billing or settlement records.
 
 ## Snapshot and history files

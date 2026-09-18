@@ -1,6 +1,7 @@
 import { validateElectricitySnapshot } from "./electricity-desk-schema.js";
 import { freshnessFor } from "./data-freshness.js";
 import { validateGridMarketSnapshot } from "./grid-market-schema.js";
+import { GridTimeline } from "./grid-timeline.js";
 
 const explorer = document.querySelector("[data-grid-explorer]");
 const PRICE_COLORS = {
@@ -67,6 +68,9 @@ class CaliforniaGridExplorer {
     this.map = null;
     this.market = null;
     this.desk = null;
+    this.latestMarket = null;
+    this.latestDesk = null;
+    this.frame = null;
     this.marketRefreshFailed = false;
     this.deskRefreshFailed = false;
     this.selectedHub = null;
@@ -86,30 +90,31 @@ class CaliforniaGridExplorer {
   }
 
   async init() {
+    this.timeline = new GridTimeline(this.root, (row, mode) => this.renderFrame(row, mode));
     if (typeof window.L === "undefined") {
       this.showUnavailable("Map library unavailable");
-      return;
+    } else {
+      this.createMap();
+      this.bindControls();
+      this.loadAreaBoundary();
     }
-    this.createMap();
-    this.bindControls();
-    this.loadAreaBoundary();
 
-    const infrastructure = Promise.all([
+    const infrastructure = this.map ? Promise.all([
       fetchJson(this.root.dataset.linesEndpoint, 25_000),
       fetchJson(this.root.dataset.substationsEndpoint, 25_000),
-    ]).then(([lines, substations]) => this.renderInfrastructure(lines, substations));
+    ]).then(([lines, substations]) => this.renderInfrastructure(lines, substations)) : Promise.resolve();
 
     const market = this.refreshData();
     window.setInterval(() => this.refreshData(), 5 * 60_000);
-    window.setInterval(() => this.updateFreshness(), 60_000);
+    window.setInterval(() => this.timeline.ageIntervals(), 60_000);
     document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") { this.updateFreshness(); this.refreshData(); }
+      if (document.visibilityState === "visible") { this.timeline.ageIntervals(); this.refreshData(); }
     });
 
     try {
       await Promise.all([infrastructure, market]);
       this.root.dataset.status = "ready";
-      this.root.querySelector(".grid-loading")?.remove();
+      if (this.map) this.root.querySelector(".grid-loading")?.remove();
     } catch (error) {
       console.error("Grid infrastructure unavailable", error);
       this.showUnavailable("Public infrastructure unavailable");
@@ -123,26 +128,36 @@ class CaliforniaGridExplorer {
       await Promise.all([
         fetchJson(this.root.dataset.marketEndpoint).then((data) => {
           const snapshot = validateGridMarketSnapshot(data);
-          if (this.market && Date.parse(snapshot.sourceUpdatedAt) < Date.parse(this.market.sourceUpdatedAt)) throw new Error("Market snapshot moved backwards");
+          if (this.latestMarket && Date.parse(snapshot.sourceUpdatedAt) < Date.parse(this.latestMarket.sourceUpdatedAt)) throw new Error("Market snapshot moved backwards");
           this.marketRefreshFailed = false;
-          this.renderMarket(snapshot);
+          this.latestMarket = snapshot;
         }).catch((error) => { this.marketRefreshFailed = true; console.error("Market refresh failed", error); }),
         fetchJson(this.root.dataset.deskEndpoint).then((data) => {
           const snapshot = validateElectricitySnapshot(data);
-          if (this.desk && Date.parse(snapshot.sourceUpdatedAt) < Date.parse(this.desk.sourceUpdatedAt)) throw new Error("Electricity snapshot moved backwards");
-          this.desk = snapshot;
+          if (this.latestDesk && Date.parse(snapshot.sourceUpdatedAt) < Date.parse(this.latestDesk.sourceUpdatedAt)) throw new Error("Electricity snapshot moved backwards");
+          this.latestDesk = snapshot;
           this.deskRefreshFailed = false;
-          this.renderDesk(snapshot);
         }).catch((error) => { this.deskRefreshFailed = true; console.error("Electricity refresh failed", error); }),
       ]);
+      await this.timeline.ready;
+      await this.timeline.updateLatest({ electricity: this.latestDesk, market: this.latestMarket });
+      if (this.hasRefreshed && this.timeline.mode === "latest") await this.timeline.refreshIndex();
+      this.hasRefreshed = true;
     } finally { this.refreshing = false; this.updateFreshness(); }
   }
 
   updateFreshness() {
+    if (!this.frame?.row) return;
+    if (this.frame.mode !== "latest") {
+      this.root.dataset.marketStatus = "history";
+      this.setField("status", this.frame.mode === "preview" ? "Interval preview" : "Selected interval");
+      this.setField("interval", pacificTime(this.frame.row.timestamp));
+      return;
+    }
     const marketStatus = freshnessFor(this.market, Date.now(), this.marketRefreshFailed);
     this.root.dataset.marketStatus = marketStatus.key;
     this.setField("status", marketStatus.label);
-    if (this.market) this.setField("interval", `Price interval ${pacificTime(this.market.sourceUpdatedAt)}`);
+    this.setField("interval", pacificTime(this.frame.row.timestamp));
     const deskStatus = freshnessFor(this.desk, Date.now(), this.deskRefreshFailed);
     if (this.desk) {
       this.renderDesk(this.desk);
@@ -152,6 +167,36 @@ class CaliforniaGridExplorer {
       this.setField("demand", "n/a"); this.setField("battery", "n/a");
       this.setField("demand-detail", "Demand unavailable"); this.setField("battery-detail", "Storage unavailable");
     }
+  }
+
+  renderFrame(row, mode) {
+    this.frame = { row, mode };
+    this.market = row?.market ?? null;
+    this.desk = row?.electricity ?? null;
+    if (this.market) this.renderMarket(this.market);
+    else {
+      if (this.layers.prices && this.map) this.map.removeLayer(this.layers.prices);
+      delete this.layers.prices;
+      this.hubMarkers.clear();
+      this.root.querySelectorAll("[data-hub-price]").forEach((element) => { element.textContent = "n/a"; });
+      this.root.querySelector("[data-grid-detail]").hidden = true;
+      this.setField("spread", "n/a");
+      this.setField("spread-direction", "No matching price interval");
+      this.setField("insight-title", mode === "loading" ? "Loading this day" : "Prices unavailable for this interval");
+      this.setField("insight-summary", row?.marketPending ? "This price interval is not yet due." : "No verified market record is available at the selected time.");
+      this.setField("insight-driver", "");
+    }
+    this.root.querySelectorAll("[data-grid-hub]").forEach((button) => { button.disabled = !this.market; });
+    this.renderDesk(this.desk);
+    if (!this.desk) {
+      this.setField("demand-detail", row?.electricityPending ? "Interval not yet due" : "No measurement at this interval");
+      this.setField("battery-detail", row?.electricityPending ? "Interval not yet due" : "No measurement at this interval");
+    }
+    if (!row) {
+      this.root.dataset.marketStatus = "unavailable";
+      this.setField("status", mode === "loading" ? "Loading history" : "History unavailable");
+      this.setField("interval", "");
+    } else this.updateFreshness();
   }
 
   createMap() {
@@ -263,31 +308,30 @@ class CaliforniaGridExplorer {
 
   renderMarket(snapshot) {
     this.market = snapshot;
-    if (this.layers.prices) this.map.removeLayer(this.layers.prices);
-    this.hubMarkers.clear();
-    this.layers.prices = L.layerGroup();
-    if (this.root.querySelector('[data-grid-layer="prices"]').checked) this.layers.prices.addTo(this.map);
+    if (this.map && !this.layers.prices) {
+      this.layers.prices = L.layerGroup();
+      if (this.root.querySelector('[data-grid-layer="prices"]').checked) this.layers.prices.addTo(this.map);
+    }
     snapshot.hubs.forEach((hub) => {
-      const color = priceColor(hub.lmp);
-      const marker = L.circleMarker(hub.coordinates, {
-        radius: 14,
-        color: "#f3eee5",
-        weight: 3,
-        fillColor: color,
-        fillOpacity: 0.96,
-        className: "grid-price-marker",
-      });
-      marker.bindTooltip(`<strong>${escapeHtml(hub.id)}</strong> ${escapeHtml(money(hub.lmp))}`, {
-        permanent: true,
-        direction: "right",
-        offset: [13, 0],
-        className: "grid-price-label",
-      });
-      marker.on("click", () => this.selectHub(hub.id));
-      marker.addTo(this.layers.prices);
-      this.hubMarkers.set(hub.id, marker);
-      const priceElement = this.root.querySelector(`[data-hub-price="${hub.id}"]`);
-      if (priceElement) priceElement.textContent = money(hub.lmp);
+      if (this.map) {
+        const label = `<strong>${escapeHtml(hub.id)}</strong> ${escapeHtml(money(hub.lmp))}`;
+        let marker = this.hubMarkers.get(hub.id);
+        if (marker) {
+          marker.setLatLng(hub.coordinates);
+          marker.setStyle({ fillColor: priceColor(hub.lmp) });
+          marker.setTooltipContent(label);
+        } else {
+          marker = L.circleMarker(hub.coordinates, {
+            radius: 14, color: "#f3eee5", weight: 3, fillColor: priceColor(hub.lmp), fillOpacity: 0.96,
+            className: "grid-price-marker",
+          });
+          marker.bindTooltip(label, { permanent: true, direction: "right", offset: [13, 0], className: "grid-price-label" });
+          marker.on("click", () => this.selectHub(hub.id));
+          marker.addTo(this.layers.prices);
+          this.hubMarkers.set(hub.id, marker);
+        }
+      }
+      this.root.querySelector(`[data-hub-price="${hub.id}"]`).textContent = money(hub.lmp);
     });
 
     const spread = snapshot.insight.northSouthSpread;
@@ -298,7 +342,6 @@ class CaliforniaGridExplorer {
     this.setField("insight-summary", snapshot.insight.summary);
     this.setField("insight-driver", snapshot.insight.driver);
     if (this.selectedHub) this.selectHub(this.selectedHub);
-    this.updateFreshness();
   }
 
   renderDesk(snapshot) {
@@ -331,7 +374,7 @@ class CaliforniaGridExplorer {
     ["energy", "congestion", "loss", "ghg"].forEach((key) => {
       this.root.querySelector(`[data-grid-detail="${key}"]`).textContent = money(hub.components[key]);
     });
-    if (pan) {
+    if (pan && this.map) {
       this.map.flyTo(hub.coordinates, Math.max(this.map.getZoom(), 7), { duration: 0.65 });
       this.hubMarkers.get(id)?.openTooltip();
     }
