@@ -1,10 +1,10 @@
 .grid-hero {
   max-width: 850px;
-  padding: 38px 0 44px;
+  padding: 24px 0 32px;
 }
 
 .grid-hero h1 {
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.75rem;
 }
 
 .grid-lead {
@@ -39,7 +39,7 @@
 .grid-summary-card p {
   margin: 0 0 18px;
   color: var(--blue-deep);
-  font-size: 0.68rem;
+  font-size: 0.8125rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -58,7 +58,7 @@
   display: block;
   margin-top: 9px;
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.8125rem;
 }
 
 .grid-summary-card--spread strong {
@@ -69,7 +69,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(270px, 330px);
   gap: clamp(24px, 4vw, 44px);
-  margin-top: 50px;
+  margin-top: 32px;
 }
 
 .grid-map-panel {
@@ -115,13 +115,14 @@
   box-shadow: 0 0 0 4px rgba(217, 174, 66, 0.15);
 }
 
+[data-market-status="stale"] .grid-status__light,
 [data-market-status="unavailable"] .grid-status__light {
   background: var(--orange);
 }
 
 .grid-status__time {
   color: var(--muted);
-  font-size: 0.65rem;
+  font-size: 0.8125rem;
   font-weight: 400;
 }
 
@@ -149,7 +150,7 @@
   align-items: center;
   color: var(--muted);
   cursor: pointer;
-  font-size: 0.65rem;
+  font-size: 0.8125rem;
   white-space: nowrap;
 }
 
@@ -199,14 +200,14 @@
   border-color: rgba(30, 78, 140, 0.2) !important;
   background: #f3eee5 !important;
   color: var(--blue-deep) !important;
-  font-family: var(--body-font) !important;
+  font-family: var(--mono-font) !important;
 }
 
 .leaflet-control-attribution {
   background: rgba(243, 238, 229, 0.84) !important;
   color: var(--muted) !important;
-  font-family: var(--body-font);
-  font-size: 8px !important;
+  font-family: var(--mono-font);
+  font-size: 12px !important;
 }
 
 .grid-price-label {
@@ -216,8 +217,8 @@
   background: rgba(243, 238, 229, 0.92) !important;
   box-shadow: 0 3px 9px rgba(40, 46, 45, 0.14) !important;
   color: var(--ink) !important;
-  font-family: var(--body-font) !important;
-  font-size: 9px !important;
+  font-family: var(--mono-font) !important;
+  font-size: 12px !important;
 }
 
 .grid-price-label::before {
@@ -241,8 +242,8 @@
 
 .leaflet-popup-content {
   margin: 18px 19px !important;
-  font-family: var(--body-font);
-  font-size: 11px;
+  font-family: var(--mono-font);
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -278,7 +279,7 @@
 
 .grid-popup small {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .grid-map-key {
@@ -287,7 +288,7 @@
   gap: 8px 17px;
   margin-top: 12px;
   color: var(--muted);
-  font-size: 0.59rem;
+  font-size: 0.8125rem;
 }
 
 .grid-map-key span {
@@ -335,21 +336,22 @@
 }
 
 .grid-insight h2 {
-  margin: 10px 0 18px;
-  font-size: clamp(2.6rem, 4vw, 3.7rem);
+  margin: 8px 0 14px;
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  line-height: 1.15;
 }
 
 .grid-insight > p:not(.eyebrow) {
   margin: 0;
   color: var(--ink);
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
 .grid-insight .grid-insight__driver {
   margin-top: 13px !important;
   color: var(--muted) !important;
-  font-size: 0.7rem !important;
+  font-size: 0.8125rem !important;
 }
 
 .grid-hubs {
@@ -369,7 +371,7 @@
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  font-family: var(--body-font);
+  font-family: var(--mono-font);
   text-align: left;
 }
 
@@ -382,7 +384,7 @@
 
 .grid-hubs button span {
   color: var(--muted);
-  font-size: 0.61rem;
+  font-size: 0.8125rem;
 }
 
 .grid-hubs button strong {
@@ -394,7 +396,7 @@
 
 .grid-hubs button b {
   color: var(--ink);
-  font-size: 0.68rem;
+  font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
   white-space: nowrap;
@@ -433,7 +435,7 @@
   gap: 12px;
   padding: 8px 0;
   border-top: 1px solid rgba(30, 78, 140, 0.15);
-  font-size: 0.66rem;
+  font-size: 0.8125rem;
 }
 
 .grid-detail dt {
@@ -449,7 +451,7 @@
 .grid-detail__note {
   margin: 13px 0 0;
   color: var(--muted);
-  font-size: 0.59rem;
+  font-size: 0.8125rem;
   line-height: 1.5;
 }
 
@@ -465,7 +467,7 @@
 .grid-source-note p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.67rem;
+  font-size: 0.8125rem;
   line-height: 1.65;
 }
 
@@ -536,3 +538,10 @@
     transition: none;
   }
 }
+
+.grid-summary-card, .grid-status, .grid-layer-controls, .grid-map-key,
+.grid-detail__price, .grid-detail dl { font-family: var(--mono-font); }
+.grid-summary-card p { margin-bottom: 14px; letter-spacing: 0.06em; }
+.grid-layer-controls label { font-size: 0.875rem; }
+.grid-source-note p { font-size: 0.9375rem; }
+.grid-detail__note { font-family: var(--body-font); font-size: 0.9375rem; }

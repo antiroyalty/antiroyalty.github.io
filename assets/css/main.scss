@@ -4,8 +4,10 @@
 @import "no-style-please";
 
 :root {
-  --body-font: Monaco, "Lucida Console", "Courier New", monospace;
-  --heading-font: "Bricolage Grotesque", "Arial Narrow", sans-serif;
+  --body-font: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono-font: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --heading-font: "Avenir Next Condensed", "Arial Narrow", "Bricolage Grotesque", sans-serif;
+  --page-background: #f5e8e2;
   --linen: #eee7d8;
   --linen-deep: #ddd3c0;
   --ceramic: #f6f0df;
@@ -68,13 +70,13 @@ html {
 body {
   min-height: 100%;
   margin: 0;
-  background-color: #edf0ec;
+  background-color: var(--page-background);
   background-image: url("../img/mineral-grain.svg");
   background-repeat: repeat;
   background-size: 256px 256px;
   color: var(--ink);
   font-family: var(--body-font);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -91,18 +93,9 @@ body {
   inset: 0 calc(50% - 50vw);
   z-index: -1;
   background:
-    radial-gradient(ellipse 850px 620px at calc(100% + 80px) 8%, rgba(119, 153, 198, 0.14), transparent 72%),
-    radial-gradient(ellipse 900px 760px at -140px 39%, rgba(145, 184, 197, 0.11), transparent 73%),
-    radial-gradient(ellipse 960px 720px at calc(100% + 100px) 68%, rgba(101, 121, 98, 0.09), transparent 74%),
-    radial-gradient(ellipse 800px 600px at -100px 94%, rgba(217, 174, 66, 0.055), transparent 72%),
-    linear-gradient(
-      180deg,
-      rgba(249, 250, 248, 0.42) 0%,
-      rgba(226, 235, 238, 0.44) 28%,
-      rgba(237, 240, 236, 0.1) 50%,
-      rgba(229, 235, 229, 0.32) 72%,
-      rgba(244, 242, 236, 0.38) 100%
-    );
+    radial-gradient(ellipse 850px 620px at calc(100% + 80px) 8%, rgba(224, 175, 158, 0.1), transparent 72%),
+    radial-gradient(ellipse 900px 760px at -140px 68%, rgba(228, 182, 170, 0.08), transparent 74%),
+    linear-gradient(180deg, rgba(255, 250, 245, 0.22), rgba(255, 247, 241, 0.08));
   content: "";
   pointer-events: none;
 }
@@ -183,9 +176,9 @@ h1, h2, h3, h4 {
   letter-spacing: -0.025em;
 }
 
-h1 { font-size: clamp(2.9rem, 6vw, 4.8rem); line-height: 0.98; }
-h2 { font-size: clamp(2.15rem, 4vw, 3.4rem); line-height: 1.02; }
-h3 { font-size: clamp(1.45rem, 2.6vw, 2.05rem); line-height: 1.08; }
+h1 { font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.08; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.12; }
+h3 { font-size: clamp(1.35rem, 2.4vw, 1.8rem); line-height: 1.18; }
 h4 { font-size: 1.2rem; line-height: 1.2; }
 
 .script-heading {
@@ -240,7 +233,7 @@ img, video { max-width: 100%; height: auto; }
   font-weight: 650;
   letter-spacing: -0.015em;
 }
-.home-intro { max-width: 720px; font-size: clamp(1.15rem, 2.2vw, 1.45rem); line-height: 1.5; }
+.home-intro { max-width: 720px; font-size: clamp(1.15rem, 2.2vw, 1.45rem); line-height: 1.6; }
 .hero-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 1.8rem; }
 
 .hero-links a {
@@ -391,7 +384,7 @@ img, video { max-width: 100%; height: auto; }
   gap: 28px;
   align-items: flex-start;
   justify-content: space-between;
-  padding: clamp(28px, 4vw, 42px) 0 clamp(24px, 3vw, 34px);
+  padding: 28px 0 24px;
   border-bottom: 1px solid rgba(30, 78, 140, 0.2);
 }
 
@@ -702,7 +695,7 @@ img, video { max-width: 100%; height: auto; }
 .post-list a:hover { color: var(--blue-deep); }
 .post-list time { color: var(--muted); font-size: 0.72rem; font-variant-numeric: tabular-nums; }
 
-code, pre { font-family: var(--body-font); }
+code, pre { font-family: var(--mono-font); font-size: 0.9em; }
 code { padding: 0.1rem 0.3rem; border-radius: 3px; background: var(--code-bg); }
 pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--code-bg); }
 
@@ -713,6 +706,17 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
 .post-banner img { display: block; width: 100%; border-radius: 8px; }
 .post-banner figcaption { margin-top: 7px; color: var(--muted); font-size: 0.75rem; }
 .post-photo-portrait { max-width: 720px; margin: 2rem auto; }
+
+.energysage-quote-crop {
+  aspect-ratio: 902 / 465;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.energysage-quote-crop img {
+  border-radius: 0;
+  transform: translateY(-41.25%);
+}
 
 .post-photo-pair {
   display: grid;
@@ -815,3 +819,14 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal-pending { opacity: 1; filter: none; transform: none; }
 }
+
+/* Prose uses a reading face; measurements and short labels use a fixed-width face. */
+.eyebrow, .desk-status, .tile-label, .tile-value, .supply-legend,
+.project-status, .post-list time, .post-meta, .resume-date, .case-facts dt {
+  font-family: var(--mono-font);
+}
+.tile-value { font-variant-numeric: tabular-nums; }
+.eyebrow, .tile-label, .project-status, .case-facts dt { font-size: 0.75rem; letter-spacing: 0.08em; }
+.desk-intro { margin-top: 10px; }
+.project-tile p, .case-facts dd, .case-question-list span { font-size: 1rem; line-height: 1.6; }
+.post-meta, .post-list time { font-size: 0.8125rem; }

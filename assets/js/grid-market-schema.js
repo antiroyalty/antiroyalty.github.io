@@ -17,7 +17,7 @@ function requireText(value, label) {
 
 export function validateGridMarketSnapshot(snapshot) {
   requireObject(snapshot, "snapshot");
-  if (snapshot.schemaVersion !== 1) throw new TypeError("snapshot schemaVersion must be 1");
+  if (![1, 2].includes(snapshot.schemaVersion)) throw new TypeError("snapshot schemaVersion must be 1 or 2");
   if (!Number.isFinite(Date.parse(snapshot.generatedAt))) {
     throw new TypeError("snapshot generatedAt must be a valid timestamp");
   }
@@ -25,14 +25,20 @@ export function validateGridMarketSnapshot(snapshot) {
     throw new TypeError("snapshot sourceUpdatedAt must be a valid timestamp");
   }
 
+  if (snapshot.schemaVersion === 2) {
+    const start = Date.parse(snapshot.intervalTimeUtc);
+    const end = Date.parse(snapshot.intervalEndUtc);
+    if (!Number.isFinite(start) || end - start !== 300_000 || start % 300_000 !== 0
+      || snapshot.sourceUpdatedAt !== snapshot.intervalTimeUtc) throw new TypeError("Invalid five-minute market interval");
+  }
   requireObject(snapshot.interval, "snapshot interval");
   requireText(snapshot.interval.tradingDate, "interval tradingDate");
   requireFinite(snapshot.interval.hourEnding, "interval hourEnding");
   requireFinite(snapshot.interval.fiveMinuteInterval, "interval fiveMinuteInterval");
-  if (snapshot.interval.hourEnding < 1 || snapshot.interval.hourEnding > 25) {
+  if (!Number.isInteger(snapshot.interval.hourEnding) || snapshot.interval.hourEnding < 1 || snapshot.interval.hourEnding > 25) {
     throw new TypeError("interval hourEnding must be between 1 and 25");
   }
-  if (snapshot.interval.fiveMinuteInterval < 1 || snapshot.interval.fiveMinuteInterval > 12) {
+  if (!Number.isInteger(snapshot.interval.fiveMinuteInterval) || snapshot.interval.fiveMinuteInterval < 1 || snapshot.interval.fiveMinuteInterval > 12) {
     throw new TypeError("interval fiveMinuteInterval must be between 1 and 12");
   }
   requireText(snapshot.interval.label, "interval label");
@@ -56,9 +62,10 @@ export function validateGridMarketSnapshot(snapshot) {
     hub.coordinates.forEach((value, index) => requireFinite(value, `hub ${id} coordinate ${index}`));
     requireFinite(hub.lmp, `hub ${id} LMP`);
     requireObject(hub.components, `hub ${id} components`);
-    COMPONENT_KEYS.forEach((key) => requireFinite(hub.components[key], `hub ${id} ${key}`));
-    const componentTotal = COMPONENT_KEYS.reduce((sum, key) => sum + hub.components[key], 0);
-    if (Math.abs(componentTotal - hub.lmp) > 0.2) {
+    const keys = snapshot.schemaVersion === 2 ? [...COMPONENT_KEYS, "ghg"] : COMPONENT_KEYS;
+    keys.forEach((key) => requireFinite(hub.components[key], `hub ${id} ${key}`));
+    const componentTotal = keys.reduce((sum, key) => sum + hub.components[key], 0);
+    if (Math.abs(componentTotal - hub.lmp) > (snapshot.schemaVersion === 2 ? 0.0001 : 0.2)) {
       throw new TypeError(`hub ${id} components do not reconcile with LMP`);
     }
   });
@@ -67,6 +74,8 @@ export function validateGridMarketSnapshot(snapshot) {
   requireFinite(snapshot.insight.northSouthSpread, "north-south spread");
   requireText(snapshot.insight.summary, "insight summary");
   requireText(snapshot.insight.driver, "insight driver");
+  const spread = Number((byId.get("SP15").lmp - byId.get("NP15").lmp).toFixed(2));
+  if (Math.abs(snapshot.insight.northSouthSpread - spread) > 0.01) throw new TypeError("Spread does not reconcile with hub prices");
   return snapshot;
 }
 

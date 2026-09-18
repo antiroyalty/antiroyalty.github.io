@@ -1,3 +1,5 @@
+import { validateElectricitySnapshot } from "./electricity-desk-schema.js";
+import { freshnessFor } from "./data-freshness.js";
 import { validateGridMarketSnapshot } from "./grid-market-schema.js";
 
 const explorer = document.querySelector("[data-grid-explorer]");
@@ -64,6 +66,11 @@ class CaliforniaGridExplorer {
     this.root = root;
     this.map = null;
     this.market = null;
+    this.desk = null;
+    this.marketRefreshFailed = false;
+    this.deskRefreshFailed = false;
+    this.selectedHub = null;
+    this.refreshing = false;
     this.layers = {};
     this.hubMarkers = new Map();
     this.init();
@@ -91,24 +98,58 @@ class CaliforniaGridExplorer {
       fetchJson(this.root.dataset.substationsEndpoint, 25_000),
     ]).then(([lines, substations]) => this.renderInfrastructure(lines, substations));
 
-    const market = fetchJson(this.root.dataset.marketEndpoint)
-      .then((snapshot) => this.renderMarket(validateGridMarketSnapshot(snapshot)))
-      .catch((error) => {
-        console.error("Grid market snapshot unavailable", error);
-        this.showUnavailable("Market snapshot unavailable");
-      });
-
-    const desk = fetchJson(this.root.dataset.deskEndpoint)
-      .then((snapshot) => this.renderDesk(snapshot))
-      .catch((error) => console.error("Electricity Desk summary unavailable", error));
+    const market = this.refreshData();
+    window.setInterval(() => this.refreshData(), 5 * 60_000);
+    window.setInterval(() => this.updateFreshness(), 60_000);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") { this.updateFreshness(); this.refreshData(); }
+    });
 
     try {
-      await Promise.all([infrastructure, market, desk]);
+      await Promise.all([infrastructure, market]);
       this.root.dataset.status = "ready";
       this.root.querySelector(".grid-loading")?.remove();
     } catch (error) {
       console.error("Grid infrastructure unavailable", error);
       this.showUnavailable("Public infrastructure unavailable");
+    }
+  }
+
+  async refreshData() {
+    if (this.refreshing) return;
+    this.refreshing = true;
+    try {
+      await Promise.all([
+        fetchJson(this.root.dataset.marketEndpoint).then((data) => {
+          const snapshot = validateGridMarketSnapshot(data);
+          if (this.market && Date.parse(snapshot.sourceUpdatedAt) < Date.parse(this.market.sourceUpdatedAt)) throw new Error("Market snapshot moved backwards");
+          this.marketRefreshFailed = false;
+          this.renderMarket(snapshot);
+        }).catch((error) => { this.marketRefreshFailed = true; console.error("Market refresh failed", error); }),
+        fetchJson(this.root.dataset.deskEndpoint).then((data) => {
+          const snapshot = validateElectricitySnapshot(data);
+          if (this.desk && Date.parse(snapshot.sourceUpdatedAt) < Date.parse(this.desk.sourceUpdatedAt)) throw new Error("Electricity snapshot moved backwards");
+          this.desk = snapshot;
+          this.deskRefreshFailed = false;
+          this.renderDesk(snapshot);
+        }).catch((error) => { this.deskRefreshFailed = true; console.error("Electricity refresh failed", error); }),
+      ]);
+    } finally { this.refreshing = false; this.updateFreshness(); }
+  }
+
+  updateFreshness() {
+    const marketStatus = freshnessFor(this.market, Date.now(), this.marketRefreshFailed);
+    this.root.dataset.marketStatus = marketStatus.key;
+    this.setField("status", marketStatus.label);
+    if (this.market) this.setField("interval", `Price interval ${pacificTime(this.market.sourceUpdatedAt)}`);
+    const deskStatus = freshnessFor(this.desk, Date.now(), this.deskRefreshFailed);
+    if (this.desk) {
+      this.renderDesk(this.desk);
+      const suffix = ` · ${deskStatus.label} · ${pacificTime(this.desk.sourceUpdatedAt)}`;
+      ["demand-detail", "battery-detail"].forEach((name) => { this.field(name).textContent += suffix; });
+    } else {
+      this.setField("demand", "n/a"); this.setField("battery", "n/a");
+      this.setField("demand-detail", "Demand unavailable"); this.setField("battery-detail", "Storage unavailable");
     }
   }
 
@@ -187,7 +228,10 @@ class CaliforniaGridExplorer {
 
   renderMarket(snapshot) {
     this.market = snapshot;
-    this.layers.prices = L.layerGroup().addTo(this.map);
+    if (this.layers.prices) this.map.removeLayer(this.layers.prices);
+    this.hubMarkers.clear();
+    this.layers.prices = L.layerGroup();
+    if (this.root.querySelector('[data-grid-layer="prices"]').checked) this.layers.prices.addTo(this.map);
     snapshot.hubs.forEach((hub) => {
       const color = priceColor(hub.lmp);
       const marker = L.circleMarker(hub.coordinates, {
@@ -214,18 +258,12 @@ class CaliforniaGridExplorer {
     const spread = snapshot.insight.northSouthSpread;
     this.setField("spread", `${spread < 0 ? "−" : ""}$${Math.abs(spread).toFixed(2)}/MWh`);
     this.setField("spread-direction", spread === 0 ? "SP15 level with NP15" : `SP15 ${spread > 0 ? "above" : "below"} NP15`);
-    const current = this.marketAgeMinutes(snapshot) <= 45;
-    this.setField("interval", `Updated ${pacificTime(snapshot.sourceUpdatedAt)}`);
     this.field("interval").title = snapshot.interval.label;
-    this.setField("status", current ? "Current" : "Delayed");
     this.setField("insight-title", Math.abs(spread) < 2 ? "California is broadly aligned" : "Prices are separating across California");
     this.setField("insight-summary", snapshot.insight.summary);
     this.setField("insight-driver", snapshot.insight.driver);
-    this.root.dataset.marketStatus = current ? "live" : "delayed";
-  }
-
-  marketAgeMinutes(snapshot) {
-    return Math.max(0, (Date.now() - Date.parse(snapshot.sourceUpdatedAt)) / 60_000);
+    if (this.selectedHub) this.selectHub(this.selectedHub);
+    this.updateFreshness();
   }
 
   renderDesk(snapshot) {
@@ -240,12 +278,13 @@ class CaliforniaGridExplorer {
       ? "charging from the grid"
       : snapshot?.supply?.batteryState === "discharging"
         ? "supplying the grid"
-        : "nearly balanced");
+        : snapshot?.supply?.batteryState === "balanced" ? "nearly balanced" : "Storage measurement unavailable");
   }
 
   selectHub(id, pan = false) {
     const hub = this.market?.hubs.find((item) => item.id === id);
     if (!hub) return;
+    this.selectedHub = id;
     this.root.querySelectorAll("[data-grid-hub]").forEach((button) => {
       button.classList.toggle("is-selected", button.dataset.gridHub === id);
       button.setAttribute("aria-pressed", button.dataset.gridHub === id ? "true" : "false");
@@ -254,7 +293,7 @@ class CaliforniaGridExplorer {
     if (detail) detail.hidden = false;
     this.root.querySelector('[data-grid-detail="name"]').textContent = `${hub.id} · ${hub.region}`;
     this.root.querySelector('[data-grid-detail="price"]').textContent = money(hub.lmp);
-    ["energy", "congestion", "loss"].forEach((key) => {
+    ["energy", "congestion", "loss", "ghg"].forEach((key) => {
       this.root.querySelector(`[data-grid-detail="${key}"]`).textContent = money(hub.components[key]);
     });
     if (pan) {
@@ -264,6 +303,8 @@ class CaliforniaGridExplorer {
   }
 
   showUnavailable(message) {
+    const loading = this.root.querySelector(".grid-loading");
+    if (loading) loading.textContent = message;
     this.root.dataset.marketStatus = "unavailable";
     this.setField("status", message);
   }

@@ -1,3 +1,4 @@
+import { freshnessFor } from "./data-freshness.js";
 import { validateElectricitySnapshot } from "./electricity-desk-schema.js";
 
 const desk = document.querySelector("[data-electricity-desk]");
@@ -31,30 +32,15 @@ if (desk) {
     return `updated ${hours} ${hours === 1 ? "hour" : "hours"} ago`;
   }
 
-  function statusFor(ageMinutes) {
-    if (ageMinutes <= 45) return { key: "live", label: "Current" };
-    if (ageMinutes <= 180) return { key: "delayed", label: "Delayed" };
-    return { key: "stale", label: "Stale" };
-  }
-
-  function snapshotAge(snapshot) {
-    const sourceTime = Date.parse(snapshot.sourceUpdatedAt ?? snapshot.generatedAt);
-    if (!Number.isFinite(sourceTime)) throw new TypeError("Snapshot has no valid source time");
-    return Math.max(0, (Date.now() - sourceTime) / 60_000);
-  }
-
   function updateFreshness() {
     if (!lastSnapshot) return;
-    const ageMinutes = snapshotAge(lastSnapshot);
-    const sourceStatus = statusFor(ageMinutes);
-    const status = lastRefreshFailed && sourceStatus.key === "live"
-      ? { key: "delayed", label: "Refresh delayed" }
-      : sourceStatus;
+    const status = freshnessFor(lastSnapshot, Date.now(), lastRefreshFailed);
+    const ageMinutes = status.ageMinutes;
     const freshness = field("freshness");
 
     desk.dataset.status = status.key;
     setField("status", status.label);
-    setField("freshness", ageLabel(ageMinutes));
+    setField("freshness", ageMinutes === null ? "Invalid source time" : ageLabel(ageMinutes));
     if (freshness) {
       freshness.title = new Date(lastSnapshot.sourceUpdatedAt).toLocaleString("en-US", {
         timeZone: "America/Los_Angeles",
@@ -71,6 +57,12 @@ if (desk) {
   }
 
   function renderMix(mix) {
+    if (mix.some((item) => item.share === null)) {
+      desk.querySelectorAll("[data-segment]").forEach((segment) => { segment.style.width = "0%"; });
+      desk.querySelectorAll("[data-mix-label]").forEach((label) => { label.textContent = "n/a"; });
+      desk.querySelector(".supply-ribbon")?.setAttribute("aria-label", "Supply mix unavailable: some source measurements are missing");
+      return;
+    }
     const byLabel = Object.fromEntries(mix.map((item) => [item.label, item]));
     const grouped = {
       solar: byLabel.solar?.share ?? 0,
@@ -98,20 +90,23 @@ if (desk) {
 
   function render(data) {
     validateElectricitySnapshot(data);
+    if (lastSnapshot && Date.parse(data.sourceUpdatedAt) < Date.parse(lastSnapshot.sourceUpdatedAt)) {
+      throw new Error("Electricity snapshot moved backwards");
+    }
     lastSnapshot = data;
     lastRefreshFailed = false;
     const batteryVerb = data.supply.batteryState === "discharging"
       ? "supplying the grid"
       : data.supply.batteryState === "charging"
         ? "charging from the grid"
-        : "nearly balanced";
+        : data.supply.batteryState === "balanced" ? "nearly balanced" : "Storage measurement unavailable";
 
     desk.setAttribute("aria-busy", "false");
     setField("interval", data.intervalLabel);
     setField("demand", formatMw(data.demand.currentMw));
     setField("demand-trend", trendCopy(data.demand.changeFromHourAgoMw));
-    setField("forecast", `${formatMw(data.demand.hourAheadMw)} hour-ahead forecast`);
-    setField("solar-wind-share", `${data.supply.solarWindShare.toFixed(1)}%`);
+    setField("forecast", data.demand.hourAheadMw === null ? "Hour-ahead forecast unavailable" : `${formatMw(data.demand.hourAheadMw)} hour-ahead forecast`);
+    setField("solar-wind-share", data.supply.solarWindShare === null ? "n/a" : `${data.supply.solarWindShare.toFixed(1)}%`);
     setField("solar-wind", `${formatMw(data.supply.solarMw)} solar + ${formatMw(data.supply.windMw)} wind`);
     setField("battery", formatMw(data.supply.batteryMw, true));
     setField("battery-state", batteryVerb);
