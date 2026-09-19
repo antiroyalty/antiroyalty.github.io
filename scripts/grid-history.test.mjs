@@ -75,3 +75,20 @@ test("an evening ramp needs a full contiguous hour of solar, wind, and demand", 
   assert.equal(findDayEvents(rows).ramp, null);
   assert.equal(netDemandMw(rows[0]), null);
 });
+
+test("slider markers follow Pacific clock times and show Now only within that day", async () => {
+  const { sliderTimeMarkers } = await import("../assets/js/grid-history.js");
+  const rows = buildTimeline(date);
+  const noon = rows.find((row) => row.label === "12:00");
+  const markers = sliderTimeMarkers(rows, noon.timeMs);
+  assert.deepEqual(markers.ticks.map((tick) => tick.label), ["12am", "6am", "12pm", "6pm", "11:55pm"]);
+  assert.equal(markers.nowPercent, markers.ticks[2].percent);
+  assert.equal(sliderTimeMarkers(rows, rows[0].timeMs - 1).nowPercent, null);
+  assert.equal(sliderTimeMarkers(rows, rows.at(-1).timeMs + 300_000).nowPercent, null);
+  assert.equal(sliderTimeMarkers(rows, rows.at(-1).timeMs + 120_000).nowPercent, 100);
+  const fall = buildTimeline("2026-11-01");
+  const six = fall.find((row) => row.label === "06:00");
+  const fallMarkers = sliderTimeMarkers(fall, six.timeMs);
+  assert.equal(fallMarkers.ticks[1].percent, 84 / 299 * 100);
+  assert.equal(fallMarkers.nowPercent, fallMarkers.ticks[1].percent);
+});

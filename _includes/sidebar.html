@@ -3,7 +3,7 @@
   <ul class="side-list">
     {% assign nav_items = site.nav | default: site.pages %}
     {% for item in nav_items %}
-      {% if item.title and item.url and item.title != '404: Lost in the Berkeley Fog' and item.url != '/guestbook/' and item.url != '/email/' %}
+      {% if item.title and item.url and item.title != '404: Lost in the Berkeley Fog' and item.url != '/email/' %}
         <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
       {% endif %}
     {% endfor %}
@@ -12,7 +12,6 @@
   <b>Contact</b>
   <ul class="side-list">
     <li><a href="{{ '/email/' | relative_url }}">Email</a></li>
-    <li><a href="{{ '/guestbook/' | relative_url }}">Sign Guestbook</a></li>
     {% if site.github_username %}<li><a href="https://github.com/{{ site.github_username }}">GitHub</a></li>{% endif %}
   </ul>
 

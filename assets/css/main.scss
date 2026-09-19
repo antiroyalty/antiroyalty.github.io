@@ -665,30 +665,6 @@ img, video { max-width: 100%; height: auto; }
 
 .year-heading { margin: 2.7rem 0 0.7rem; color: var(--blue-deep); font-size: 1.1rem; letter-spacing: 0.08em; }
 
-.guestbook-box {
-  margin-top: 38px;
-  padding: 20px;
-  border: 7px solid transparent;
-  border-radius: 2px;
-  background-color: rgba(255, 250, 240, 0.78);
-  background-image: linear-gradient(rgba(255, 250, 240, 0.78), rgba(255, 250, 240, 0.78)), var(--glaze-museum-black);
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-position: center;
-  background-repeat: no-repeat, repeat;
-  background-size: 100% 100%, var(--glaze-sheet-size);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.7), 0 16px 30px rgba(52, 48, 43, 0.14);
-}
-
-.guestbook-title {
-  margin-bottom: 20px;
-  color: var(--blue-deep);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .post-list { padding: 0; margin: 0; list-style: none; border-top: 1px solid var(--border); }
 .post-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--border); }
 .post-list a { color: var(--ink); font-size: 1.05rem; font-weight: 650; text-decoration: none; }

@@ -659,6 +659,16 @@
 .grid-history-note { margin: 12px 0; color: var(--muted); font-size: 0.9375rem; line-height: 1.55; }
 .grid-interval-label { display: block; margin: 20px 0 4px; color: var(--blue-deep); font-weight: 600; }
 .grid-interval-slider { display: block; width: 100%; min-height: 36px; margin: 0; accent-color: var(--blue-deep); }
+.grid-time-scale { position: relative; height: 28px; margin: 0 8px; color: var(--muted); font-family: var(--mono-font); font-size: 0.75rem; }
+.grid-time-scale.has-now { height: 52px; }
+.grid-time-tick, .grid-time-now { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.grid-time-tick::before { position: absolute; top: -5px; left: 50%; height: 4px; border-left: 1px solid var(--border); content: ""; }
+.grid-time-now { top: 25px; color: var(--orange); font-weight: 700; }
+.grid-time-now::before { display: inline-block; margin-right: 4px; content: "↑"; }
+.grid-time-scale .is-first { transform: none; }
+.grid-time-scale .is-last { transform: translateX(-100%); }
+.grid-time-tick.is-first::before { left: 0; }
+.grid-time-tick.is-last::before { left: 100%; }
 .grid-history { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--border); }
 .grid-history h2 { margin: 0 0 12px; font-size: 1.8rem; }
 .grid-event-presets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 22px 0 14px; }

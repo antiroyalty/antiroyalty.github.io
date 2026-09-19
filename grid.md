@@ -34,6 +34,7 @@ permalink: /grid/
     <p class="grid-history-note" data-timeline="available">Loading available dates…</p>
     <label class="grid-interval-label" for="grid-interval-slider" data-timeline="selection">Loading interval history…</label>
     <input id="grid-interval-slider" class="grid-interval-slider" data-timeline="range" type="range" min="0" max="287" step="1" value="0" disabled aria-describedby="grid-timeline-help">
+    <div class="grid-time-scale" data-timeline="scale" aria-label="Pacific time markers"></div>
     <p class="grid-history-note" id="grid-timeline-help">Move the slider or use arrow keys to step through five-minute intervals. Hover over a chart to preview; click or tap to select.</p>
   </section>
 
@@ -146,6 +147,7 @@ permalink: /grid/
     <p class="grid-history-note">Presets use observed intervals on this date. Evening ramp finds the largest one-hour rise in demand minus solar and wind, ending from 16:00–21:00. Partial days may miss larger events.</p>
     <label class="grid-interval-label" for="grid-chart-slider" data-timeline="chart-selection">Selected interval</label>
     <input id="grid-chart-slider" class="grid-interval-slider" data-timeline="chart-range" type="range" min="0" max="287" step="1" value="0" disabled aria-describedby="grid-timeline-help">
+    <div class="grid-time-scale" data-timeline="chart-scale" aria-label="Pacific time markers"></div>
     <div class="grid-history-charts" data-timeline="charts"></div>
     <p class="grid-history-note">All times are Pacific. Gaps are unrecorded or unavailable measurements; lines never bridge them. Demand excludes battery charging and dispatchable pumping. Signed solar and wind measurements are retained.</p>
   </section>

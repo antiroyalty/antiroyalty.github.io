@@ -4,6 +4,19 @@ import { validateGridMarketSnapshot } from "./grid-market-schema.js";
 
 export const HISTORY_DATASETS = ["electricity", "market"];
 
+export function sliderTimeMarkers(rows, nowMs) {
+  if (rows.length < 2) return { ticks: [], nowPercent: null };
+  const ticks = [["00:00", "12am"], ["06:00", "6am"], ["12:00", "12pm"], ["18:00", "6pm"], ["23:55", "11:55pm"]]
+    .map(([clockLabel, label]) => ({ index: rows.findIndex((row) => row.label === clockLabel), label }))
+    .filter((tick) => tick.index >= 0)
+    .map(({ index, label }) => ({ label, percent: index / (rows.length - 1) * 100 }));
+  const startMs = rows[0].timeMs;
+  const lastMs = rows.at(-1).timeMs;
+  const nowPercent = nowMs >= startMs && nowMs < lastMs + FIVE_MINUTES_MS
+    ? Math.min(100, (nowMs - startMs) / (lastMs - startMs) * 100) : null;
+  return { ticks, nowPercent };
+}
+
 export function validateHistoryIndex(index) {
   if (index?.schemaVersion !== 1 || !index.datasets) throw new TypeError("Invalid history index");
   for (const dataset of HISTORY_DATASETS) {

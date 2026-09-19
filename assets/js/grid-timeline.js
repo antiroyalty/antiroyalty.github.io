@@ -1,4 +1,4 @@
-import { availableDates, buildTimeline, chartSegments, findDayEvents, HISTORY_DATASETS, mergeLatest, netDemandMw, validateHistoryDay, validateHistoryIndex } from "./grid-history.js";
+import { availableDates, buildTimeline, chartSegments, findDayEvents, HISTORY_DATASETS, mergeLatest, netDemandMw, sliderTimeMarkers, validateHistoryDay, validateHistoryIndex } from "./grid-history.js";
 import { pacificDate, FIVE_MINUTES_MS } from "./grid-time.js";
 
 const clock = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit", timeZoneName: "short" });
@@ -146,6 +146,7 @@ export class GridTimeline {
     this.rows = [];
     this.records = { electricity: [], market: [] };
     this.errors = [];
+    this.renderTimeMarkers();
     this.loading = true;
     this.element("range").disabled = true;
     this.element("chart-range").disabled = true;
@@ -199,6 +200,7 @@ export class GridTimeline {
     this.element("range").disabled = !this.rows.length;
     this.element("chart-range").max = this.rows.length - 1;
     this.element("chart-range").disabled = !this.rows.length;
+    this.renderTimeMarkers();
     this.renderCoverage();
     this.renderCharts();
     this.setPresets();
@@ -211,8 +213,37 @@ export class GridTimeline {
       row.electricityPending = row.timeMs > nowMs;
       row.marketPending = row.timeMs + FIVE_MINUTES_MS > nowMs;
     }
+    this.renderTimeMarkers(nowMs);
     this.renderCoverage();
     this.emitSelection();
+  }
+
+  renderTimeMarkers(nowMs = Date.now()) {
+    const { ticks, nowPercent } = sliderTimeMarkers(this.rows, nowMs);
+    for (const name of ["scale", "chart-scale"]) {
+      const scale = this.element(name);
+      scale.replaceChildren();
+      scale.classList.toggle("has-now", nowPercent !== null);
+      for (const tick of ticks) {
+        const label = document.createElement("span");
+        label.className = "grid-time-tick";
+        label.textContent = tick.label;
+        label.style.left = `${tick.percent}%`;
+        if (tick.percent === 0) label.classList.add("is-first");
+        if (tick.percent === 100) label.classList.add("is-last");
+        scale.append(label);
+      }
+      if (nowPercent !== null) {
+        const marker = document.createElement("span");
+        marker.className = "grid-time-now";
+        marker.textContent = "Now";
+        marker.title = `Current time: ${clock.format(new Date(nowMs))}`;
+        marker.style.left = `${nowPercent}%`;
+        if (nowPercent < 5) marker.classList.add("is-first");
+        if (nowPercent > 95) marker.classList.add("is-last");
+        scale.append(marker);
+      }
+    }
   }
 
   renderCoverage() {
@@ -239,7 +270,7 @@ export class GridTimeline {
     const row = this.rows[index];
     if (!row) return;
     const mode = this.preview !== null ? "preview" : this.mode;
-    const label = `${mode === "latest" ? "Latest available" : mode === "preview" ? "Preview" : "Selected"} · ${this.date} · ${clock.format(new Date(row.timestamp))}`;
+    const label = `${mode === "latest" ? "Latest available" : mode === "preview" ? "Preview" : "Selected"} · ${this.date} · ${clock.format(new Date(row.timestamp))}${row.timeMs > Date.now() ? " · Future interval — no data yet" : ""}`;
     this.element("selection").textContent = label;
     this.element("chart-selection").textContent = label;
     for (const name of ["range", "chart-range"]) {
