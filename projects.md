@@ -11,7 +11,7 @@ permalink: /projects/
     <p>Experiments that make electricity systems, infrastructure, and research software easier to inspect.</p>
   </div>
   <div class="projects-grid">
-    {% assign projects = site.data.projects | default: empty %}
+    {% assign projects = site.data.projects | sort: 'date' | reverse %}
     {% for item in projects %}
       <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
         <span class="project-tile__content">

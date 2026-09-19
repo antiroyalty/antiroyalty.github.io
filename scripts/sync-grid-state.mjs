@@ -2,8 +2,10 @@ import { cp, mkdir, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { DATASETS, readJson, writeJson, validateDay, saveRecords, writeHistoryIndex } from "./lib/data-store.mjs";
+import { validateQueueArchive, mergeQueueArchive } from "./lib/queue-store.mjs";
 
 export async function validateState(directory) {
+  await validateQueueArchive(path.join(directory, "queue"));
   for (const [dataset, spec] of Object.entries(DATASETS)) {
     const latest = await readJson(path.join(directory, spec.file));
     if (latest) spec.validate(latest);
@@ -18,6 +20,7 @@ export async function validateState(directory) {
 
 export async function restoreState(stateDir, dataDir = "assets/data") {
   await validateState(stateDir);
+  await mergeQueueArchive(path.join(stateDir, "queue"), path.join(dataDir, "queue"));
   for (const [dataset, spec] of Object.entries(DATASETS)) {
     const saved = await readJson(path.join(stateDir, spec.file));
     const local = await readJson(path.join(dataDir, spec.file));
@@ -46,6 +49,7 @@ export async function persistState(stateDir, dataDir = "assets/data") {
     await writeJson(path.join(stateDir, spec.file), snapshot);
   }
   await cp(path.join(dataDir, "history"), path.join(stateDir, "history"), { recursive: true });
+  await mergeQueueArchive(path.join(dataDir, "queue"), path.join(stateDir, "queue"));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

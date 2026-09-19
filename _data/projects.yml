@@ -1,22 +1,27 @@
-- title: Electrify California
+# Date records when the project was introduced, not its latest data refresh.
+- title: "What would it cost to go electric?"
+  date: "2026-08-17"
   url: "/projects/electrify-california/"
   description: Explore how electrification, solar, storage, and California utility rates shape modeled household costs.
   accent: paper
   status: Research preview
 
-- title: California Electricity Desk
-  url: "/#electricity-desk"
-  description: A five-minute view of demand, solar, wind, and batteries on California's grid.
-  accent: electricity
-  status: Live data
-
-- title: California Grid Map
+- title: "What's happening on the grid?"
+  date: "2026-08-11"
   url: "/grid/"
-  description: An experimental map of substations, transmission paths, and market signals.
+  description: Explore California's wholesale prices, demand, generation, and transmission network through five-minute intervals.
   accent: map
   status: Prototype
 
-- title: California Load Capacity Research
+- title: "What's in the queue?"
+  date: "2026-09-19"
+  url: "/queue/"
+  description: Explore proposed generation and storage in the CAISO interconnection queue—where projects want to connect and how long they've been waiting.
+  accent: map
+  status: Public data explorer
+
+- title: "Where can the grid take more load?"
+  date: "2024-09-15"
   url: "/energy/research/2024/09/15/load-capacity-data-california-ious.html"
   description: A practical guide to finding and interpreting distribution capacity data.
   accent: research

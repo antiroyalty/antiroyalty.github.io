@@ -1,13 +1,14 @@
 ---
 layout: default
-title: California Grid Map
+title: "What's happening on the grid?"
 permalink: /grid/
 ---
 
 <section class="grid-hero" aria-labelledby="grid-page-title">
   <p class="eyebrow">California market geography</p>
-  <h1 id="grid-page-title">California Grid Map</h1>
+  <h1 id="grid-page-title">What's happening on the grid?</h1>
   <p class="grid-lead">Explore five-minute wholesale prices, demand, and generation alongside California's public high-voltage transmission network.</p>
+  <p><a href="{{ '/queue/' | relative_url }}">What's in the queue? Explore proposed generation and storage ↗</a></p>
 </section>
 
 <section
@@ -47,7 +48,7 @@ permalink: /grid/
     <article class="grid-summary-card">
       <p>System demand</p>
       <strong data-grid-field="demand">···</strong>
-      <span data-grid-field="demand-detail">Loading the Electricity Desk</span>
+      <span data-grid-field="demand-detail">Loading system demand</span>
     </article>
     <article class="grid-summary-card">
       <p>Grid batteries</p>

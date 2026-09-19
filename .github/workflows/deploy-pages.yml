@@ -27,6 +27,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/queue-requirements.txt
+      - name: Install queue workbook reader
+        run: python -m pip install -r scripts/queue-requirements.txt
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
@@ -61,8 +68,19 @@ jobs:
       - name: Report retained California market snapshot
         if: always() && steps.refresh_grid_market.outcome == 'failure'
         run: echo "::warning title=California market refresh failed::The previous snapshot was retained. Deployment will continue only if validation confirms it is usable."
+      - name: Check queue editions weekly
+        id: refresh_queue
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python scripts/update-queue-data.py
+      - name: Report retained queue edition
+        if: always() && steps.refresh_queue.outcome == 'failure'
+        run: echo "::warning title=Queue refresh failed::The previous queue observation was retained. Check source structure and source dates."
       - name: Validate data snapshots and pipelines
-        run: npm test
+        run: |
+          npm test
+          python -m unittest discover -s scripts -p '*_test.py'
+          npm run validate:data
       - name: Preserve verified intervals before building the site
         if: github.event_name != 'push'
         env:
@@ -71,7 +89,7 @@ jobs:
           node scripts/sync-grid-state.mjs persist "$GRID_STATE_DIR"
           git -C "$GRID_STATE_DIR" config user.name "github-actions[bot]"
           git -C "$GRID_STATE_DIR" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git -C "$GRID_STATE_DIR" add electricity-desk.json grid-market.json history
+          git -C "$GRID_STATE_DIR" add electricity-desk.json grid-market.json history queue
           if ! git -C "$GRID_STATE_DIR" diff --cached --quiet; then
             git -C "$GRID_STATE_DIR" commit -m "update verified grid intervals"
             git -C "$GRID_STATE_DIR" push origin HEAD:refs/heads/grid-data

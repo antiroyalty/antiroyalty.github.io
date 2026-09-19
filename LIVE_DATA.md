@@ -45,7 +45,7 @@ New snapshots use schema version 2. Version 1 snapshots remain readable during m
 
 History files are sorted by UTC timestamp. Repeated downloads deduplicate intervals and replace source revisions. Unchanged measurements keep their original collection timestamp. An older revision or a partial response cannot erase a previously observed value for the same interval. Missing intervals remain gaps; the collector does not interpolate or fabricate measurements. Current-day history is naturally incomplete. Files accumulate by date; there is no automatic history deletion.
 
-The initial repository history contains the dates downloaded during this change. It does not claim coverage of earlier dates. No date picker or historical chart is exposed yet.
+The initial repository history contains the dates downloaded during this change. It does not claim coverage of earlier dates.
 
 ## Time and missing-data rules
 
@@ -121,3 +121,34 @@ Tests cover missing versus zero, misaligned feeds, exact hourly comparisons, mid
 - Production lifecycle: `.github/workflows/deploy-pages.yml`.
 
 The OASIS fixture contains two public intervals downloaded on September 18, 2026. Unit tests do not contact live services.
+
+## Interconnection queue explorer
+
+`/queue/` combines two CAISO workbooks: [Cluster 14 and earlier](https://www.caiso.com/documents/publicqueuereport.xlsx) and [Cluster 15](https://www.caiso.com/documents/cluster-15-interconnection-requests.xlsx). The initial editions have a September 18, 2026 run date and a July 16, 2026 publication date, respectively. They contain 2,448 records, including 349 active projects. Report dates are displayed separately. They are not live market data.
+
+The default view shows active projects. Filters, rankings, summaries, charts, and project records share the same selection. Completed and withdrawn records are available through the status filter. Each project links to a retained source workbook and identifies its worksheet and row.
+
+Domain rules:
+
+- Project identity is the queue identifier, including suffixes. Duplicate identifiers across reports stop the import for review.
+- Net capacity uses `Net MWs to Grid` or `NET MW POI`. Component capacities remain separate; solar and battery MW are never added to infer the shared connection limit.
+- Active queue age ends at that project's source report date. Completed age ends at its actual online date; withdrawn age ends at the reported withdrawal date. Missing, invalid, or inverted dates yield unavailable duration. Age is not a construction delay or an estimate of remaining wait.
+- County filters normalize capitalization and the County suffix. Source fields retain their original values. Compound and inconsistent place names are not silently reassigned.
+- Map positions use exact normalized station-name, owner, and county matches to the existing CEC reference. Proposed facilities, line connections, ambiguous matches, and projects outside California remain unmapped. Unmapped records stay in totals and the table. The initial active subset has 85 mapped records.
+- Changes compare recorded fields by queue ID. Newly present and absent records are labeled as observations, not inferred applications or withdrawals. Status, technology, capacity, dates, location, and agreement changes retain both values. Row reordering alone does not generate a field-change event.
+
+`assets/data/queue/index.json` lists immutable observations under `snapshots/`. Content-hashed workbooks are retained under `sources/`. Each snapshot records collection time, source edition dates, source URLs, workbook checksums, and row provenance. The first observation is a baseline, so no change claims are made until another observation exists. Identical project records do not create a new observation; the index still records the successful source check and latest downloaded editions.
+
+The existing deployment workflow checks these sources at most once per seven days, after restoring the `grid-data` branch. Both workbooks must parse and validate before the index changes. A failed fetch or schema change retains the prior index; a source edition that moves backward fails. Queue snapshots and workbooks are merged into the persistent data branch before the site builds. Ordinary source pushes restore the archive too. This schedule becomes active when the code is deployed.
+
+Local collection requires Python 3 and `python3 -m pip install -r scripts/queue-requirements.txt`:
+
+```bash
+npm run update:queue
+python3 scripts/update-queue-data.py --force
+python3 -m unittest discover -s scripts -p '*_test.py'
+npm test
+npm run validate:data
+```
+
+`--force` bypasses the seven-day check interval. `--inputs DIRECTORY` supports offline verification with `caiso-queue.xlsx`, `caiso-cluster15.xlsx`, and the CAISO listing saved as `caiso-interconnection.html`. An independent browser validator rejects invalid records. Archive validation also verifies retained workbook checksums. No external services are called by the test suite.

@@ -25,8 +25,8 @@ layout: default
   <div class="desk-header">
     <div>
       <p class="eyebrow">CAISO · five-minute averages</p>
-      <h2 id="electricity-desk-title">Electricity Desk</h2>
-      <p class="desk-intro">A small live instrument for watching demand, sunlight, wind, and storage move through the grid.</p>
+      <h2 id="electricity-desk-title">What's powering the grid right now?</h2>
+      <p class="desk-intro">A snapshot of demand, generation, and batteries. <a href="{{ '/grid/' | relative_url }}">Explore prices, maps, and interval history →</a></p>
     </div>
     <div class="desk-status" role="status" aria-live="polite">
       <span class="desk-status__light" aria-hidden="true"></span>
@@ -85,7 +85,7 @@ layout: default
     <a href="{{ '/projects/' | relative_url }}">All projects</a>
   </div>
   <div class="projects-grid projects-grid--home">
-    {% assign projects = site.data.projects | default: empty %}
+    {% assign projects = site.data.projects | sort: 'date' | reverse %}
     {% for item in projects limit:3 %}
       <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}">
         <span class="project-tile__content">
