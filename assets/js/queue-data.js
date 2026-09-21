@@ -1,4 +1,5 @@
 const DAY_MS = 86400000;
+export const DAYS_PER_YEAR = 365.2425;
 export const CHANGE_FIELDS = {
   status: "Status", netMw: "Net MW to grid", components: "Technology / component MW",
   poi: "Connection point", county: "County", state: "State", utility: "Transmission owner",
@@ -101,6 +102,23 @@ export function median(values) {
   const sorted = values.filter(Number.isFinite).sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
   return sorted.length ? (sorted[mid] + sorted[Math.floor((sorted.length - 1) / 2)]) / 2 : null;
+}
+
+// Equal-width, lower-inclusive intervals; retain empty bins through the oldest project.
+export function isInQueueAgeBin(days, bin) {
+  return Number.isFinite(days) && days >= bin.fromYears * DAYS_PER_YEAR && days < bin.toYears * DAYS_PER_YEAR;
+}
+
+export function queueAgeHistogram(daysValues) {
+  const knownDays = daysValues.filter(days => Number.isFinite(days) && days >= 0);
+  if (!knownDays.length) return [];
+  const intervalDays = 2 * DAYS_PER_YEAR;
+  const binCount = Math.floor(Math.max(...knownDays) / intervalDays) + 1;
+  const bins = Array.from({length: binCount}, (_, index) => ({
+    fromYears: index * 2, toYears: (index + 1) * 2, count: 0,
+  }));
+  knownDays.forEach(days => { bins[Math.floor(days / intervalDays)].count++; });
+  return bins;
 }
 
 export function countyLabel(value) {

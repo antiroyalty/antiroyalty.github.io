@@ -16,7 +16,7 @@ permalink: /queue/
   <noscript><p>This explorer needs JavaScript. <a href="https://www.caiso.com/documents/publicqueuereport.xlsx">Download the CAISO queue</a> or <a href="https://www.caiso.com/documents/cluster-15-interconnection-requests.xlsx">Cluster 15 report</a>.</p></noscript>
   <div data-q="content" hidden>
     <form class="queue-filters" aria-label="Filter projects">
-      <label class="queue-search">Find a project or connection point<input type="search" data-q="search" placeholder="Try Whirlwind, solar, or a queue number"></label>
+      <label class="queue-search">Find a project or connection<input type="search" data-q="search" placeholder="Name, connection, or queue ID"></label>
       <label>Technology<select data-q="technology"><option value="">All technologies</option></select></label>
       <label>State<select data-q="state"><option value="">All states</option></select></label>
       <label>County<select data-q="county"><option value="">All counties</option></select></label>
@@ -25,25 +25,28 @@ permalink: /queue/
     </form>
     <div class="queue-summary" aria-live="polite" data-q="summary"></div>
     <p class="queue-note">Capacity is the reported net MW at the grid connection, counted once per project. Proposals are not a forecast of what will be built.</p>
-    <section class="queue-geography" aria-labelledby="queue-location-title">
-      <div class="queue-section-heading"><div><p class="eyebrow">01 / Connection points</p><h2 id="queue-location-title">Where projects want to connect</h2></div><button type="button" data-q="map-reset">Reset map</button></div>
+    <div class="queue-geography">
       <div class="queue-map-layout">
-        <div><div id="queue-map" aria-label="Reference map of matched project connection substations"><p>Loading substation reference map…</p></div><p class="queue-note" data-q="map-note"></p></div>
-        <div class="queue-poi-list"><p class="queue-note">Most requested connection points in this selection. Select one to explore its projects.</p><div data-q="connections"></div><p class="queue-note">Names are grouped as reported. Similar names may refer to the same facility.</p></div>
+        <section class="queue-map-section" aria-labelledby="queue-location-title">
+          <div class="queue-section-heading"><div><p class="eyebrow">01 / Connection points</p><h2 id="queue-location-title">Where projects want to connect</h2></div><button type="button" data-q="map-reset">Reset map</button></div>
+          <div class="queue-map-container"><div id="queue-map" aria-label="Reference map of matched project connection substations"><p>Loading substation reference map…</p></div><p class="queue-note" data-q="map-note"></p><div class="queue-map-highlight" data-q="highlight-controls" hidden><p class="queue-note" data-q="highlight-note" role="status"></p><button type="button" data-q="clear-highlight">Clear bucket highlight</button></div></div>
+        </section>
+        <section aria-labelledby="queue-age-title"><p class="eyebrow">02 / Time in the queue</p><h2 id="queue-age-title">How long has it been?</h2><p class="queue-note">Active projects: queue entry to each source report date. Completed or withdrawn projects: queue entry to the reported exit date.</p><div data-q="ages" class="queue-histogram"></div><p class="queue-note" data-q="age-note"></p></section>
+        <aside class="queue-age-detail" aria-labelledby="queue-age-detail-title"><p class="eyebrow">Selected interval</p><h2 id="queue-age-detail-title">Projects in this interval</h2><p class="queue-note" data-q="bucket-empty">Hover over an age bar to see its projects here and highlight their map locations. Click or tap a bar to keep that interval selected.</p><div data-q="bucket-detail"></div></aside>
       </div>
-    </section>
+    </div>
     <div class="queue-chart-grid">
-      <section><p class="eyebrow">02 / Proposed technologies</p><h2>What they want to build</h2><p class="queue-note">Project counts. Hybrid projects appear in one category.</p><div data-q="technologies" class="queue-bars"></div></section>
-      <section><p class="eyebrow">03 / Time in the queue</p><h2>How long has it been?</h2><p class="queue-note">Active projects: queue entry to each source report date. Completed or withdrawn projects: queue entry to the reported exit date.</p><div data-q="ages" class="queue-bars"></div><p class="queue-note" data-q="age-note"></p></section>
+      <section><p class="eyebrow">03 / Proposed technologies</p><h2>What they want to build</h2><p class="queue-note">Project counts. Hybrid projects appear in one category.</p><div data-q="technologies" class="queue-bars"></div></section>
+      <section class="queue-poi-list"><p class="eyebrow">04 / Most requested connections</p><h2>Where interest is concentrated</h2><p class="queue-note">Most requested connection points in this selection. Select one to explore its projects.</p><div data-q="connections"></div><p class="queue-note">Names are grouped as reported. Similar names may refer to the same facility.</p></section>
     </div>
     <section class="queue-projects" aria-labelledby="queue-project-title">
-      <div class="queue-section-heading"><div><p class="eyebrow">04 / Project records</p><h2 id="queue-project-title">Look a little closer</h2></div><label>Sort by<select data-q="sort"><option value="capacity">Largest net MW</option><option value="age">Longest time in queue</option><option value="name">Project name</option></select></label></div>
+      <div class="queue-section-heading"><div><p class="eyebrow">05 / Project records</p><h2 id="queue-project-title">Look a little closer</h2></div><label>Sort by<select data-q="sort"><option value="capacity">Largest net MW</option><option value="age">Longest time in queue</option><option value="name">Project name</option></select></label></div>
       <p class="queue-note" data-q="results" role="status"></p>
       <div class="queue-table-scroll" tabindex="0" role="region" aria-label="Project records table"><table class="queue-table"><thead><tr><th scope="col">Project / queue ID</th><th scope="col">Technology</th><th scope="col">Connection point</th><th scope="col">Net MW</th><th scope="col">Time in queue</th><th scope="col">Status</th></tr></thead><tbody data-q="rows"></tbody></table></div>
       <div class="queue-pagination"><button type="button" data-q="previous">← Previous</button><span data-q="page"></span><button type="button" data-q="next">Next →</button></div>
     </section>
     <section class="queue-changes" aria-labelledby="queue-changes-title">
-      <p class="eyebrow">05 / A queue in motion</p><h2 id="queue-changes-title">What changed?</h2>
+      <p class="eyebrow">06 / A queue in motion</p><h2 id="queue-changes-title">What changed?</h2>
       <label>Saved observation<select data-q="snapshot"></select></label>
       <p data-q="change-note"></p><div data-q="changes"></div>
       <p class="queue-note">Comparisons cover the full reports, independent of the filters above. A newly appearing record is not necessarily a new application; an absent record is not automatically a withdrawal.</p>
@@ -63,6 +66,6 @@ permalink: /queue/
 </section>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="{{ '/assets/css/queue.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/queue.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script type="module" src="{{ '/assets/js/queue-view.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/js/queue-view.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

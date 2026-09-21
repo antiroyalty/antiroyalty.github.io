@@ -1,15 +1,31 @@
-import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, compareQueues, CHANGE_FIELDS, matchSubstation, countyLabel } from "./queue-data.js";
+import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, compareQueues, CHANGE_FIELDS, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, DAYS_PER_YEAR } from "./queue-data.js";
 
 const root = document.querySelector("[data-queue-explorer]");
 const number = new Intl.NumberFormat("en-US", {maximumFractionDigits: 1});
 const label = value => value === null || value === undefined || value === "" ? "Not reported" : String(value);
-const years = days => days === null ? "Unavailable" : `${number.format(days / 365.2425)} yr`;
+const years = days => days === null ? "Unavailable" : `${number.format(days / DAYS_PER_YEAR)} yr`;
 const element = (tag, text, className) => {
   const node = document.createElement(tag);
   if (text !== undefined) node.textContent = text;
   if (className) node.className = className;
   return node;
 };
+
+function componentCapacities(components) {
+  const list = element("div", undefined, "queue-components");
+  if (!components.length) {
+    list.append(element("span", "Component capacities not reported", "queue-components-missing"));
+  }
+  components.forEach(component => {
+    const row = element("div", undefined, "queue-component");
+    row.append(
+      element("span", component.fuel || "Technology not reported"),
+      element("strong", component.capacityMw === null ? "MW not reported" : `${number.format(component.capacityMw)} MW`),
+    );
+    list.append(row);
+  });
+  return list;
+}
 
 async function getJson(url) {
   const response = await fetch(url);
@@ -27,7 +43,36 @@ class QueueExplorer {
     this.page = 0;
     this.generation = 0;
     this.mapUnavailable = false;
+    this.ageSelection = null;
+    this.markerRecords = [];
+    this.ui["clear-highlight"].addEventListener("click", () => this.closeAgeBucket());
+    container.addEventListener("keydown", event => {
+      if (event.key === "Escape" && this.ageSelection && !this.ui.dialog.open) {
+        event.preventDefault();
+        event.stopPropagation();
+        const trigger = this.ageSelection.trigger;
+        // Focus before closing so its focus handler cannot reopen the list.
+        trigger.focus();
+        this.closeAgeBucket();
+      }
+    });
+    document.addEventListener("pointerdown", event => {
+      if (!this.ui.ages.contains(event.target) && !event.target.closest(".queue-geography, .queue-dialog")) this.closeAgeBucket();
+    });
     this.ui.close.addEventListener("click", () => this.ui.dialog.close());
+    const isBackdrop = event => {
+      if (event.target !== this.ui.dialog) return false;
+      const bounds = this.ui.dialog.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right
+        || event.clientY < bounds.top || event.clientY > bounds.bottom;
+    };
+    let pressedBackdrop = false;
+    this.ui.dialog.addEventListener("pointerdown", event => { pressedBackdrop = isBackdrop(event); });
+    this.ui.dialog.addEventListener("click", event => {
+      // Keep padding clicks and drags that start inside the dialog from dismissing it.
+      if (pressedBackdrop && isBackdrop(event)) this.ui.dialog.close();
+      pressedBackdrop = false;
+    });
     container.querySelector("form").addEventListener("submit", event => event.preventDefault());
     for (const key of ["search", "technology", "county", "state", "status", "sort"]) {
       this.ui[key].addEventListener(key === "search" ? "input" : "change", () => { this.page = 0; this.render(); });
@@ -172,9 +217,7 @@ class QueueExplorer {
     const techCounts = new Map();
     projects.forEach(p => techCounts.set(technology(p), (techCounts.get(technology(p)) || 0) + 1));
     this.renderBars(this.ui.technologies, [...techCounts].sort((a, b) => b[1] - a[1]));
-    const bins = [["Under 2 years", 0], ["2–5 years", 0], ["5–10 years", 0], ["10+ years", 0]];
-    times.filter(Number.isFinite).forEach(days => { const y = days / 365.2425; bins[y < 2 ? 0 : y < 5 ? 1 : y < 10 ? 2 : 3][1]++; });
-    this.renderBars(this.ui.ages, bins);
+    this.renderAgeHistogram(times);
     this.ui["age-note"].textContent = `${times.filter(t => t === null).length} projects have unavailable time in queue. Older entries can include amendments to existing plants.`;
     this.renderMap();
     this.renderTable();
@@ -190,6 +233,133 @@ class QueueExplorer {
     }));
   }
 
+  renderAgeHistogram(times) {
+    this.closeAgeBucket();
+    const bins = queueAgeHistogram(times);
+    this.ui.ages.replaceChildren();
+    if (!bins.length) {
+      this.ui.ages.append(element("p", times.length ? "No reported queue ages for this selection." : "No projects match these filters.", "queue-note"));
+      return;
+    }
+    const maxCount = Math.max(...bins.map(bin => bin.count));
+    const chart = element("div", undefined, "queue-histogram-plot");
+    chart.setAttribute("role", "list");
+    chart.setAttribute("aria-label", "Project counts by time in queue, in two-year intervals");
+    const panel = element("section", undefined, "queue-bucket-panel");
+    panel.id = "queue-age-projects";
+    panel.hidden = true;
+    panel.setAttribute("aria-labelledby", "queue-age-projects-title");
+    this.agePanel = panel;
+    this.ui["bucket-detail"].replaceChildren(panel);
+    for (const bin of bins) {
+      const description = `${bin.fromYears} to under ${bin.toYears} years: ${bin.count} ${bin.count === 1 ? "project" : "projects"}`;
+      const item = element("div");
+      item.setAttribute("role", "listitem");
+      const row = element("button", undefined, "queue-histogram-row");
+      row.type = "button";
+      row.setAttribute("aria-label", `${description}. Show projects`);
+      row.setAttribute("aria-expanded", "false");
+      row.setAttribute("aria-controls", panel.id);
+      row.addEventListener("pointerenter", event => {
+        if (event.pointerType !== "touch" && window.matchMedia("(min-width: 761px) and (hover: hover)").matches
+          && !this.ageSelection?.pinned) this.openAgeBucket(bin, row);
+      });
+      row.addEventListener("focus", () => {
+        if (row.matches(":focus-visible") && !this.ageSelection?.pinned) this.openAgeBucket(bin, row);
+      });
+      row.addEventListener("click", event => {
+        if (this.ageSelection?.trigger === row && this.ageSelection.pinned) this.closeAgeBucket();
+        else {
+          this.openAgeBucket(bin, row, true);
+          if (event.detail === 0) panel.querySelector("button").focus();
+        }
+      });
+      const range = element("span", `${bin.fromYears}–${bin.toYears}`, "queue-histogram-range");
+      const track = element("span", undefined, "queue-histogram-track");
+      const bar = element("span", undefined, "queue-histogram-bar");
+      bar.style.width = `${bin.count / maxCount * 100}%`;
+      bar.append(element("span", String(bin.count), "queue-histogram-count"));
+      track.append(bar);
+      row.append(range, track);
+      item.append(row);
+      chart.append(item);
+    }
+    this.ui.ages.append(element("p", "Time in queue (years) · project count", "queue-histogram-axis"), chart,
+      element("p", "Hover to preview projects. Click or tap to keep a bucket selected.", "queue-note"));
+  }
+
+  closeAgeBucket() {
+    if (this.ageSelection) this.ageSelection.trigger.setAttribute("aria-expanded", "false");
+    this.ageSelection = null;
+    if (this.agePanel) this.agePanel.hidden = true;
+    this.ui["bucket-empty"].hidden = false;
+    this.updateMapHighlight();
+  }
+
+  openAgeBucket(bin, trigger, pinned = false) {
+    if (this.ageSelection?.trigger === trigger) {
+      this.ageSelection.pinned ||= pinned;
+      return;
+    }
+    if (this.ageSelection) this.ageSelection.trigger.setAttribute("aria-expanded", "false");
+    const projects = this.filtered.filter(p => isInQueueAgeBin(this.days(p), bin)).sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+    this.ageSelection = {bin, trigger, pinned, projectIds: new Set(projects.map(p => p.id))};
+    trigger.setAttribute("aria-expanded", "true");
+    const heading = element("h3", `${bin.fromYears}–${bin.toYears} years · ${projects.length} projects`);
+    heading.id = "queue-age-projects-title";
+    const close = element("button", "Close ×");
+    close.type = "button";
+    close.addEventListener("click", () => { trigger.focus(); this.closeAgeBucket(); });
+    const header = element("div", undefined, "queue-bucket-heading");
+    header.append(heading, close);
+    const note = element("p", undefined, "queue-note");
+    note.dataset.bucketMapNote = "";
+    const list = element("ul", undefined, "queue-bucket-list");
+    projects.forEach(p => {
+      const item = element("li");
+      const link = element("button", p.name || `Queue ${p.id}`, "queue-bucket-project");
+      link.type = "button";
+      link.addEventListener("click", () => { this.ageSelection.pinned = true; this.showProject(p); });
+      item.append(
+        link,
+        element("span", `${countyLabel(p.county)}, ${p.state || "State not reported"}`, "queue-bucket-location"),
+        componentCapacities(p.components),
+      );
+      list.append(item);
+    });
+    if (!projects.length) list.append(element("li", "No projects in this interval."));
+    const showMap = element("button", "View highlighted map ↑", "queue-bucket-show-map");
+    showMap.type = "button";
+    showMap.addEventListener("click", () => {
+      this.ageSelection.pinned = true;
+      document.getElementById("queue-location-title").scrollIntoView({behavior: "smooth", block: "start"});
+      this.ui["clear-highlight"].focus({preventScroll: true});
+    });
+    this.agePanel.replaceChildren(header, note, list, showMap);
+    this.agePanel.hidden = false;
+    this.ui["bucket-empty"].hidden = true;
+    this.updateMapHighlight();
+  }
+
+  updateMapHighlight() {
+    const selected = this.ageSelection;
+    this.markerRecords.forEach(({marker, projects}) => {
+      const highlighted = selected && projects.some(p => selected.projectIds.has(p.id));
+      marker.setStyle({color: "#173f78", weight: highlighted ? 3 : 1.3,
+        opacity: selected && !highlighted ? .25 : 1,
+        fillColor: highlighted ? "#173f78" : "#bf7956", fillOpacity: selected ? (highlighted ? .9 : .12) : .7});
+      if (highlighted) marker.bringToFront();
+    });
+    this.ui["highlight-controls"].hidden = !selected;
+    if (!selected) return;
+    const mappedCount = [...selected.projectIds].filter(id => this.matches.get(id)).length;
+    const caption = `${selected.bin.fromYears}–${selected.bin.toYears} years: ${selected.projectIds.size} projects. `
+      + (this.mapUnavailable ? "The map is unavailable." : !this.map ? "Map locations are loading." : `${mappedCount} have matched map locations; ${selected.projectIds.size - mappedCount} are not mapped.${mappedCount ? " Blue circles contain at least one project in this bucket." : ""}`);
+    this.ui["highlight-note"].textContent = caption;
+    const panelNote = this.agePanel.querySelector("[data-bucket-map-note]");
+    if (panelNote) panelNote.textContent = caption;
+  }
+
   selectPoi(poi) {
     this.ui.search.value = poi;
     this.page = 0;
@@ -200,8 +370,9 @@ class QueueExplorer {
   renderMap() {
     const matched = this.filtered.filter(p => this.matches.get(p.id));
     this.ui["map-note"].textContent = this.mapUnavailable ? "Project records are available below; map unavailable." : `${matched.length} of ${this.filtered.length} selected projects matched to reference substations. Circles scale with project count. Unmatched projects are included in all totals and records. Dashed outline: CAISO area, 2021 reference.`;
-    if (!this.markers) return;
+    if (!this.markers) { this.updateMapHighlight(); return; }
     this.markers.clearLayers();
+    this.markerRecords = [];
     const groups = new Map();
     matched.forEach(p => { const f = this.matches.get(p.id); const key = JSON.stringify(f.geometry.coordinates); if (!groups.has(key)) groups.set(key, {feature: f, projects: []}); groups.get(key).projects.push(p); });
     groups.forEach(({feature, projects}) => {
@@ -214,8 +385,10 @@ class QueueExplorer {
         document.getElementById("queue-project-title").scrollIntoView({behavior: "smooth"});
       });
       popup.append(element("p", "Reference substation location"), button);
-      L.circleMarker([lat, lon], {radius: 5 + Math.sqrt(projects.length) * 3, color: "#173f78", weight: 1.3, fillColor: "#bf7956", fillOpacity: .7}).bindTooltip(tooltip).bindPopup(popup).addTo(this.markers);
+      const marker = L.circleMarker([lat, lon], {radius: 5 + Math.sqrt(projects.length) * 3, color: "#173f78", weight: 1.3, fillColor: "#bf7956", fillOpacity: .7}).bindTooltip(tooltip).bindPopup(popup).addTo(this.markers);
+      this.markerRecords.push({marker, projects});
     });
+    this.updateMapHighlight();
   }
 
   renderTable() {
@@ -242,6 +415,9 @@ class QueueExplorer {
     const heading = element("h2", p.name); heading.id = "queue-detail-title";
     content.replaceChildren(heading, element("p", `Queue ${p.id} · ${p.status.toLowerCase()} · ${p.studyProcess}`, "eyebrow"));
     content.append(element("p", technology(p), "queue-detail-technology"));
+    const components = element("section", undefined, "queue-detail-components");
+    components.append(element("h3", "Technology components"), componentCapacities(p.components));
+    content.append(components);
     const metrics = element("div", undefined, "queue-detail-metrics");
     const ageEnd = p.status === "ACTIVE" ? source.reportDate : p.status === "COMPLETED" ? p.completedDate : p.withdrawnDate;
     for (const [value, caption, note] of [
@@ -271,7 +447,6 @@ class QueueExplorer {
       ]],
       ["Technical details and source", [
         ["Transmission owner", p.utility], ["Study area", p.studyRegion], ["Deliverability", p.deliverability],
-        ["Technology components", p.components.map(c => `${c.fuel}: ${c.capacityMw === null ? "MW not reported" : `${number.format(c.capacityMw)} MW`}`).join("; ")],
         ["Map location", this.matches.get(p.id) ? "Matched reference substation; not the project footprint" : "No unambiguous reference substation match"],
         ["Source edition", `${source.reportDate} (${source.dateKind})`], ["Source record", `${p.sourceSheet}, row ${p.sourceRow}`],
       ]],

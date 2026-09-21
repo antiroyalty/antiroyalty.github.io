@@ -70,7 +70,9 @@ OASIS requests are spaced apart. HTTP 429 and server errors have bounded retries
 
 A dedicated `grid-data` Git branch holds the latest snapshots and accumulated history. The workflow restores it before any deployment, including ordinary source pushes. Scheduled and manual runs save the verified data back to this branch before building the site. Thus data survives a failed site build and an unrelated source deployment.
 
-The workflow creates the data branch on its first scheduled or manual run after this code is deployed. It needs repository contents-write permission for that job. No credentials are added to the repository. Data-branch commits do not trigger site builds. Pages deployments remain serialized by the existing concurrency group.
+The workflow creates the data branch on its first scheduled or manual run after this code is deployed. It needs repository contents-write permission for that job. No credentials are added to the repository. Data-branch commits do not trigger GitHub Pages builds. Pages deployments remain serialized by the existing concurrency group.
+
+Both Vercel projects connected to this repository (`antiroyalty` and `antiroyalty-github-io`) must skip the data-only branch. Set their **Ignored Build Step** to `test "$VERCEL_GIT_COMMIT_REF" = "grid-data"`. Vercel skips a build when this command exits with 0; other branches continue to build. Keep this setting in Vercel because the orphan `grid-data` branch contains neither the site's `vercel.json` nor its Jekyll dependencies. Without the exclusion, data updates trigger preview builds that fail with `jekyll: command not found`.
 
 If the branch cannot be read or updated, the workflow stops rather than silently substituting older committed data. A CAISO refresh failure produces a warning; independently successful dates and feeds are still retained, and validated fallback data can be deployed. Check warning steps even when a deployment succeeds.
 

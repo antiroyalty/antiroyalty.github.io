@@ -3,10 +3,24 @@ import assert from "node:assert/strict";
 import { readFile, mkdtemp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
-import { queueDays, median, technology, compareQueues, matchSubstation, validateQueueSnapshot, validateQueueIndex, countyLabel } from "../assets/js/queue-data.js";
+import { queueDays, median, technology, compareQueues, matchSubstation, validateQueueSnapshot, validateQueueIndex, countyLabel, queueAgeHistogram, isInQueueAgeBin, DAYS_PER_YEAR } from "../assets/js/queue-data.js";
 import { validateQueueArchive, mergeQueueArchive } from "./lib/queue-store.mjs";
 
 const project = {id: "2207", name: "Alisa Solar Energy Complex 2", status: "ACTIVE", queueDate: "2025-02-12", completedDate: null, withdrawnDate: null, netMw: 500, components: [{fuel: "Photovoltaic/Solar", capacityMw: 500}, {fuel: "Storage/Battery", capacityMw: 500}]};
+
+test("queue histogram uses two-year boundaries, preserves empty intervals, and excludes unknown ages", () => {
+  const bins = queueAgeHistogram([0, 2 * DAYS_PER_YEAR - 1, 2 * DAYS_PER_YEAR, 4 * DAYS_PER_YEAR, 10 * DAYS_PER_YEAR, null, NaN, -1]);
+  assert.deepEqual(bins.map(bin => bin.count), [2, 1, 1, 0, 0, 1]);
+  assert.deepEqual(bins.at(-1), {fromYears: 10, toYears: 12, count: 1});
+  assert.equal(bins.reduce((total, bin) => total + bin.count, 0), 5);
+  assert.equal(queueAgeHistogram([24 * DAYS_PER_YEAR]).at(-1).toYears, 26);
+  assert.deepEqual(queueAgeHistogram([null, NaN, -1]), []);
+  assert.deepEqual(queueAgeHistogram([]), []);
+  const ages = [0, 2 * DAYS_PER_YEAR - 1, 2 * DAYS_PER_YEAR, 4 * DAYS_PER_YEAR, 10 * DAYS_PER_YEAR, null];
+  for (const bin of bins) assert.equal(ages.filter(days => isInQueueAgeBin(days, bin)).length, bin.count);
+  assert.equal(isInQueueAgeBin(null, bins[0]), false);
+  assert.equal(isInQueueAgeBin(-1, bins[0]), false);
+});
 
 test("queue age uses the report date or actual exit; missing and inverted dates remain unknown", () => {
   assert.equal(queueDays(project, "2025-02-12"), 0);
