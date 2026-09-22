@@ -13,72 +13,6 @@ layout: default
   </div>
 </section>
 
-<section
-  id="electricity-desk"
-  class="electricity-desk"
-  data-electricity-desk
-  data-endpoint="{{ '/assets/data/electricity-desk.json' | relative_url }}"
-  data-status="loading"
-  aria-labelledby="electricity-desk-title"
-  aria-busy="true"
->
-  <div class="desk-header">
-    <div>
-      <p class="eyebrow">CAISO · five-minute averages</p>
-      <h2 id="electricity-desk-title">What's powering the grid right now?</h2>
-      <p class="desk-intro">A snapshot of demand, generation, and batteries. <a href="{{ '/grid/' | relative_url }}">Explore prices, maps, and interval history →</a></p>
-    </div>
-    <div class="desk-status" role="status" aria-live="polite">
-      <span class="desk-status__light" aria-hidden="true"></span>
-      <span data-field="status">Connecting</span>
-    </div>
-  </div>
-
-  <div class="desk-readings">
-    <article class="desk-reading desk-reading--demand">
-      <p class="tile-label">Demand now</p>
-      <p class="tile-value" data-field="demand">···</p>
-      <p class="tile-detail" data-field="demand-trend">Reading the latest interval</p>
-      <p class="tile-foot" data-field="forecast">Hour-ahead forecast loading</p>
-    </article>
-
-    <article class="desk-reading desk-reading--renewables">
-      <p class="tile-label">Sun + wind</p>
-      <p class="tile-value" data-field="solar-wind-share">···</p>
-      <p class="tile-detail">of current demand</p>
-      <p class="tile-foot" data-field="solar-wind">Generation mix loading</p>
-    </article>
-
-    <article class="desk-reading desk-reading--storage">
-      <p class="tile-label">Grid batteries</p>
-      <p class="tile-value" data-field="battery">···</p>
-      <p class="tile-detail" data-field="battery-state">Storage activity loading</p>
-      <p class="tile-foot">Positive values supply the grid</p>
-    </article>
-  </div>
-
-  <div class="supply-ribbon" role="img" aria-label="Current positive electricity supply mix is loading">
-    <span class="supply-ribbon__segment is-solar" data-segment="solar"></span>
-    <span class="supply-ribbon__segment is-wind" data-segment="wind"></span>
-    <span class="supply-ribbon__segment is-gas" data-segment="gas"></span>
-    <span class="supply-ribbon__segment is-imports" data-segment="imports"></span>
-    <span class="supply-ribbon__segment is-other" data-segment="other"></span>
-  </div>
-  <div class="supply-legend" aria-label="Positive supply mix values">
-    <span class="is-solar">Solar <strong data-mix-label="solar">···</strong></span>
-    <span class="is-wind">Wind <strong data-mix-label="wind">···</strong></span>
-    <span class="is-gas">Gas <strong data-mix-label="gas">···</strong></span>
-    <span class="is-imports">Imports <strong data-mix-label="imports">···</strong></span>
-    <span class="is-other">Other <strong data-mix-label="other">···</strong></span>
-  </div>
-
-  <div class="desk-source">
-    <p><strong data-field="freshness">Waiting for a verified snapshot</strong> · source interval <span data-field="interval">pending</span></p>
-    <p>Source: <a href="https://www.caiso.com/todays-outlook">California ISO Today’s Outlook</a>. Demand excludes battery charging and dispatchable pumping. Sun + wind can exceed 100% of this demand. OASIS is the official market source.</p>
-  </div>
-  <noscript><p class="desk-noscript">Live values require JavaScript. The data source link remains available above.</p></noscript>
-</section>
-
 <section class="home-section" data-reveal aria-labelledby="projects-title">
   <div class="section-heading">
     <h2 id="projects-title" class="script-heading">Projects</h2>
@@ -89,7 +23,6 @@ layout: default
     {% for item in projects limit:3 %}
       <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}">
         <span class="project-tile__content">
-          {% if item.status %}<span class="project-status">{{ item.status }}</span>{% endif %}
           <h3>{{ item.title }}</h3>
           {% if item.description %}<p>{{ item.description }}</p>{% endif %}
         </span>
@@ -113,5 +46,3 @@ layout: default
     {% endfor %}
   </ul>
 </section>
-
-<script type="module" src="{{ '/assets/js/electricity-desk.js' | relative_url }}"></script>

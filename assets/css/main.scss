@@ -521,8 +521,8 @@ img, video { max-width: 100%; height: auto; }
   gap: clamp(20px, 4vw, 54px);
   align-items: center;
   width: 100%;
-  min-height: 190px;
-  padding: 24px 20px 24px 0;
+  min-height: 0;
+  padding: 18px 20px 18px 0;
   overflow: hidden;
   border-top: 1px solid rgba(30, 78, 140, 0.22);
   color: var(--ink);
@@ -555,13 +555,13 @@ img, video { max-width: 100%; height: auto; }
 .project-tile--paper::before { background-color: #b9ad67; background-image: var(--glaze-celery); }
 
 .project-tile__content { position: relative; z-index: 1; max-width: 680px; }
-.project-tile h3 { margin: 7px 0 8px; color: var(--ink); }
+.project-tile h3 { margin: 0 0 6px; color: var(--ink); }
 .project-tile p { max-width: 640px; margin: 0; color: var(--muted); font-size: 0.84rem; line-height: 1.55; }
 .project-status { display: inline-block; color: var(--blue-deep); font-size: 0.63rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .project-specimen {
   justify-self: end;
-  width: min(100%, 148px);
+  width: min(100%, 96px);
   aspect-ratio: 1;
   background-image: url("../img/art/critter-specimens.webp");
   background-repeat: no-repeat;
@@ -775,7 +775,7 @@ pre { padding: 1rem 1.1rem; overflow: auto; border: 1px solid var(--border); bor
   .case-hero { align-items: start; }
   .case-facts { max-width: 520px; }
   .tile-value { font-size: 2.2rem; }
-  .project-tile { grid-template-columns: 5px minmax(0, 1fr); gap: 18px; width: 100%; min-height: 210px; padding-right: 0; }
+  .project-tile { grid-template-columns: 5px minmax(0, 1fr); gap: 18px; width: 100%; padding-right: 0; }
   .project-tile:hover { padding-right: 0; padding-left: 0; transform: none; }
   .project-specimen { position: absolute; right: -22px; bottom: -35px; z-index: 0; width: 105px; opacity: 0.34; }
   .project-tile__content { padding-right: 34px; }
