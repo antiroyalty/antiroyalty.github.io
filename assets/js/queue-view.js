@@ -1,4 +1,4 @@
-import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, compareQueues, CHANGE_FIELDS, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, DAYS_PER_YEAR } from "./queue-data.js";
+import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, DAYS_PER_YEAR } from "./queue-data.js";
 
 const root = document.querySelector("[data-queue-explorer]");
 const number = new Intl.NumberFormat("en-US", {maximumFractionDigits: 1});
@@ -40,7 +40,6 @@ class QueueExplorer {
     this.base = container.dataset.endpoint;
     this.features = [];
     this.matches = new Map();
-    this.page = 0;
     this.generation = 0;
     this.mapUnavailable = false;
     this.ageSelection = null;
@@ -74,27 +73,20 @@ class QueueExplorer {
       pressedBackdrop = false;
     });
     container.querySelector("form").addEventListener("submit", event => event.preventDefault());
-    for (const key of ["search", "technology", "county", "state", "status", "sort"]) {
-      this.ui[key].addEventListener(key === "search" ? "input" : "change", () => { this.page = 0; this.render(); });
+    for (const key of ["search", "technology", "county", "state", "status"]) {
+      this.ui[key].addEventListener(key === "search" ? "input" : "change", () => this.render());
     }
     this.ui.reset.addEventListener("click", () => {
       for (const key of ["search", "technology", "county", "state"]) this.ui[key].value = "";
       this.ui.status.value = "ACTIVE";
-      this.page = 0;
       this.render();
     });
-    this.ui.previous.addEventListener("click", () => { this.page--; this.renderTable(); });
-    this.ui.next.addEventListener("click", () => { this.page++; this.renderTable(); });
-    this.ui.snapshot.addEventListener("change", () => this.loadSnapshot(Number(this.ui.snapshot.value)));
     this.ui["map-reset"].addEventListener("click", () => this.map?.fitBounds([[32.3, -124.5], [42.1, -114.1]]));
   }
 
   async start() {
     try {
       this.index = validateQueueIndex(await getJson(`${this.base}index.json`));
-      this.index.snapshots.forEach((entry, index) => {
-        this.ui.snapshot.add(new Option(new Date(entry.collectedAt).toLocaleString("en-US", {timeZone: "America/Los_Angeles", timeZoneName: "short"}), index));
-      });
       await this.loadSnapshot(this.index.snapshots.length - 1);
       this.initMap();
     } catch (error) {
@@ -108,24 +100,14 @@ class QueueExplorer {
 
   async loadSnapshot(index) {
     const generation = ++this.generation;
-    this.ui.snapshot.disabled = true;
     this.ui.edition.textContent = "Loading saved observation…";
     try {
       const entry = this.index.snapshots[index];
       const current = validateQueueSnapshot(await getJson(this.base + entry.file));
       if (current.id !== entry.id) throw new Error("Snapshot identity mismatch");
-      let previous = null;
-      let comparisonUnavailable = false;
-      if (index > 0) {
-        try {
-          previous = validateQueueSnapshot(await getJson(this.base + this.index.snapshots[index - 1].file));
-          if (previous.id !== this.index.snapshots[index - 1].id) throw new Error("Previous identity mismatch");
-        } catch { comparisonUnavailable = true; }
-      }
       if (generation !== this.generation) return;
       this.snapshot = current;
       this.sources = current.sources;
-      this.ui.snapshot.value = index;
       this.ui.content.hidden = false;
       const checked = new Date(this.index.checkedAt).toLocaleDateString("en-US", {timeZone: "America/Los_Angeles"});
       this.ui.edition.textContent = `Older queue: ${this.sources.find(s => s.id === "legacy").reportDate} · Cluster 15: ${this.sources.find(s => s.id === "cluster15").reportDate} · Last source check: ${checked} Pacific`;
@@ -136,19 +118,14 @@ class QueueExplorer {
         [...new Set(current.projects.map(getValue).filter(Boolean))].sort().forEach(value => this.ui[key].add(new Option(value, value)));
         this.ui[key].value = [...this.ui[key].options].some(o => o.value === selected) ? selected : "";
       }
-      this.page = 0;
       this.matchLocations();
       this.render();
-      this.renderChanges(previous, comparisonUnavailable);
       this.renderSources();
     } catch (error) {
       if (generation !== this.generation) return;
-      if (this.snapshot) this.ui.snapshot.value = this.index.snapshots.findIndex(e => e.id === this.snapshot.id);
-      this.ui.edition.textContent = "This saved observation could not be loaded. The previous selection remains displayed; choose another observation to retry.";
+      this.ui.edition.textContent = "The latest queue observation could not be loaded. Reload the page to try again or use the source reports below.";
       this.ui.content.hidden = !this.snapshot;
       console.error(error);
-    } finally {
-      if (generation === this.generation) this.ui.snapshot.disabled = false;
     }
   }
 
@@ -178,7 +155,7 @@ class QueueExplorer {
       } catch { /* The optional historical outline does not affect project records. */ }
     } catch (error) {
       this.mapUnavailable = true;
-      document.getElementById("queue-map").replaceChildren(element("p", "The reference map is unavailable. All connection points remain available in the project records."));
+      document.getElementById("queue-map").replaceChildren(element("p", "The reference map is unavailable. Use the filters and age intervals to explore projects."));
       this.renderMap();
       console.error("Queue map unavailable", error);
     }
@@ -220,7 +197,6 @@ class QueueExplorer {
     this.renderAgeHistogram(times);
     this.ui["age-note"].textContent = `${times.filter(t => t === null).length} projects have unavailable time in queue. Older entries can include amendments to existing plants.`;
     this.renderMap();
-    this.renderTable();
   }
 
   renderBars(target, values) {
@@ -362,14 +338,13 @@ class QueueExplorer {
 
   selectPoi(poi) {
     this.ui.search.value = poi;
-    this.page = 0;
     this.render();
-    document.getElementById("queue-project-title").scrollIntoView({behavior: "smooth", block: "start"});
+    document.getElementById("queue-age-title").scrollIntoView({behavior: "smooth", block: "start"});
   }
 
   renderMap() {
     const matched = this.filtered.filter(p => this.matches.get(p.id));
-    this.ui["map-note"].textContent = this.mapUnavailable ? "Project records are available below; map unavailable." : `${matched.length} of ${this.filtered.length} selected projects matched to reference substations. Circles scale with project count. Unmatched projects are included in all totals and records. Dashed outline: CAISO area, 2021 reference.`;
+    this.ui["map-note"].textContent = this.mapUnavailable ? "Map unavailable. Use the filters and age intervals to explore projects." : `${matched.length} of ${this.filtered.length} selected projects matched to reference substations. Circles scale with project count. Unmatched projects are included in the filters and totals. Dashed outline: CAISO area, 2021 reference.`;
     if (!this.markers) { this.updateMapHighlight(); return; }
     this.markers.clearLayers();
     this.markerRecords = [];
@@ -381,32 +356,13 @@ class QueueExplorer {
       const popup = element("div"); popup.append(element("strong", feature.properties.Name));
       const button = element("button", "Search this connection name");
       button.addEventListener("click", () => {
-        this.ui.search.value = feature.properties.Name; this.page = 0; this.render();
-        document.getElementById("queue-project-title").scrollIntoView({behavior: "smooth"});
+        this.selectPoi(feature.properties.Name);
       });
       popup.append(element("p", "Reference substation location"), button);
       const marker = L.circleMarker([lat, lon], {radius: 5 + Math.sqrt(projects.length) * 3, color: "#173f78", weight: 1.3, fillColor: "#bf7956", fillOpacity: .7}).bindTooltip(tooltip).bindPopup(popup).addTo(this.markers);
       this.markerRecords.push({marker, projects});
     });
     this.updateMapHighlight();
-  }
-
-  renderTable() {
-    const mode = this.ui.sort.value;
-    const sorted = [...this.filtered].sort((a, b) => mode === "name" ? a.name.localeCompare(b.name) :
-      (mode === "age" ? (this.days(b) ?? -1) - (this.days(a) ?? -1) : (b.netMw ?? -1) - (a.netMw ?? -1)) || a.id.localeCompare(b.id));
-    const pages = Math.max(1, Math.ceil(sorted.length / 20));
-    this.page = Math.max(0, Math.min(this.page, pages - 1));
-    this.ui.rows.replaceChildren(...sorted.slice(this.page * 20, (this.page + 1) * 20).map(p => {
-      const row = element("tr"); const first = element("td"); const button = element("button", p.name, "queue-project-link");
-      button.addEventListener("click", () => this.showProject(p)); first.append(button, element("small", `Queue ${p.id} · ${p.studyProcess}`)); row.append(first);
-      const poi = element("td", label(p.poi)); poi.append(element("small", `${p.county || "County not reported"}, ${p.state || "State not reported"}`));
-      row.append(element("td", technology(p)), poi, element("td", p.netMw === null ? "Not reported" : number.format(p.netMw)), element("td", years(this.days(p))), element("td", p.status.toLowerCase())); return row;
-    }));
-    this.ui.results.textContent = `${sorted.length} matching projects. Select a project for dates, component capacities, and its source record.`;
-    this.ui.page.textContent = `Page ${this.page + 1} of ${pages}`;
-    this.ui.previous.disabled = this.page === 0;
-    this.ui.next.disabled = this.page >= pages - 1;
   }
 
   showProject(p) {
@@ -458,29 +414,6 @@ class QueueExplorer {
     const link = element("a", "Download this source workbook ↗"); link.href = this.base + source.file; content.append(link);
     this.ui.dialog.scrollTop = 0;
     this.ui.dialog.showModal();
-  }
-
-  renderChanges(previous, unavailable) {
-    this.ui.changes.replaceChildren();
-    if (unavailable) { this.ui["change-note"].textContent = "The preceding observation could not be loaded. Change comparison is unavailable."; return; }
-    const changes = compareQueues(previous, this.snapshot);
-    if (changes === null) {
-      this.ui["change-note"].textContent = "Our first observation establishes the baseline. As new reports arrive, this section will show status changes, revised online dates, changes in capacity or technology, and records that appear or disappear.";
-      return;
-    }
-    this.ui["change-note"].textContent = `${changes.length} project records changed since the observation on ${previous.collectedAt.slice(0, 10)}. These are observed changes between reports; their effective dates may be earlier.`;
-    changes.forEach(change => {
-      const article = element("article"); article.append(element("strong", `${change.name} · Queue ${change.id}`));
-      if (change.kind !== "updated") article.append(element("p", change.kind === "appeared" ? "Newly present in these reports" : "Absent from these reports; outcome unconfirmed"));
-      else {
-        const list = element("ul");
-        change.fields.forEach(field => {
-          const format = v => Array.isArray(v) ? v.map(c => `${c.fuel} ${label(c.capacityMw)} MW`).join("; ") : label(v);
-          list.append(element("li", `${CHANGE_FIELDS[field.key]}: ${format(field.before)} → ${format(field.after)}`));
-        }); article.append(list);
-      }
-      this.ui.changes.append(article);
-    });
   }
 
   renderSources() {

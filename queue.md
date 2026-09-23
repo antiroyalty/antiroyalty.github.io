@@ -39,23 +39,11 @@ permalink: /queue/
       <section><p class="eyebrow">03 / Proposed technologies</p><h2>What they want to build</h2><p class="queue-note">Project counts. Hybrid projects appear in one category.</p><div data-q="technologies" class="queue-bars"></div></section>
       <section class="queue-poi-list"><p class="eyebrow">04 / Most requested connections</p><h2>Where interest is concentrated</h2><p class="queue-note">Most requested connection points in this selection. Select one to explore its projects.</p><div data-q="connections"></div><p class="queue-note">Names are grouped as reported. Similar names may refer to the same facility.</p></section>
     </div>
-    <section class="queue-projects" aria-labelledby="queue-project-title">
-      <div class="queue-section-heading"><div><p class="eyebrow">05 / Project records</p><h2 id="queue-project-title">Look a little closer</h2></div><label>Sort by<select data-q="sort"><option value="capacity">Largest net MW</option><option value="age">Longest time in queue</option><option value="name">Project name</option></select></label></div>
-      <p class="queue-note" data-q="results" role="status"></p>
-      <div class="queue-table-scroll" tabindex="0" role="region" aria-label="Project records table"><table class="queue-table"><thead><tr><th scope="col">Project / queue ID</th><th scope="col">Technology</th><th scope="col">Connection point</th><th scope="col">Net MW</th><th scope="col">Time in queue</th><th scope="col">Status</th></tr></thead><tbody data-q="rows"></tbody></table></div>
-      <div class="queue-pagination"><button type="button" data-q="previous">← Previous</button><span data-q="page"></span><button type="button" data-q="next">Next →</button></div>
-    </section>
-    <section class="queue-changes" aria-labelledby="queue-changes-title">
-      <p class="eyebrow">06 / A queue in motion</p><h2 id="queue-changes-title">What changed?</h2>
-      <label>Saved observation<select data-q="snapshot"></select></label>
-      <p data-q="change-note"></p><div data-q="changes"></div>
-      <p class="queue-note">Comparisons cover the full reports, independent of the filters above. A newly appearing record is not necessarily a new application; an absent record is not automatically a withdrawal.</p>
-    </section>
     <details class="queue-method"><summary>Sources and how to read this</summary>
       <p>CAISO publishes Cluster 14 and earlier separately from Cluster 15. These editions can have different dates. This explorer includes projects outside California when they request connection to the CAISO-controlled grid.</p>
       <div data-q="sources"></div>
       <p>“Time in queue” measures elapsed calendar days, not a forecast of remaining wait or proof of a study delay. Active entries can include amendments to existing plants. Missing or inconsistent dates remain unavailable. Requested online dates are not commitments.</p>
-      <p>The map matches normalized substation names, transmission owners, and counties against the site's public CEC substation reference. It shows connection substations, not project footprints. Line connections, proposed facilities, ambiguous names, and unmatched records remain in the table. The dashed CAISO area is a retired 2021 reference.</p>
+      <p>The map matches normalized substation names, transmission owners, and counties against the site's public CEC substation reference. It shows connection substations, not project footprints. Line connections, proposed facilities, ambiguous names, and unmatched records remain included in the filters and totals. The dashed CAISO area is a retired 2021 reference.</p>
       <p>Technology categories use reported fuels. Solar and storage components can share one connection limit, so their individual MW values must not be added to infer net grid capacity.</p>
       <p>County filters combine capitalization and “County” suffix variations. Project details preserve the source spelling, including incomplete or inconsistent place names.</p>
       <p>Sources are checked weekly by the site's data workflow after deployment. Changed project records create a new observation. Original workbooks are retained with each source version. The first observation establishes the baseline; it cannot reveal earlier changes.</p>
