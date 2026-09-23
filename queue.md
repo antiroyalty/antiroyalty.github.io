@@ -15,6 +15,22 @@ permalink: /queue/
   </header>
   <noscript><p>This explorer needs JavaScript. <a href="https://www.caiso.com/documents/publicqueuereport.xlsx">Download the CAISO queue</a> or <a href="https://www.caiso.com/documents/cluster-15-interconnection-requests.xlsx">Cluster 15 report</a>.</p></noscript>
   <div data-q="content" hidden>
+    <div class="queue-summary" aria-live="polite" data-q="summary"></div>
+    <p class="queue-note">Capacity is the reported net MW at the grid connection, counted once per project. Proposals are not a forecast of what will be built.</p>
+    <div class="queue-geography">
+      <div class="queue-connection-filter" data-q="connection-filter" hidden>
+        <p><span class="eyebrow">Connection filter</span><strong data-q="connection-filter-label" role="status"></strong></p>
+        <button type="button" data-q="clear-connection">Clear connection filter ×</button>
+      </div>
+      <div class="queue-map-layout">
+        <section class="queue-map-section" aria-labelledby="queue-location-title">
+          <div class="queue-section-heading"><div><p class="eyebrow">01 / Connection points</p><h2 id="queue-location-title">Where projects want to connect</h2></div><button type="button" data-q="map-reset">Reset map</button></div>
+          <div class="queue-map-container"><div id="queue-map" aria-label="Reference map of matched project connection substations"><p>Loading substation reference map…</p></div><p class="queue-note" data-q="map-note"></p><div class="queue-map-highlight" data-q="highlight-controls" hidden><p class="queue-note" data-q="highlight-note" role="status"></p><button type="button" data-q="clear-highlight">Clear bucket highlight</button></div></div>
+        </section>
+        <section aria-labelledby="queue-age-title"><p class="eyebrow">02 / Time in the queue</p><h2 id="queue-age-title" tabindex="-1">How long has it been?</h2><p class="queue-note">Active projects: queue entry to each source report date. Completed or withdrawn projects: queue entry to the reported exit date.</p><div data-q="ages" class="queue-histogram"></div><p class="queue-note" data-q="age-note"></p></section>
+        <aside class="queue-age-detail" aria-labelledby="queue-age-detail-title"><p class="eyebrow">Selected interval</p><h2 id="queue-age-detail-title">Projects in this interval</h2><p class="queue-note" data-q="bucket-empty">Hover over an age bar to see its projects here and highlight their map locations. Click or tap a bar to keep that interval selected.</p><div data-q="bucket-detail"></div></aside>
+      </div>
+    </div>
     <form class="queue-filters" aria-label="Filter projects">
       <label class="queue-search">Find a project or connection<input type="search" data-q="search" placeholder="Name, connection, or queue ID"></label>
       <label>Technology<select data-q="technology"><option value="">All technologies</option></select></label>
@@ -23,21 +39,9 @@ permalink: /queue/
       <label>Status<select data-q="status"><option value="ACTIVE">Active</option><option value="COMPLETED">Completed</option><option value="WITHDRAWN">Withdrawn</option><option value="">All statuses</option></select></label>
       <button type="button" data-q="reset">Reset filters</button>
     </form>
-    <div class="queue-summary" aria-live="polite" data-q="summary"></div>
-    <p class="queue-note">Capacity is the reported net MW at the grid connection, counted once per project. Proposals are not a forecast of what will be built.</p>
-    <div class="queue-geography">
-      <div class="queue-map-layout">
-        <section class="queue-map-section" aria-labelledby="queue-location-title">
-          <div class="queue-section-heading"><div><p class="eyebrow">01 / Connection points</p><h2 id="queue-location-title">Where projects want to connect</h2></div><button type="button" data-q="map-reset">Reset map</button></div>
-          <div class="queue-map-container"><div id="queue-map" aria-label="Reference map of matched project connection substations"><p>Loading substation reference map…</p></div><p class="queue-note" data-q="map-note"></p><div class="queue-map-highlight" data-q="highlight-controls" hidden><p class="queue-note" data-q="highlight-note" role="status"></p><button type="button" data-q="clear-highlight">Clear bucket highlight</button></div></div>
-        </section>
-        <section aria-labelledby="queue-age-title"><p class="eyebrow">02 / Time in the queue</p><h2 id="queue-age-title">How long has it been?</h2><p class="queue-note">Active projects: queue entry to each source report date. Completed or withdrawn projects: queue entry to the reported exit date.</p><div data-q="ages" class="queue-histogram"></div><p class="queue-note" data-q="age-note"></p></section>
-        <aside class="queue-age-detail" aria-labelledby="queue-age-detail-title"><p class="eyebrow">Selected interval</p><h2 id="queue-age-detail-title">Projects in this interval</h2><p class="queue-note" data-q="bucket-empty">Hover over an age bar to see its projects here and highlight their map locations. Click or tap a bar to keep that interval selected.</p><div data-q="bucket-detail"></div></aside>
-      </div>
-    </div>
     <div class="queue-chart-grid">
       <section><p class="eyebrow">03 / Proposed technologies</p><h2>What they want to build</h2><p class="queue-note">Project counts. Hybrid projects appear in one category.</p><div data-q="technologies" class="queue-bars"></div></section>
-      <section class="queue-poi-list"><p class="eyebrow">04 / Most requested connections</p><h2>Where interest is concentrated</h2><p class="queue-note">Most requested connection points in this selection. Select one to explore its projects.</p><div data-q="connections"></div><p class="queue-note">Names are grouped as reported. Similar names may refer to the same facility.</p></section>
+      <section class="queue-poi-list"><p class="eyebrow">04 / Most requested connections</p><h2>Where interest is concentrated</h2><p class="queue-note">Connection points with the most projects matching your search and dropdown filters. Select one to filter the map and charts; select it again to clear.</p><button type="button" class="queue-clear-connection" data-q="clear-connection-list" hidden>Clear connection filter ×</button><div data-q="connections"></div><p class="queue-note">Names are grouped as reported. Similar names may refer to the same facility.</p></section>
     </div>
     <details class="queue-method"><summary>Sources and how to read this</summary>
       <p>CAISO publishes Cluster 14 and earlier separately from Cluster 15. These editions can have different dates. This explorer includes projects outside California when they request connection to the CAISO-controlled grid.</p>

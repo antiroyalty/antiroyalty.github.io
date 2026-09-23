@@ -43,6 +43,7 @@ class QueueExplorer {
     this.generation = 0;
     this.mapUnavailable = false;
     this.ageSelection = null;
+    this.connectionSelection = null;
     this.markerRecords = [];
     this.ui["clear-highlight"].addEventListener("click", () => this.closeAgeBucket());
     container.addEventListener("keydown", event => {
@@ -79,8 +80,16 @@ class QueueExplorer {
     this.ui.reset.addEventListener("click", () => {
       for (const key of ["search", "technology", "county", "state"]) this.ui[key].value = "";
       this.ui.status.value = "ACTIVE";
+      this.connectionSelection = null;
       this.render();
     });
+    for (const key of ["clear-connection", "clear-connection-list"]) {
+      this.ui[key].addEventListener("click", () => {
+        this.connectionSelection = null;
+        this.render();
+        document.getElementById("queue-age-title").focus({preventScroll: true});
+      });
+    }
     this.ui["map-reset"].addEventListener("click", () => this.map?.fitBounds([[32.3, -124.5], [42.1, -114.1]]));
   }
 
@@ -163,13 +172,21 @@ class QueueExplorer {
 
   render() {
     const search = this.ui.search.value.trim().toLowerCase();
-    this.filtered = this.snapshot.projects.filter(p =>
+    const matchingProjects = this.snapshot.projects.filter(p =>
       (!this.ui.status.value || p.status === this.ui.status.value)
       && (!this.ui.technology.value || technology(p) === this.ui.technology.value)
       && (!this.ui.county.value || countyLabel(p.county) === this.ui.county.value)
       && (!this.ui.state.value || p.state === this.ui.state.value)
       && (!search || [p.name, p.id, p.poi, p.county, p.utility, technology(p)].join(" ").toLowerCase().includes(search)));
+    const connection = this.connectionSelection;
+    this.filtered = matchingProjects.filter(p => !connection || (connection.utility === null
+      ? p.poi?.toLowerCase().includes(connection.poi.toLowerCase())
+      : p.poi === connection.poi && p.utility === connection.utility));
     const projects = this.filtered;
+    this.ui["connection-filter"].hidden = !connection;
+    this.ui["clear-connection-list"].hidden = !connection;
+    this.ui["connection-filter-label"].textContent = connection
+      ? `${connection.poi}${connection.utility ? ` · ${connection.utility}` : ""} · ${projects.length} projects` : "";
     const capacities = projects.map(p => p.netMw).filter(Number.isFinite);
     const times = projects.map(p => this.days(p));
     const stats = [
@@ -182,15 +199,16 @@ class QueueExplorer {
       const card = element("article"); card.append(element("strong", value), element("span", caption)); return card;
     }));
     const grouped = new Map();
-    projects.forEach(p => { if (p.poi) { const key = `${p.utility}|${p.poi}`; if (!grouped.has(key)) grouped.set(key, []); grouped.get(key).push(p); } });
+    matchingProjects.forEach(p => { if (p.poi) { const key = `${p.utility}|${p.poi}`; if (!grouped.has(key)) grouped.set(key, []); grouped.get(key).push(p); } });
     this.ui.connections.replaceChildren(...[...grouped.values()].sort((a, b) => b.length - a.length).slice(0, 7).map(group => {
       const button = element("button", undefined, "queue-poi-button"); button.type = "button";
       const description = element("span", group[0].poi);
       description.append(element("small", `${group[0].utility} · ${group[0].county || "County not reported"}`));
       button.append(description, element("strong", `${group.length}`));
-      button.addEventListener("click", () => this.selectPoi(group[0].poi)); return button;
+      button.setAttribute("aria-pressed", String(connection?.poi === group[0].poi && connection?.utility === group[0].utility));
+      button.addEventListener("click", () => this.selectPoi(group[0].poi, group[0].utility)); return button;
     }));
-    if (!projects.length) this.ui.connections.append(element("p", "No projects match these filters."));
+    if (!matchingProjects.length) this.ui.connections.append(element("p", "No projects match these filters."));
     const techCounts = new Map();
     projects.forEach(p => techCounts.set(technology(p), (techCounts.get(technology(p)) || 0) + 1));
     this.renderBars(this.ui.technologies, [...techCounts].sort((a, b) => b[1] - a[1]));
@@ -260,8 +278,7 @@ class QueueExplorer {
       item.append(row);
       chart.append(item);
     }
-    this.ui.ages.append(element("p", "Time in queue (years) · project count", "queue-histogram-axis"), chart,
-      element("p", "Hover to preview projects. Click or tap to keep a bucket selected.", "queue-note"));
+    this.ui.ages.append(element("p", "Time in queue (years) · project count", "queue-histogram-axis"), chart);
   }
 
   closeAgeBucket() {
@@ -336,10 +353,11 @@ class QueueExplorer {
     if (panelNote) panelNote.textContent = caption;
   }
 
-  selectPoi(poi) {
-    this.ui.search.value = poi;
+  selectPoi(poi, utility = null) {
+    this.connectionSelection = this.connectionSelection?.poi === poi && this.connectionSelection?.utility === utility
+      ? null : {poi, utility};
     this.render();
-    document.getElementById("queue-age-title").scrollIntoView({behavior: "smooth", block: "start"});
+    this.ui["connection-filter"].parentElement.scrollIntoView({behavior: "smooth", block: "start"});
   }
 
   renderMap() {

@@ -10,7 +10,7 @@
 .queue-page button:disabled { opacity: .45; cursor: default; }
 .queue-page :focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 3px; }
 .queue-page label { display: flex; flex-direction: column; gap: 7px; font-family: var(--mono-font); font-size: .75rem; }
-.queue-filters { display: grid; grid-template-columns: minmax(240px, 2.2fr) minmax(160px, 1.25fr) minmax(120px, .75fr) minmax(130px, 1fr) minmax(132px, .85fr) auto; gap: 16px 8px; align-items: end; padding: 24px 0; border-top: 1px solid var(--border); }
+.queue-filters { display: grid; grid-template-columns: minmax(240px, 2.2fr) minmax(160px, 1.25fr) minmax(120px, .75fr) minmax(130px, 1fr) minmax(132px, .85fr) auto; gap: 16px 8px; align-items: end; margin-top: 48px; padding: 24px 0; border-top: 1px solid var(--border); }
 .queue-filters label { min-width: 0; }
 .queue-filters input, .queue-filters select { width: 100%; min-width: 0; padding-inline: 10px; }
 .queue-filters input, .queue-filters select, .queue-filters button { height: 44px; box-sizing: border-box; }
@@ -37,7 +37,13 @@
 .queue-poi-button { display: grid; grid-template-columns: 1fr auto; gap: 12px; width: 100%; text-align: left; margin-bottom: 7px; }
 .queue-poi-button small { display: block; color: var(--muted); margin-top: 4px; font-size: .75rem; }
 .queue-poi-button strong { color: var(--blue-deep); font-family: var(--mono-font); font-size: 1rem; }
-.queue-chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding: 48px 0; margin-top: 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.queue-poi-button[aria-pressed="true"] { border-color: var(--blue-deep); background: #eee7d8; }
+.queue-connection-filter:not([hidden]) { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 24px; padding: 16px; border-left: 3px solid var(--blue-deep); background: var(--paper); }
+.queue-connection-filter p { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.queue-connection-filter strong { display: block; margin-top: 5px; font-size: .95rem; }
+.queue-connection-filter button, .queue-clear-connection { font-size: .8rem; }
+.queue-clear-connection { margin-bottom: 12px; }
+.queue-chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding: 16px 0 48px; }
 .queue-bar { margin: 20px 0; }
 .queue-bar-label { display: flex; justify-content: space-between; gap: 15px; font-size: .95rem; margin-bottom: 7px; }
 .queue-bar-track { background: #e7e5dc; height: 8px; }
