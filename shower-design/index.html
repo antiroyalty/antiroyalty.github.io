@@ -23,14 +23,14 @@
     <button data-view="trim" aria-pressed="false">Wall trim</button>
   </div>
   <div class="stage">
-    <canvas aria-label="Interactive 78 by 44 inch shower with an 11 foot ceiling, Cotone wall tile, Cypress 2 by 4 inch tile, a 28 by 14 by 5 inch custom niche, a 3 inch outside curb height, and a brushed stainless linear drain and controls on the left wall."></canvas>
+    <canvas aria-label="Interactive 78 by 44 inch shower with an 8 foot ceiling, horizontal Cotone wall tile, a flush Cypress wall band, and a custom niche 28 inches wide, 20 inches high, and 5 inches deep. Its shelf is 48 inches above the shower floor. The curb is 4 inches wide and 3 inches high outside. One Cypress tile spans the curb cap, with short-edge bullnose on both vertical faces. Brushed stainless linear drain and controls are on the left wall."></canvas>
     <div class="labels" aria-hidden="true"></div>
     <div class="status" role="status">Loading shower preview…</div>
   </div>
   <p class="view-note" aria-live="polite"></p>
   <div class="materials">
-    <span><i class="swatch" style="background:#dbceb3"></i>SensiTerre Cotone Natural · nominal 12″ × 24″</span>
-    <span><i class="swatch" style="background:#333728"></i>Heath Cypress · 2″ × 4″ vertical straight lay</span>
+    <span><i class="swatch" style="background:#dbceb3"></i>SensiTerre Cotone Natural · horizontal 12″ × 24″ · ⅛″ grout</span>
+    <span><i class="swatch" style="background:#333728"></i>Heath Cypress · 2″ × 4″ vertical straight lay · 3⁄16″ grout</span>
     <span><i class="swatch" style="background:linear-gradient(110deg,#949c9c,#e6e7e5,#a4abab)"></i>Brushed stainless KERDI-LINE SOLID</span>
   </div>
   <p class="hint">Drag to orbit · scroll to zoom. Colors and finish profiles are approximations; use physical samples for approval.</p>
@@ -38,13 +38,13 @@
     <summary>Dimensions and working assumptions</summary>
     <dl>
       <dt>Finished footprint</dt><dd>78″ × 44″ between finished faces; the curb is outside this area.</dd>
-      <dt>Ceiling</dt><dd>132″ above the shower floor at the center of the back wall, directly below the niche.</dd>
-      <dt>Custom niche</dt><dd>28″ wide × 14″ high at the front opening is a working size. Usable depth is 5″. The front sill is 48″ above the shower floor directly below it; the sill rises toward the back at ¼″ per foot.</dd>
-      <dt>Green wall band</dt><dd>8″ above the local sloped floor on three walls. The upper short-edge bullnose follows the floor slope; adjacent wall tiles are cut to meet it.</dd>
+      <dt>Ceiling</dt><dd>96″ (8′) above the shower floor at the center of the back wall, directly below the niche.</dd>
+      <dt>Custom niche</dt><dd>28″ wide × 20″ high clear opening, with 5″ usable depth. The finished front sill is 48″ above the shower floor directly below it; the opening top is 68″ above the same datum. The sill rises toward the back at ¼″ per foot. Cotone rows are set out to align a horizontal joint with the niche’s upper bullnose edge. Michael must confirm the final set-out, base-course cuts, and framing against the delivered tiles.</dd>
+      <dt>Green wall band</dt><dd>8″ above the local sloped floor on three walls. Regular Cypress field tile meets the Sensi Terre Cotone tile in the same finished plane across a grout joint. No bullnose is used at this transition.</dd>
       <dt>Floor and drain</dt><dd>¼″-per-foot main slope and wall-strip slope. Faceted end zones feed the drain ends. The 35 7⁄16″ × 2 29⁄32″ frame and solid grate are flush with the tile datum. The nearest frame edge is 2″ from the finished left wall.</dd>
-      <dt>Curb</dt><dd>3″ above the outside bathroom floor; 5⅜″ finished width is a working assumption. The cap slopes continuously inward at ¼″ per foot. Inside exposure varies with the floor slope. Final width and floor elevations need Michael’s confirmation.</dd>
+      <dt>Curb</dt><dd>4″ finished width, including tile, and 3″ above the outside bathroom floor. One regular 2″ × 4″ tile piece is cut to span the cap between the joints at both bullnose edges. Short-edge bullnose is on the inside and outside vertical faces, not a second row of cap tiles. The cap slopes inward at ¼″ per foot. Inside exposure varies with the floor slope. Michael must confirm the build-up, edge joints, and actual tile dimensions.</dd>
       <dt>Elevation reference</dt><dd>For this preview, the bathroom floor and drain top share elevation zero. Their actual relationship is not yet measured.</dd>
-      <dt>Tile layout</dt><dd>3⁄16″ grout joints are a working assumption for both materials. Wall tiles use nominal 12″ × 24″ dimensions; actual caliber, grout width, cut layout, and trim profiles need installer confirmation. Bullnose pieces are shown with individual joints.</dd>
+      <dt>Tile layout</dt><dd>Cotone wall joints are ⅛″; Heath joints remain 3⁄16″. Heath tiles are modeled as actual 2″ × 4″ pieces. Cotone tiles are horizontal, using nominal 24″ width × 12″ height. Delivered sizes, grout width, cut layout, and trim profiles need installer confirmation. Bullnose is used only at the curb and niche, with individual tile joints.</dd>
       <dt>Fixtures</dt><dd>Controls are on the left wall, approximately 48″ above the local floor. The 13″ rain-head diameter and ceiling drop are illustrative. Glass is omitted pending the reuse decision.</dd>
     </dl>
     <p class="sources"><a href="https://www.allnaturalstone.com/sensi-terre-connte" target="_blank" rel="noreferrer">Cotone Natural product and swatch</a> · <a href="https://www.schluter.com/schluter-us/en_US/Shower-System/Drains/Schluter%C2%AE-KERDI-LINE/p/KERDI_LINE" target="_blank" rel="noreferrer">Schluter KERDI-LINE</a></p>
@@ -60,12 +60,12 @@
 <script type="module" id="shower-model">
 // All dimensions are inches. Finished interior wall faces define the footprint.
 const spec = Object.freeze({
-  length: 78, depth: 44, ceilingHeight: 132,
+  length: 78, depth: 44, ceilingHeight: 96,
   greenWidth: 2, greenHeight: 4, greenJoint: 3 / 16,
-  wallWidth: 24, wallHeight: 12, wallJoint: 3 / 16,
+  wallWidth: 24, wallHeight: 12, wallJoint: 1 / 8,
   bandHeight: 8, slope: 0.25 / 12, bullnoseRadius: 0.09,
-  nicheWidth: 28, nicheHeight: 14, nicheDepth: 5, nicheSillHeight: 48,
-  curbHeightOutside: 3, curbWidth: 5 + 3 / 8,
+  nicheWidth: 28, nicheHeight: 20, nicheDepth: 5, nicheSillHeight: 48,
+  curbHeightOutside: 3, curbWidth: 4,
   bathroomFloorY: 0, drainY: 0,
   drainLength: 35 + 7 / 16, drainWidth: 2 + 29 / 32, drainWallGap: 2,
 });
@@ -91,10 +91,30 @@ const niche = Object.freeze({
   top: floorReferenceY + spec.nicheSillHeight + spec.nicheHeight,
   front: spec.depth, back: spec.depth + spec.nicheDepth,
 });
+// Coordinate the first Cotone tile above the niche with its outer bullnose edge.
+// This is a proposed set-out; delivered tile sizes and base-course cuts need review.
+const wallTileAboveNicheY = niche.top + spec.bullnoseRadius + spec.wallJoint;
+function wallCourses() {
+  const pitch = spec.wallHeight + spec.wallJoint;
+  const firstOriginY = wallTileAboveNicheY - Math.ceil(wallTileAboveNicheY / pitch) * pitch;
+  return spans(0, ceilingY, spec.wallHeight, spec.wallJoint, firstOriginY);
+}
 const nicheShelfY = z => niche.bottom + (z - niche.front) * spec.slope;
 const curbTopY = z => spec.bathroomFloorY + spec.curbHeightOutside
   - (z + spec.curbWidth) * spec.slope;
 const bandTopY = (x, z) => floorY(x, z) + spec.bandHeight;
+
+// Finished curb width includes both rounded face edges and their cap joints.
+// Each regular tile is cut to this clear span; no second tile runs across it.
+const curbCap = Object.freeze({
+  outsideZ: -spec.curbWidth + spec.bullnoseRadius + spec.greenJoint,
+  insideZ: -spec.bullnoseRadius - spec.greenJoint,
+});
+
+function curbCapTiles() {
+  return spans(-spec.length / 2, spec.length / 2, spec.greenWidth, spec.greenJoint)
+    .map(([x1, x2]) => [x1, x2, curbCap.outsideZ, curbCap.insideZ]);
+}
 
 function spans(min, max, tile, joint, origin = min + joint / 2) {
   const values = [];
@@ -301,7 +321,8 @@ for (const wall of walls) {
     polygon(part, p => wall.map(p, 0.35), substrate);
     polygon(part, p => wall.map(p, 0.13), wallGrout);
   }
-  // Tiled band: level tile courses clipped to a constant 8-inch height above floor.
+  // Flush wall band: field tiles meet Cotone in the same plane, without bullnose.
+  // Level courses are clipped to a constant 8-inch height above the local floor.
   for (const [u1, u2] of spans(wall.min, wall.max, 2, spec.greenJoint)) {
     for (const [a, b] of intervals(u1, u2, wall.cuts)) {
       const bottom = u => wall.height(u), top = u => bottom(u) + spec.bandHeight;
@@ -309,16 +330,15 @@ for (const wall of walls) {
       for (const [v1, v2] of spans(0, 12, 4, spec.greenJoint)) {
         let points = rect(a, b, v1, v2);
         points = clipPolygon(points, p => p[1] - bottom(p[0]) - spec.greenJoint / 2);
-        points = clipPolygon(points, p => top(p[0]) - bullRadius - p[1]);
+        points = clipPolygon(points, p => top(p[0]) - p[1]);
         polygon(points, p => wall.map(p), green());
       }
-      const mat = green();
-      roundedEdge(a, b, (u, angle) => wall.map([u, top(u) - bullRadius + bullRadius * Math.sin(angle)], bullRadius * (1 - Math.cos(angle))), mat);
     }
   }
   // Nominal horizontal Cotone courses. UVs retain tile scale on cut pieces.
+  // The same level rows wrap all three walls and align with the niche head joint.
   for (const [u1, u2] of spans(wall.min, wall.max, spec.wallWidth, spec.wallJoint)) {
-    for (const [v1, v2] of spans(8, ceilingY, spec.wallHeight, spec.wallJoint)) {
+    for (const [v1, v2] of wallCourses()) {
       const mat = cotone();
       for (const [a, b] of intervals(u1, u2, wall.cuts)) {
         const points = clipPolygon(rect(a, b, v1, v2), p => p[1] - wall.height(p[0]) - spec.bandHeight - spec.wallJoint);
@@ -360,13 +380,13 @@ for (const side of [-1, 1]) {
   }
 }
 
-// Continuous curb top. Outside finished face is z=-width; inside face is z=0.
+// One field tile spans the cap between the two vertical-face bullnose edges.
+// Outside finished face is z=-width; inside finished face is z=0.
 surface(-39, 39, -spec.curbWidth + bullRadius, -bullRadius, (x, z) => curbTopY(z) - 0.025, 3, greenGrout);
+for (const [x1, x2, z1, z2] of curbCapTiles()) {
+  surface(x1, x2, z1, z2, (x, z) => curbTopY(z), 0.15, green());
+}
 for (const [x1, x2] of floorX) {
-  for (const [z1, z2] of spans(-spec.curbWidth, 0, 4, spec.greenJoint)) {
-    const a = Math.max(z1, -spec.curbWidth + bullRadius), b = Math.min(z2, -bullRadius);
-    if (b > a) surface(x1, x2, a, b, (x, z) => curbTopY(z), 0.15, green());
-  }
   for (const outside of [true, false]) {
     const z = outside ? -spec.curbWidth : 0;
     const mat = green(), top = curbTopY(z), direction = outside ? 1 : -1;
@@ -416,27 +436,29 @@ function measure(id, text, a, b, anchor, views, tick = [0, 1, 0]) {
 }
 measure('length', '78″ clear length', [-39, 3, -9], [39, 3, -9], [0, 3, -12], ['overall', 'floor']);
 measure('depth', '44″ clear depth', [44, 3, 0], [44, 3, 44], [49, 4, 22], ['overall', 'floor'], [1, 0, 0]);
-measure('height', '11′ ceiling', [-44, floorReferenceY, 44], [-44, ceilingY, 44], [-48, 70, 44], ['overall'], [1, 0, 0]);
+measure('height', '8′ ceiling', [-44, floorReferenceY, 44], [-44, ceilingY, 44], [-48, (floorReferenceY + ceilingY) / 2, 44], ['overall'], [1, 0, 0]);
 measure('niche-width', '28″ width · working', [niche.left, niche.top + 4, 43], [niche.right, niche.top + 4, 43], [0, niche.top + 7, 43], ['niche']);
-measure('niche-height', '14″ opening · working', [-18, niche.bottom, 43], [-18, niche.top, 43], [-22, (niche.bottom + niche.top) / 2, 43], ['niche'], [1, 0, 0]);
+measure('niche-height', '20″ clear opening', [-18, niche.bottom, 43], [-18, niche.top, 43], [-22, (niche.bottom + niche.top) / 2, 43], ['niche'], [1, 0, 0]);
 measure('niche-depth', '5″ usable depth', [18, niche.bottom - 2, 44], [18, niche.bottom - 2, 49], [22, niche.bottom - 3, 47], ['niche'], [1, 0, 0]);
-annotation('niche-summary', 'Niche 28″ × 14″ × 5″', [0, niche.top + 7, 44], [], ['overall']);
+annotation('niche-summary', 'Niche 28″ × 20″ × 5″', [0, niche.top + 7, 44], [], ['overall']);
 measure('niche-sill', '48″ sill above floor below', [-17, floorReferenceY, 44], [-17, niche.bottom, 44], [-23, niche.bottom - 8, 43], ['niche'], [1, 0, 0]);
 measure('curb-height', '3″ curb · outside', [4, 0, -spec.curbWidth - 0.5], [4, 3, -spec.curbWidth - 0.5], [10, 0, -spec.curbWidth - 7], ['overall', 'curb'], [0.7, 0, 0]);
-measure('curb-width', '5⅜″ width · assumed', [-9, 3.3, -spec.curbWidth], [-9, 3.3, 0], [-17, 6, -spec.curbWidth / 2], ['curb'], [0.7, 0, 0]);
+measure('curb-width', '4″ finished curb width', [-9, 3.3, -spec.curbWidth], [-9, 3.3, 0], [-17, 6, -spec.curbWidth / 2], ['curb'], [0.7, 0, 0]);
+annotation('curb-cap', 'One field tile across cap', [10, 7, -2], [], ['curb']);
 measure('drain-size', '35 7⁄16″ × 2 29⁄32″ drain', [31, 0.3, drain.zMin], [31, 0.3, drain.zMax], [27, 11, 22], ['overall', 'drain', 'floor'], [0.8, 0, 0]);
 measure('drain-gap', '2″ finished-wall gap', [drain.xMax, 0.3, 10], [39, 0.3, 10], [39, 7, 8], ['drain', 'floor']);
 measure('drain-end', '4 9⁄32″ end space', [35, 0.3, 0], [35, 0.3, drain.zMin], [31, 5, -2], ['floor'], [0.7, 0, 0]);
 measure('band', '8″ band above local floor', [-7, floorY(-7, 44), 43.5], [-7, bandTopY(-7, 44), 43.5], [-12, 6, 41], ['trim'], [0.7, 0, 0]);
+annotation('band-transition', 'Flush transition · no bullnose', [8, bandTopY(8, 44) + 4, 43.5], [], ['trim']);
 annotation('main-slope', '¼″ / ft toward drain', [-12, 5, 24], [[[ -30, floorY(-30, 22) + 0.2, 22], [25, floorY(25, 22) + 0.2, 22]], [[25, floorY(25, 22) + 0.2, 22], [21, floorY(21, 20) + 0.2, 20]], [[25, floorY(25, 22) + 0.2, 22], [21, floorY(21, 24) + 0.2, 24]]], ['floor']);
 
 const presets = {
-  overall: { position: [-30, 85, -210], target: [0, 62, 20], note: 'Three tiled walls with the opening along the 78″ side. Left and right are viewed from the entrance.' },
-  niche: { position: [-25, 74, -25], target: [0, niche.bottom + 7, 47], note: 'Custom niche: 5″ finished depth, a sloped sill, and individually jointed bullnose edges. Opening size remains provisional.' },
+  overall: { position: [-30, 65, -170], target: [0, (floorReferenceY + ceilingY) / 2, 20], note: 'Three tiled walls with the opening along the 78″ side. Left and right are viewed from the entrance.' },
+  niche: { position: [-25, 78, -30], target: [0, (niche.bottom + niche.top) / 2, 47], note: '28″ × 20″ clear opening, 5″ usable depth, and a sloped sill 48″ above the floor at the front. The top is 68″ above that floor datum; its bullnose edge aligns with a Cotone joint. Final tile set-out needs installer confirmation.' },
   drain: { position: [-22, 57, -44], target: [34, 25, 22], note: 'Brushed stainless frame and solid grate are flush with the adjoining tile. The 2″ strip behind the drain slopes back toward it.' },
   floor: { position: [-15, 108, -32], target: [0, 0, 22], note: 'The floor uses a ¼″/ft main pitch, reverse pitch behind the drain, and additional pitches at both drain ends. Cut lines mark slope changes.' },
-  curb: { position: [23, 19, -78], target: [0, 2, -2], note: 'The cap has one continuous inward slope. Short-edge bullnose follows the vertical 2″ tile rhythm; inside exposure varies with floor height.' },
-  trim: { position: [15, 30, -58], target: [0, 7, 42], note: 'The 8″ Cypress band follows the sloped floor. Its upper short edges are bullnosed; Cotone tiles are cut to the transition.' },
+  curb: { position: [23, 19, -78], target: [0, 2, -2], note: '4″ finished width, with one field-tile piece across the inward-sloping cap. Short-edge bullnose tops both vertical faces. Outside height is 3″; inside exposure varies with floor height.' },
+  trim: { position: [15, 30, -58], target: [0, 7, 42], note: 'The 8″ Cypress field-tile band follows the sloped floor and meets Cotone flush across a grout joint. There is no bullnose at this transition.' },
 };
 let activeView = 'overall';
 function setView(name) {

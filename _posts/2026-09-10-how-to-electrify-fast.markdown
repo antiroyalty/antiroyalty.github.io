@@ -7,7 +7,7 @@ categories: notes
 
 *I started drafting these ideas in 2025 and returned to them in 2026.*
 
-There is a dissonance in how we talk about decarbonization that I can't seem to shake.
+I feel like there's a dissonance in how we talk about climate change and decarbonization and I find it annoying. We say we need to decarbonize ASAP, but then don't set up any of the actions we need to take to be a flywheel. So nothing takes off. My grandparents have a (Russian) phrase for this: "Hurrying slowly."
 
 On one hand, we should have started much earlier. The [IPCC pathways that limit warming to 1.5°C](https://www.ipcc.ch/report/ar6/syr/summary-for-policymakers/) require rapid emissions reductions now, followed by some amount of carbon dioxide removal. We do have ways to remove carbon, including forests, soil management, and early engineered systems. But we do not have anything operating at the enormous scale assumed in many climate models.
 
