@@ -5,7 +5,7 @@ description: Explore where proposed power plants and storage projects want to co
 permalink: /queue/
 ---
 
-<section class="queue-page" data-queue-explorer data-endpoint="{{ '/assets/data/queue/' | relative_url }}" data-substations="{{ '/assets/data/california-substations.geojson' | relative_url }}" data-area="{{ '/assets/data/caiso-area-reference.geojson' | relative_url }}">
+<section class="queue-page" data-queue-explorer data-endpoint="{{ '/assets/data/queue/' | relative_url }}" data-annual-endpoint="{{ '/assets/data/queue-annual/' | relative_url }}" data-substations="{{ '/assets/data/california-substations.geojson' | relative_url }}" data-area="{{ '/assets/data/caiso-area-reference.geojson' | relative_url }}">
   <nav class="queue-nav" aria-label="Grid explorers"><a href="{{ '/grid/' | relative_url }}">Grid today ↗</a><span aria-current="page">Interconnection queue</span></nav>
   <header class="queue-hero">
     <p class="eyebrow">CAISO · Proposed generation + storage</p>
@@ -34,7 +34,7 @@ permalink: /queue/
     <form class="queue-filters" aria-label="Filter projects">
       <div class="queue-observation-controls">
         <label>Queue observation<select data-q="snapshot" aria-describedby="queue-history-note" disabled></select></label>
-        <p class="queue-note" id="queue-history-note">Saved observations, checked weekly. Source report dates can differ from collection dates.</p>
+        <p class="queue-note" id="queue-history-note">Saved observations, checked daily. Source report dates can differ from collection dates.</p>
       </div>
       <label class="queue-search">Find a project or connection<input type="search" data-q="search" placeholder="Name, connection, or queue ID"></label>
       <label>Technology<select data-q="technology"><option value="">All technologies</option></select></label>
@@ -50,19 +50,36 @@ permalink: /queue/
     <section class="queue-history" aria-labelledby="queue-history-title">
       <p class="eyebrow">05 / The queue over time</p>
       <h2 id="queue-history-title">How is the queue changing?</h2>
-      <p class="queue-note">Project counts across the full reports, including completed and withdrawn projects. Each bar uses the latest saved observation in that Pacific week, independent of the filters above.</p>
-      <div class="queue-history-legend" aria-label="Project status colors"><span><i class="queue-status-active"></i>Active</span><span><i class="queue-status-completed"></i>Completed</span><span><i class="queue-status-withdrawn"></i>Withdrawn</span></div>
-      <p class="queue-history-axis-title">Projects</p>
-      <div class="queue-history-chart" data-q="history-chart" role="group" aria-label="Weekly project counts by status"><p class="queue-note">Loading saved observations…</p></div>
-      <p class="queue-history-readout" data-q="history-hover" role="status"></p>
-      <p class="queue-note" data-q="history-selection" role="status"></p>
-      <p class="queue-note">Dates label the start of each week. Weeks without a saved observation remain gaps; unchanged reports do not create new observations.</p>
-    <details class="queue-history-changes" data-q="history-changes">
-      <summary data-q="changes-summary">Changes since the previous observation</summary>
-      <p class="queue-note" data-q="change-note" role="status"></p>
-      <div class="queue-history-list" data-q="changes"></div>
-      <p class="queue-note">Changes cover the full reports, independent of filters. They show what changed between our observations, not when it happened.</p>
-    </details>
+      <div class="queue-history-modes" role="group" aria-label="History period">
+        <button type="button" data-q="history-annual-button" aria-pressed="true" aria-controls="queue-annual-panel">Year-end · 2020–2025</button>
+        <button type="button" data-q="history-weekly-button" aria-pressed="false" aria-controls="queue-weekly-panel">Recent weeks</button>
+      </div>
+      <div id="queue-annual-panel" data-q="history-annual-panel">
+        <p class="queue-note">CAISO project counts in each year's Queued Up dataset, including completed and withdrawn records. Counts cover the full CAISO sample, independent of the filters above.</p>
+        <div class="queue-history-legend" aria-label="Project status colors"><span><i class="queue-status-active"></i>Active</span><span><i class="queue-status-completed"></i>Completed</span><span><i class="queue-status-withdrawn"></i>Withdrawn</span><span><i class="queue-status-suspended"></i>Suspended</span></div>
+        <p class="queue-history-axis-title">Projects</p>
+        <div class="queue-history-chart" data-q="annual-chart" role="group" aria-label="Year-end CAISO project counts by status"><p class="queue-note">Loading annual history…</p></div>
+        <p class="queue-history-readout" data-q="annual-hover" role="status"></p>
+        <p class="queue-note" data-q="annual-selection" role="status"></p>
+        <p class="queue-note" data-q="annual-source"></p>
+        <p class="queue-note">Completed and withdrawn counts include earlier years; they are not new outcomes within that year. Source revisions and coverage changes can also change the totals. “Operational” is shown as “Completed.”</p>
+        <p class="queue-note">Source: <a href="https://emp.lbl.gov/queues">Lawrence Berkeley National Laboratory and GridTracker, Queued Up</a> (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>). Adapted to CAISO project counts. These annual editions have different coverage from our recent CAISO observations. The map and project list use the recent observations.</p>
+      </div>
+      <div id="queue-weekly-panel" data-q="history-weekly-panel" hidden>
+        <p class="queue-note">Project counts across the full reports, including completed and withdrawn projects. Each bar uses the latest saved observation in that Pacific week, independent of the filters above.</p>
+        <div class="queue-history-legend" aria-label="Project status colors"><span><i class="queue-status-active"></i>Active</span><span><i class="queue-status-completed"></i>Completed</span><span><i class="queue-status-withdrawn"></i>Withdrawn</span></div>
+        <p class="queue-history-axis-title">Projects</p>
+        <div class="queue-history-chart" data-q="history-chart" role="group" aria-label="Weekly project counts by status"><p class="queue-note">Loading saved observations…</p></div>
+        <p class="queue-history-readout" data-q="history-hover" role="status"></p>
+        <p class="queue-note" data-q="history-selection" role="status"></p>
+        <p class="queue-note">Dates label the start of each week. Weeks without a saved observation remain gaps; unchanged reports do not create new observations.</p>
+        <details class="queue-history-changes" data-q="history-changes">
+          <summary data-q="changes-summary">Changes since the previous observation</summary>
+          <p class="queue-note" data-q="change-note" role="status"></p>
+          <div class="queue-history-list" data-q="changes"></div>
+          <p class="queue-note">Changes cover the full reports, independent of filters. They show what changed between our observations, not when it happened.</p>
+        </details>
+      </div>
     </section>
     <details class="queue-method"><summary>Sources and how to read this</summary>
       <p>CAISO publishes Cluster 14 and earlier separately from Cluster 15. These editions can have different dates. This explorer includes projects outside California when they request connection to the CAISO-controlled grid.</p>
@@ -71,7 +88,7 @@ permalink: /queue/
       <p>The map matches normalized substation names, transmission owners, and counties against the site's public CEC substation reference. It shows connection substations, not project footprints. Line connections, proposed facilities, ambiguous names, and unmatched records remain included in the filters and totals. The dashed CAISO area is a retired 2021 reference.</p>
       <p>Technology categories use reported fuels. Solar and storage components can share one connection limit, so their individual MW values must not be added to infer net grid capacity.</p>
       <p>County filters combine capitalization and “County” suffix variations. Project details preserve the source spelling, including incomplete or inconsistent place names.</p>
-      <p>Sources are checked weekly by the site's data workflow after deployment. Changed project records create a new observation. Original workbooks are retained with each source version. The first observation establishes the baseline; it cannot reveal earlier changes.</p>
+      <p>Sources are checked daily by the site's data workflow after deployment. Changed project records create a new observation. Each weekly bar shows that week's latest saved observation. Original workbooks are retained with each source version. The first observation establishes the baseline; it cannot reveal earlier changes.</p>
       <p><a href="https://www.caiso.com/generation-transmission/generation/generator-interconnection">CAISO generator interconnection ↗</a> · <a href="https://www.arcgis.com/home/item.html?id=147c83114a3f4ff8a82225e3d6c24857">Historical area reference ↗</a></p>
     </details>
   </div>

@@ -1,4 +1,5 @@
-import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, compareQueues, CHANGE_FIELDS, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, queueHistoryWeeks, DAYS_PER_YEAR } from "./queue-data.js";
+import { renderQueueHistoryChart } from "./queue-history-chart.js";
+import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, compareQueues, CHANGE_FIELDS, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, queueHistoryWeeks, validateAnnualQueueHistory, DAYS_PER_YEAR } from "./queue-data.js";
 
 const root = document.querySelector("[data-queue-explorer]");
 const number = new Intl.NumberFormat("en-US", {maximumFractionDigits: 1});
@@ -50,6 +51,14 @@ class QueueExplorer {
     this.markerRecords = [];
     this.observations = new Map();
     this.historyButtons = new Map();
+    for (const mode of ["annual", "weekly"]) {
+      this.ui[`history-${mode}-button`].addEventListener("click", () => {
+        for (const option of ["annual", "weekly"]) {
+          this.ui[`history-${option}-button`].setAttribute("aria-pressed", String(option === mode));
+          this.ui[`history-${option}-panel`].hidden = option !== mode;
+        }
+      });
+    }
     this.ui["clear-highlight"].addEventListener("click", () => this.closeAgeBucket());
     container.addEventListener("keydown", event => {
       if (event.key === "Escape" && this.ageSelection && !this.ui.dialog.open) {
@@ -109,6 +118,7 @@ class QueueExplorer {
       await this.loadSnapshot(this.index.snapshots.length - 1);
       this.initMap();
       this.loadHistory();
+      this.loadAnnualHistory();
     } catch (error) {
       this.ui.edition.textContent = "Queue reports are unavailable. Please use the CAISO source reports linked below or try again later.";
       const link = element("a", "Open CAISO queue reports ↗");
@@ -513,73 +523,43 @@ class QueueExplorer {
       }
     }));
     const weeks = queueHistoryWeeks(observations);
-    const maximum = Math.max(1, ...weeks.map(week => week.snapshot?.projects.length ?? 0));
-    // Round the count axis to readable steps, leaving space above the tallest stack.
-    const magnitude = 10 ** Math.floor(Math.log10(maximum / 5));
-    const tickStep = Math.max(1, [1, 2, 5, 10].find(step => step * magnitude >= maximum / 5) * magnitude);
-    const axisMaximum = Math.ceil(maximum / tickStep) * tickStep;
-    const plotHeightPx = 240;
-    this.ui["history-chart"].replaceChildren();
-    this.historyButtons.clear();
-    const axis = element("div", undefined, "queue-history-axis");
-    axis.setAttribute("aria-hidden", "true");
-    const viewport = element("div", undefined, "queue-history-viewport");
-    const plot = element("div", undefined, "queue-history-plot");
-    plot.style.minWidth = `${weeks.length * 112}px`;
-    const grid = element("div", undefined, "queue-history-grid");
-    grid.setAttribute("aria-hidden", "true");
-    for (let count = 0; count <= axisMaximum; count += tickStep) {
-      const tick = element("span", number.format(count));
-      tick.style.top = `${32 + plotHeightPx * (1 - count / axisMaximum)}px`;
-      axis.append(tick);
-      const line = element("span");
-      line.style.bottom = `${count / axisMaximum * 100}%`;
-      grid.append(line);
-    }
-    plot.append(grid);
-    viewport.append(plot);
-    this.ui["history-chart"].append(axis, viewport);
-    const clearHover = () => { this.ui["history-hover"].textContent = ""; };
-    clearHover();
     const weekLabel = date => new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {timeZone: "UTC", month: "short", day: "numeric", year: "numeric"});
-    for (const week of weeks) {
-      const bar = element(week.counts ? "button" : "div", undefined, "queue-week");
-      const track = element("span", undefined, "queue-week-track");
-      if (week.counts) {
-        bar.type = "button";
-        const total = week.snapshot.projects.length;
-        const stack = element("span", undefined, "queue-week-stack");
-        stack.setAttribute("aria-hidden", "true");
-        stack.style.height = `${plotHeightPx * total / axisMaximum}px`;
-        stack.append(element("span", number.format(total), "queue-week-total"));
-        for (const status of ["ACTIVE", "COMPLETED", "WITHDRAWN"]) {
-          const segment = element("span", undefined, `queue-week-segment queue-status-${status.toLowerCase()}`);
-          segment.style.height = `${total ? week.counts[status] / total * 100 : 0}%`;
-          const statusLabel = status[0] + status.slice(1).toLowerCase();
-          const count = week.counts[status];
-          // Keep thin future segments to scale; their counts remain in the hover readout.
-          if (plotHeightPx * count / axisMaximum >= 18) {
-            segment.append(element("span", number.format(count), "queue-week-count"));
-          }
-          const hoverText = `${statusLabel} · ${number.format(count)} ${count === 1 ? "project" : "projects"} · ${number.format(total ? count / total * 100 : 0)}% of ${number.format(total)} · Week of ${weekLabel(week.weekStart)}`;
-          segment.addEventListener("pointerenter", () => { this.ui["history-hover"].textContent = hoverText; });
-          segment.addEventListener("pointerleave", clearHover);
-          stack.append(segment);
-        }
-        const description = `Week of ${weekLabel(week.weekStart)}. Observed ${observationTime(week.collectedAt)}. ${total} projects: ${week.counts.ACTIVE} active, ${week.counts.COMPLETED} completed, ${week.counts.WITHDRAWN} withdrawn. View observation.`;
-        bar.setAttribute("aria-label", description);
-        bar.addEventListener("click", () => this.loadSnapshot(week.index));
-        bar.addEventListener("focus", () => { this.ui["history-hover"].textContent = `Week of ${weekLabel(week.weekStart)} · ${number.format(week.counts.ACTIVE)} active · ${number.format(week.counts.COMPLETED)} completed · ${number.format(week.counts.WITHDRAWN)} withdrawn`; });
-        bar.addEventListener("blur", clearHover);
-        track.append(stack);
-        this.historyButtons.set(week.index, bar);
-      } else {
-        track.append(element("span", week.collectedAt ? "Observation unavailable" : "No saved observation", "queue-week-gap"));
-      }
-      bar.append(track, element("span", weekLabel(week.weekStart), "queue-week-label"));
-      plot.append(bar);
-    }
+    const bars = weeks.map(week => ({
+      id: week.index, label: weekLabel(week.weekStart), periodLabel: `Week of ${weekLabel(week.weekStart)}`,
+      counts: week.counts, total: week.snapshot?.projects.length,
+      description: week.collectedAt ? `Observed ${observationTime(week.collectedAt)}. View observation.` : "",
+      gapLabel: week.collectedAt ? "Observation unavailable" : "No saved observation",
+    }));
+    this.historyButtons = renderQueueHistoryChart(this.ui["history-chart"], this.ui["history-hover"],
+      bars, ["ACTIVE", "COMPLETED", "WITHDRAWN"], index => this.loadSnapshot(index));
     this.renderHistorySelection();
+  }
+
+  async loadAnnualHistory() {
+    try {
+      const base = this.root.dataset.annualEndpoint;
+      const history = validateAnnualQueueHistory(await getJson(`${base}index.json`));
+      const statuses = ["ACTIVE", "COMPLETED", "WITHDRAWN", "SUSPENDED"];
+      const selectYear = year => {
+        const edition = history.editions.find(entry => entry.year === year);
+        buttons.forEach((button, id) => button.setAttribute("aria-pressed", String(id === year)));
+        const counts = statuses.map(status => `${number.format(edition.counts[status])} ${status.toLowerCase()}`);
+        this.ui["annual-selection"].textContent = `End of ${year}: ${counts.join(" · ")}.`;
+        const link = element("a", `Download ${year} source workbook ↗`);
+        link.href = base + edition.source.file;
+        this.ui["annual-source"].replaceChildren(link);
+      };
+      const bars = history.editions.map(edition => ({
+        id: edition.year, label: String(edition.year), periodLabel: `End of ${edition.year}`,
+        counts: edition.counts, total: edition.total, description: "View year-end counts and source.",
+      }));
+      const buttons = renderQueueHistoryChart(this.ui["annual-chart"], this.ui["annual-hover"],
+        bars, statuses, selectYear, 92);
+      selectYear(history.editions.at(-1).year);
+    } catch (error) {
+      this.ui["annual-chart"].replaceChildren(element("p", "Annual history is unavailable. Recent weekly observations are still available.", "queue-note"));
+      console.error("Annual queue history unavailable", error);
+    }
   }
 
   renderHistorySelection() {

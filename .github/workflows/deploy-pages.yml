@@ -68,7 +68,7 @@ jobs:
       - name: Report retained California market snapshot
         if: always() && steps.refresh_grid_market.outcome == 'failure'
         run: echo "::warning title=California market refresh failed::The previous snapshot was retained. Deployment will continue only if validation confirms it is usable."
-      - name: Check queue editions weekly
+      - name: Check queue editions daily
         id: refresh_queue
         if: github.event_name != 'push'
         continue-on-error: true

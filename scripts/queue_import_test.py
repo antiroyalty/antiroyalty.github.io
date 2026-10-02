@@ -1,4 +1,5 @@
 import importlib.util
+import datetime as dt
 import json
 from pathlib import Path
 import unittest
@@ -9,6 +10,15 @@ spec.loader.exec_module(queue)
 
 
 class QueueImportTests(unittest.TestCase):
+  def test_daily_source_check_boundary(self):
+    now = dt.datetime(2026, 10, 2, 10, tzinfo=dt.timezone.utc)
+    self.assertTrue(queue.source_check_due(None, now))
+    self.assertFalse(queue.source_check_due(now.isoformat(), now))
+    self.assertFalse(queue.source_check_due((now - dt.timedelta(hours=24, microseconds=-1)).isoformat(), now))
+    self.assertTrue(queue.source_check_due((now - dt.timedelta(hours=24)).isoformat(), now))
+    self.assertTrue(queue.source_check_due((now - dt.timedelta(hours=25)).isoformat(), now))
+    self.assertTrue(queue.source_check_due("2026-10-01T03:00:00-07:00", now))
+
   def test_missing_zero_and_bad_values(self):
     self.assertIsNone(queue.mw(None))
     self.assertIsNone(queue.mw("N/A"))

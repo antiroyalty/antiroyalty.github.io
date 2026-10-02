@@ -128,12 +128,19 @@ def write_json(path, value):
   temporary.replace(path)
 
 
+QUEUE_CHECK_INTERVAL = dt.timedelta(days=1)
+
+
+def source_check_due(checked_at, now):
+  return not checked_at or now - dt.datetime.fromisoformat(checked_at) >= QUEUE_CHECK_INTERVAL
+
+
 def update(directory, inputs=None, force=False):
   now = dt.datetime.now(dt.timezone.utc)
   index_path = directory / "index.json"
   index = json.loads(index_path.read_text()) if index_path.exists() else {"schemaVersion": 1, "snapshots": []}
-  if not force and index.get("checkedAt") and (now - dt.datetime.fromisoformat(index["checkedAt"])).total_seconds() < 7 * 86400:
-    print("Queue sources checked within seven days; retaining current editions.")
+  if not force and not source_check_due(index.get("checkedAt"), now):
+    print("Queue sources checked within 24 hours; retaining current editions.")
     return
   html = (inputs / "caiso-interconnection.html").read_text() if inputs else fetch(PAGE).decode()
   match = re.search(r'cluster-15-interconnection-requests\.xlsx[\s\S]*?<span class="time">(\d{2}/\d{2}/\d{4})', html)

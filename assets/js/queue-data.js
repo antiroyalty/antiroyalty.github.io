@@ -174,6 +174,28 @@ export function queueHistoryWeeks(observations) {
   return result;
 }
 
+export function validateAnnualQueueHistory(history) {
+  assert(history?.schemaVersion === 1 && history.entity === "CAISO", "annual history schema");
+  assert(Array.isArray(history.editions) && history.editions.length > 0, "annual editions");
+  let previousYear = 0;
+  for (const edition of history.editions) {
+    assert(Number.isInteger(edition.year) && edition.year >= 2020 && edition.year > previousYear, "annual ordering");
+    previousYear = edition.year;
+    assert(edition.asOf === `${edition.year}-12-31`, "year-end date");
+    const statuses = ["ACTIVE", "COMPLETED", "WITHDRAWN", "SUSPENDED"];
+    assert(edition.counts && Object.keys(edition.counts).length === statuses.length, "annual statuses");
+    for (const status of statuses) assert(Number.isInteger(edition.counts[status]) && edition.counts[status] >= 0, "annual count");
+    assert(Number.isInteger(edition.total) && edition.total > 0
+      && statuses.reduce((total, status) => total + edition.counts[status], 0) === edition.total, "annual total");
+    assert(edition.recordsFile === `records/${edition.year}.json`, "annual records path");
+    const source = edition.source;
+    assert(source && /^sources\/[a-z0-9_]+\.xlsx$/.test(source.file)
+      && /^[a-f0-9]{64}$/.test(source.sha256), "annual source");
+    assert(typeof source.url === "string" && source.url.startsWith("https://eta-publications.lbl.gov/sites/default/files/"), "annual source URL");
+  }
+  return history;
+}
+
 const owner = value => value.toUpperCase().replace(/[^A-Z]/g, "").replace("PGAE", "PGE");
 const county = value => value.toUpperCase().replace(/ COUNTY\b/g, "").trim();
 const station = value => value.toUpperCase().replace(/\b\d+(?:\.\d+)?\s*KV\b/g, "")

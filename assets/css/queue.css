@@ -25,12 +25,18 @@
 .queue-history-list h3 { font-size: 1rem; margin: 0 0 8px; }
 .queue-history-list ul { margin: 0; padding-left: 20px; font-size: .9rem; }
 .queue-history { margin: 16px 0 40px; }
+.queue-history-modes { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 20px; }
+.queue-page .queue-history-modes button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 10px 0; background: transparent; color: var(--muted); font: .8rem var(--mono-font); }
+.queue-page .queue-history-modes button[aria-pressed="true"] { border-bottom-color: #303633; color: #303633; }
+.queue-history-modes button:focus-visible { outline: 2px solid #303633; outline-offset: 4px; }
+.queue-history [hidden] { display: none; }
 .queue-history-legend { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 24px 0 16px; font: .7rem var(--mono-font); color: var(--muted); }
 .queue-history-legend span { display: inline-flex; align-items: center; gap: 8px; }
 .queue-history-legend i { display: inline-block; width: 12px; height: 12px; }
 .queue-status-active { background: #497c8a; }
 .queue-status-completed { background: #829376; }
 .queue-status-withdrawn { background: #b76a4a; }
+.queue-status-suspended { background: #8a7297; }
 .queue-history-axis-title { margin: 0 0 0 52px; font: .65rem var(--mono-font); color: var(--muted); }
 .queue-history-chart { display: grid; grid-template-columns: 52px minmax(0, 1fr); }
 .queue-history-axis { position: relative; font: .65rem var(--mono-font); color: var(--muted); }
@@ -39,7 +45,7 @@
 .queue-history-plot { position: relative; display: flex; padding-top: 32px; }
 .queue-history-grid { position: absolute; top: 32px; left: 0; right: 0; height: 240px; border-left: 1px solid var(--border); pointer-events: none; }
 .queue-history-grid span { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); opacity: .5; }
-.queue-page .queue-week { position: relative; display: flex; flex: 1 0 112px; flex-direction: column; padding: 0 14px; box-sizing: border-box; background: transparent; border: 0; border-radius: 0; min-width: 0; text-align: center; color: #303633; }
+.queue-page .queue-week { position: relative; display: flex; flex: 1 0 var(--queue-bar-width, 112px); flex-direction: column; padding: 0 14px; box-sizing: border-box; background: transparent; border: 0; border-radius: 0; min-width: 0; text-align: center; color: #303633; }
 .queue-page .queue-week:hover { background: transparent; }
 .queue-page .queue-week:focus-visible { outline: 2px solid #303633; outline-offset: -2px; }
 .queue-week-track { height: 240px; display: flex; flex-direction: column; justify-content: end; align-items: center; }

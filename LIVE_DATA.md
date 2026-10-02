@@ -143,7 +143,7 @@ Domain rules:
 
 `assets/data/queue/index.json` lists immutable observations under `snapshots/`. Content-hashed workbooks are retained under `sources/`. Each snapshot records collection time, source edition dates, source URLs, workbook checksums, and row provenance. The first observation is a baseline, so no change claims are made until another observation exists. Identical project records do not create a new observation; the index still records the successful source check and latest downloaded editions.
 
-The existing deployment workflow checks these sources at most once per seven days, after restoring the `grid-data` branch. Both workbooks must parse and validate before the index changes. A failed fetch or schema change retains the prior index; a source edition that moves backward fails. Queue snapshots and workbooks are merged into the persistent data branch before the site builds. Ordinary source pushes restore the archive too. This schedule becomes active when the code is deployed.
+The existing deployment workflow checks these sources at most once per 24 hours, after restoring the `grid-data` branch. Both workbooks must parse and validate before the index changes. A failed fetch or schema change retains the prior index; a source edition that moves backward fails. Queue snapshots and workbooks are merged into the persistent data branch before the site builds. Ordinary source pushes restore the archive too. This schedule becomes active when the code is deployed.
 
 Local collection requires Python 3 and `python3 -m pip install -r scripts/queue-requirements.txt`:
 
@@ -155,4 +155,16 @@ npm test
 npm run validate:data
 ```
 
-`--force` bypasses the seven-day check interval. `--inputs DIRECTORY` supports offline verification with `caiso-queue.xlsx`, `caiso-cluster15.xlsx`, and the CAISO listing saved as `caiso-interconnection.html`. An independent browser validator rejects invalid records. Archive validation also verifies retained workbook checksums. No external services are called by the test suite.
+`--force` bypasses the 24-hour check interval. `--inputs DIRECTORY` supports offline verification with `caiso-queue.xlsx`, `caiso-cluster15.xlsx`, and the CAISO listing saved as `caiso-interconnection.html`. An independent browser validator rejects invalid records. Archive validation also verifies retained workbook checksums. No external services are called by the test suite.
+
+### Published annual queue history
+
+`assets/data/queue-annual/` retains the 2020–2025 year-end editions of Berkeley Lab's *Queued Up* dataset. Unmodified workbooks live in `sources/`, with SHA-256 checksums and original download URLs in `index.json`. Compact CAISO extracts in `records/` preserve queue ID, original status, technology, state, worksheet, and Excel row number. Only the small count index loads with the page. Workbooks download on request.
+
+Rebuild from the retained sources with `python3 scripts/import-queue-annual.py`. To import the same editions from another folder, add `--inputs DIRECTORY`. All six editions must validate before the index changes. Different bytes cannot silently replace a retained workbook. Source files are copied, so originals in Downloads remain intact.
+
+The importer selects `entity == CAISO`, including requests outside California. It counts each queue ID once per edition, maps `operational` and `completed` to `COMPLETED`, and preserves `suspended` separately. Unknown statuses and duplicate identifiers fail the import. The 2020 edition has three status sheets; later editions have a combined data sheet.
+
+These are each edition's published year-end observations, not reconstructed histories from today's status. Completed and withdrawn records include earlier years. Coverage and source revisions can change totals: the completed count, for example, falls from 199 in 2022 to 198 in 2023. Differences must not be presented as exact annual flows or completion rates. Annual history uses a separate view from recent direct CAISO observations because their samples differ. Selecting an annual bar updates its counts and source link without changing or scrolling the map.
+
+Data attribution: Lawrence Berkeley National Laboratory and GridTracker, [Queued Up](https://emp.lbl.gov/queues), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The site adapts the source to CAISO status counts. Annual files are versioned with site code, outside the automated `grid-data` archive. Tests validate retained checksums, record counts, status mappings, and row provenance. Adding a later annual edition requires explicit source review and an importer update.
