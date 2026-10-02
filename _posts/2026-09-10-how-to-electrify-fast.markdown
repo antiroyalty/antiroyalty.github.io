@@ -5,8 +5,6 @@ date: 2026-09-10 12:00:00 -0700
 categories: notes
 ---
 
-*I started drafting these ideas in 2025 and returned to them in 2026.*
-
 There's a dissonance in how we talk and act about climate change and decarbonization: on the one hand, we say we needed it yesterday. On the other hand, we don't set up electrification to be a flywheel. Mass-adoption and incentivization has hardly taken off.
 
 Starting with the obvious: we should have started acting on the climate change problem much earlier. Because now, the [IPCC pathways that limit warming to 1.5°C](https://www.ipcc.ch/report/ar6/syr/summary-for-policymakers/) require massive emissions reductions, *and actually removing carbon dioxide from the air*, like a carbon-sucking machine. Fundamentally, that's not so straight forward: we have _some_ ways to remove carbon, like forests and soil, and some very early engineered systems. But we don't have anything operating at the scale assumed in most climate models.
@@ -21,15 +19,15 @@ My short answer is: replace the largest sources of fossil-fuel use first, stop t
 
 ## Electrification is not the final goal
 
-The goal is not to install the largest possible number of electric appliances. The goal is to stop burning fossil fuels while keeping energy reliable and affordable.
+The goal is not to install the largest possible number of electric appliances. The goal is to stop burning fossil fuels while keeping energy reliable and affordable. (Because of that, the efficiency movement had been effective at accomplishing that goal for a long time, but it's no longer good enough!)
 
-Electrification is still one of the most useful ways to get there. Electric technologies often need much less energy to perform the same task. A typical electric vehicle converts about 87 to 91 percent of its stored energy into movement, compared with about 30 percent for a gasoline vehicle. ([U.S. Department of Energy](https://www.energy.gov/cmei/vehicles/articles/fotw-1360-sept-16-2024-typical-ev-87-91-efficient-compared-30-conventional)) A heat pump moves heat instead of producing it through combustion, and can use much less energy than a furnace or electric-resistance heater. ([U.S. Department of Energy](https://www.energy.gov/energysaver/heat-pump-systems))
+Electrification is still one of the most useful ways to get there. Electric technologies often need much less energy to perform the same task. For instance: a typical electric vehicle converts about 87 to 91 percent of its stored energy into movement, compared with about 30 percent for a gasoline vehicle simply because of thermodynamic limits. ([U.S. Department of Energy](https://www.energy.gov/cmei/vehicles/articles/fotw-1360-sept-16-2024-typical-ev-87-91-efficient-compared-30-conventional)) A heat pump moves heat instead of producing it through combustion, so can use much less energy than a furnace or electric-resistance heater. ([U.S. Department of Energy](https://www.energy.gov/energysaver/heat-pump-systems))
 
-Electric equipment also gets cleaner as the grid gets cleaner. A gas furnace installed today will burn gas for the rest of its life. A heat pump installed today can have lower emissions each year as more clean electricity comes online.
+Electric equipment also gets cleaner as the grid gets cleaner. A gas furnace installed today will burn gas for the rest of its life. A heat pump installed today can have lower emissions each year as more clean electricity comes online. This was the promise of electrification, but despite over a decade of work, we still haven't gotten there. 
 
-But "electrify everything" isn't really a complete climate strategy. California also needs fewer vehicle miles, better transit and land use, industrial process changes, methane reductions, energy efficiency, and carbon removal for emissions that are genuinely difficult to eliminate. Transportation is still California's largest source of greenhouse gas emissions, according to the state's [2023 emissions inventory](https://ww2.arb.ca.gov/ghg-inventory-data). Replacing gasoline vehicles matters, but so does reducing the need to drive them.
+Even if we were further along, "wlectrify everything" isn't really a complete climate strategy. Beyond that California would also need fewer vehicle miles, better transit and land use, industrial process changes, methane reductions, energy efficiency, and carbon removal for emissions that are genuinely difficult to get rid of. Transportation is still California's largest source of greenhouse gas emissions, according to the state's [2023 emissions inventory](https://ww2.arb.ca.gov/ghg-inventory-data).
 
-I would therefore measure speed in fossil fuel displaced and emissions avoided, not in electrified devices installed.
+I suggest a new metric: measure speed in fossil fuel displaced and emissions avoided, not in electrified devices installed.
 
 ## Use equipment replacement as the deadline
 
@@ -37,9 +35,9 @@ The fastest practical time to replace a furnace, water heater, or car is often w
 
 The problem is that equipment failures create terrible planning conditions. If a gas water heater breaks on Friday, most people will buy whatever can be installed by Monday. They will not wait for a panel assessment, permit, rebate application, and electrical work.
 
-Fast electrification therefore starts before the equipment fails. Buildings can be made electric-ready with panel space, conduit, suitable circuits, and a plan for managing load. Contractors can offer standard replacement packages. Permits and incentives can use a small number of pre-approved designs. Some homes can avoid a service upgrade by using load-management controls instead of assuming every new appliance must run at full power at the same time.
+Fast electrification therefore starts before the equipment fails. Buildings can be made electric-ready with panel space, conduit, suitable circuits, and a plan for managing load. Contractors can offer standard replacement packages, meanwhile permits and incentives have to use basic pre-approved designs. And, some homes might be able to avoid a service upgrade by using load-management controls instead of assuming every new appliance must run at full power at the same time.
 
-This is less exciting than announcing a new technology target, because ultimately we don't need any new tech. But this means that we don't have to wait to set this into motion: it's feasible *today*.
+This is less exciting than announcing a new technology target, because ultimately we don't need any new tech. But this is also a benefit -- we don't have to wait to set this into motion: it's feasible *today*.
 
 ## Make energization routine
 
@@ -175,3 +173,5 @@ My version of "fast electrification" would do six things at once:
 6. Use faster models to screen ordinary cases while engineers focus on real constraints.
 
 My point is to stop making every project bespoke. California already knows which technologies it wants people to adopt and where much of the demand will appear. The state should plan for that demand as a system, instead of asking each household or business to discover the same obstacles one project at a time. That seems both faster and more realistic than waiting for one perfect technology to save us later.
+
+*I started drafting these ideas in 2025 and returned to them in 2026.*
