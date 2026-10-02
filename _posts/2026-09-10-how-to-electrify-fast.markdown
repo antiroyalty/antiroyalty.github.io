@@ -7,13 +7,13 @@ categories: notes
 
 *I started drafting these ideas in 2025 and returned to them in 2026.*
 
-I feel like there's a dissonance in how we talk about climate change and decarbonization and I find it annoying. We say we need to decarbonize ASAP, but then don't set up any of the actions we need to take to be a flywheel. So nothing takes off. My grandparents have a (Russian) phrase for this: "Hurrying slowly."
+There's a dissonance in how we talk and act about climate change and decarbonization: on the one hand, we say we needed it yesterday. On the other hand, we don't set up electrification to be a flywheel. Mass-adoption and incentivization has hardly taken off.
 
-On one hand, we should have started much earlier. The [IPCC pathways that limit warming to 1.5°C](https://www.ipcc.ch/report/ar6/syr/summary-for-policymakers/) require rapid emissions reductions now, followed by some amount of carbon dioxide removal. We do have ways to remove carbon, including forests, soil management, and early engineered systems. But we do not have anything operating at the enormous scale assumed in many climate models.
+Starting with the obvious: we should have started acting on the climate change problem much earlier. Because now, the [IPCC pathways that limit warming to 1.5°C](https://www.ipcc.ch/report/ar6/syr/summary-for-policymakers/) require massive emissions reductions, *and actually removing carbon dioxide from the air*, like a carbon-sucking machine. Fundamentally, that's not so straight forward: we have _some_ ways to remove carbon, like forests and soil, and some very early engineered systems. But we don't have anything operating at the scale assumed in most climate models.
 
-I do not want our plan to depend on a future machine arriving just in time to clean up several decades of continued emissions. The less carbon we emit now, the less we have to remove later.
+I don't want our plan to depend on a future machine arriving just in time to mop up decades of emissions. It seems risky to bet _the whole earth_ on the thing we don't even have now. To be more confident we'll actually achieve our results, we could instead emit less carbon now. The less we have in the air, the less we'll have to remove later, and the more likely we'll be to find a technology that could actually do it.
 
-On the other hand, the work to decarbonize has been, let's just say, sluggish. We spend years discussing the optimal program, the perfect incentive, and the exact allocation of every cost. Cost, reliability, and equity are real constraints. They are not reasons to wait forever, though!
+On the other hand, the work to decarbonize has been, in my opinion, sluggish. We spend years discussing the optimal program, the perfect incentive, and the exact allocation of every cost. Cost, reliability, and equity are real constraints. They are not reasons to wait forever, though!
 
 So what would it actually mean to electrify California fast?
 
