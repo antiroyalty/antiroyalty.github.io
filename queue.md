@@ -32,6 +32,10 @@ permalink: /queue/
       </div>
     </div>
     <form class="queue-filters" aria-label="Filter projects">
+      <div class="queue-observation-controls">
+        <label>Queue observation<select data-q="snapshot" aria-describedby="queue-history-note" disabled></select></label>
+        <p class="queue-note" id="queue-history-note">Saved observations, checked weekly. Source report dates can differ from collection dates.</p>
+      </div>
       <label class="queue-search">Find a project or connection<input type="search" data-q="search" placeholder="Name, connection, or queue ID"></label>
       <label>Technology<select data-q="technology"><option value="">All technologies</option></select></label>
       <label>State<select data-q="state"><option value="">All states</option></select></label>
@@ -43,6 +47,23 @@ permalink: /queue/
       <section><p class="eyebrow">03 / Proposed technologies</p><h2>What they want to build</h2><p class="queue-note">Project counts. Hybrid projects appear in one category.</p><div data-q="technologies" class="queue-bars"></div></section>
       <section class="queue-poi-list"><p class="eyebrow">04 / Most requested connections</p><h2>Where interest is concentrated</h2><p class="queue-note">Connection points with the most projects matching your search and dropdown filters. Select one to filter the map and charts; select it again to clear.</p><button type="button" class="queue-clear-connection" data-q="clear-connection-list" hidden>Clear connection filter ×</button><div data-q="connections"></div><p class="queue-note">Names are grouped as reported. Similar names may refer to the same facility.</p></section>
     </div>
+    <section class="queue-history" aria-labelledby="queue-history-title">
+      <p class="eyebrow">05 / The queue over time</p>
+      <h2 id="queue-history-title">How is the queue changing?</h2>
+      <p class="queue-note">Project counts across the full reports, including completed and withdrawn projects. Each bar uses the latest saved observation in that Pacific week, independent of the filters above.</p>
+      <div class="queue-history-legend" aria-label="Project status colors"><span><i class="queue-status-active"></i>Active</span><span><i class="queue-status-completed"></i>Completed</span><span><i class="queue-status-withdrawn"></i>Withdrawn</span></div>
+      <p class="queue-history-axis-title">Projects</p>
+      <div class="queue-history-chart" data-q="history-chart" role="group" aria-label="Weekly project counts by status"><p class="queue-note">Loading saved observations…</p></div>
+      <p class="queue-history-readout" data-q="history-hover" role="status"></p>
+      <p class="queue-note" data-q="history-selection" role="status"></p>
+      <p class="queue-note">Dates label the start of each week. Weeks without a saved observation remain gaps; unchanged reports do not create new observations.</p>
+    <details class="queue-history-changes" data-q="history-changes">
+      <summary data-q="changes-summary">Changes since the previous observation</summary>
+      <p class="queue-note" data-q="change-note" role="status"></p>
+      <div class="queue-history-list" data-q="changes"></div>
+      <p class="queue-note">Changes cover the full reports, independent of filters. They show what changed between our observations, not when it happened.</p>
+    </details>
+    </section>
     <details class="queue-method"><summary>Sources and how to read this</summary>
       <p>CAISO publishes Cluster 14 and earlier separately from Cluster 15. These editions can have different dates. This explorer includes projects outside California when they request connection to the CAISO-controlled grid.</p>
       <div data-q="sources"></div>

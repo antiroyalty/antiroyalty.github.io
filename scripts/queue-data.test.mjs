@@ -3,10 +3,37 @@ import assert from "node:assert/strict";
 import { readFile, mkdtemp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
-import { queueDays, median, technology, compareQueues, matchSubstation, validateQueueSnapshot, validateQueueIndex, countyLabel, queueAgeHistogram, isInQueueAgeBin, DAYS_PER_YEAR } from "../assets/js/queue-data.js";
+import { queueDays, median, technology, compareQueues, matchSubstation, validateQueueSnapshot, validateQueueIndex, countyLabel, queueAgeHistogram, isInQueueAgeBin, queueHistoryWeeks, DAYS_PER_YEAR } from "../assets/js/queue-data.js";
 import { validateQueueArchive, mergeQueueArchive } from "./lib/queue-store.mjs";
 
 const project = {id: "2207", name: "Alisa Solar Energy Complex 2", status: "ACTIVE", queueDate: "2025-02-12", completedDate: null, withdrawnDate: null, netMw: 500, components: [{fuel: "Photovoltaic/Solar", capacityMw: 500}, {fuel: "Storage/Battery", capacityMw: 500}]};
+
+test("weekly history uses Pacific weeks and the last observation without double counting", () => {
+  const observation = (index, collectedAt, statuses) => ({index, collectedAt, snapshot: {projects: statuses.map(status => ({status}))}});
+  const weeks = queueHistoryWeeks([
+    observation(0, "2026-09-19T06:00:00Z", ["ACTIVE", "ACTIVE", "COMPLETED"]),
+    // Monday in UTC is still Sunday in California: this belongs to the prior week.
+    observation(1, "2026-09-21T06:59:00Z", ["ACTIVE", "WITHDRAWN", "COMPLETED"]),
+    observation(2, "2026-09-21T07:00:00Z", ["WITHDRAWN", "WITHDRAWN", "COMPLETED"]),
+  ]);
+  assert.deepEqual(weeks.map(w => [w.weekStart, w.index]), [["2026-09-14", 1], ["2026-09-21", 2]]);
+  assert.deepEqual(weeks[0].counts, {ACTIVE: 1, COMPLETED: 1, WITHDRAWN: 1});
+  assert.equal(Object.values(weeks[1].counts).reduce((a, b) => a + b, 0), 3);
+});
+
+test("weekly history distinguishes gaps, failed observations, and real zero counts", () => {
+  const weeks = queueHistoryWeeks([
+    {index: 0, collectedAt: "2026-12-27T20:00:00Z", snapshot: {projects: []}},
+    {index: 1, collectedAt: "2027-01-05T20:00:00Z", snapshot: null},
+  ]);
+  assert.deepEqual(weeks.map(w => w.weekStart), ["2026-12-21", "2026-12-28", "2027-01-04"]);
+  assert.deepEqual(weeks[0].counts, {ACTIVE: 0, COMPLETED: 0, WITHDRAWN: 0});
+  assert.equal(weeks[1].counts, null);
+  assert.equal(weeks[1].collectedAt, undefined);
+  assert.equal(weeks[2].counts, null);
+  assert.equal(weeks[2].index, 1);
+  assert.deepEqual(queueHistoryWeeks([]), []);
+});
 
 test("queue histogram uses two-year boundaries, preserves empty intervals, and excludes unknown ages", () => {
   const bins = queueAgeHistogram([0, 2 * DAYS_PER_YEAR - 1, 2 * DAYS_PER_YEAR, 4 * DAYS_PER_YEAR, 10 * DAYS_PER_YEAR, null, NaN, -1]);

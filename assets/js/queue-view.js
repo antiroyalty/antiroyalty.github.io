@@ -1,7 +1,10 @@
-import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, DAYS_PER_YEAR } from "./queue-data.js";
+import { validateQueueIndex, validateQueueSnapshot, technology, queueDays, median, compareQueues, CHANGE_FIELDS, matchSubstation, countyLabel, queueAgeHistogram, isInQueueAgeBin, queueHistoryWeeks, DAYS_PER_YEAR } from "./queue-data.js";
 
 const root = document.querySelector("[data-queue-explorer]");
 const number = new Intl.NumberFormat("en-US", {maximumFractionDigits: 1});
+const observationTime = value => new Date(value).toLocaleString("en-US", {
+  timeZone: "America/Los_Angeles", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short",
+});
 const label = value => value === null || value === undefined || value === "" ? "Not reported" : String(value);
 const years = days => days === null ? "Unavailable" : `${number.format(days / DAYS_PER_YEAR)} yr`;
 const element = (tag, text, className) => {
@@ -45,6 +48,8 @@ class QueueExplorer {
     this.ageSelection = null;
     this.connectionSelection = null;
     this.markerRecords = [];
+    this.observations = new Map();
+    this.historyButtons = new Map();
     this.ui["clear-highlight"].addEventListener("click", () => this.closeAgeBucket());
     container.addEventListener("keydown", event => {
       if (event.key === "Escape" && this.ageSelection && !this.ui.dialog.open) {
@@ -91,13 +96,19 @@ class QueueExplorer {
       });
     }
     this.ui["map-reset"].addEventListener("click", () => this.map?.fitBounds([[32.3, -124.5], [42.1, -114.1]]));
+    this.ui.snapshot.addEventListener("change", () => this.loadSnapshot(Number(this.ui.snapshot.value)));
   }
 
   async start() {
     try {
       this.index = validateQueueIndex(await getJson(`${this.base}index.json`));
+      this.index.snapshots.forEach((entry, index) => {
+        const suffix = index === this.index.snapshots.length - 1 ? " · Latest" : "";
+        this.ui.snapshot.add(new Option(`${observationTime(entry.collectedAt)}${suffix}`, index));
+      });
       await this.loadSnapshot(this.index.snapshots.length - 1);
       this.initMap();
+      this.loadHistory();
     } catch (error) {
       this.ui.edition.textContent = "Queue reports are unavailable. Please use the CAISO source reports linked below or try again later.";
       const link = element("a", "Open CAISO queue reports ↗");
@@ -107,19 +118,43 @@ class QueueExplorer {
     }
   }
 
+  readObservation(index) {
+    if (!this.observations.has(index)) {
+      const entry = this.index.snapshots[index];
+      const request = getJson(this.base + entry.file).then(data => {
+        const snapshot = validateQueueSnapshot(data);
+        if (snapshot.id !== entry.id) throw new Error("Snapshot identity mismatch");
+        return snapshot;
+      }).catch(error => { this.observations.delete(index); throw error; });
+      this.observations.set(index, request);
+    }
+    return this.observations.get(index);
+  }
+
   async loadSnapshot(index) {
     const generation = ++this.generation;
+    this.ui.snapshot.disabled = true;
     this.ui.edition.textContent = "Loading saved observation…";
     try {
-      const entry = this.index.snapshots[index];
-      const current = validateQueueSnapshot(await getJson(this.base + entry.file));
-      if (current.id !== entry.id) throw new Error("Snapshot identity mismatch");
+      const current = await this.readObservation(index);
+      let previous = null;
+      let comparisonUnavailable = false;
+      if (index > 0) {
+        try {
+          previous = await this.readObservation(index - 1);
+        } catch (error) {
+          comparisonUnavailable = true;
+          console.error("Queue comparison unavailable", error);
+        }
+      }
       if (generation !== this.generation) return;
       this.snapshot = current;
       this.sources = current.sources;
+      this.snapshotIndex = index;
+      this.ui.snapshot.value = index;
       this.ui.content.hidden = false;
       const checked = new Date(this.index.checkedAt).toLocaleDateString("en-US", {timeZone: "America/Los_Angeles"});
-      this.ui.edition.textContent = `Older queue: ${this.sources.find(s => s.id === "legacy").reportDate} · Cluster 15: ${this.sources.find(s => s.id === "cluster15").reportDate} · Last source check: ${checked} Pacific`;
+      this.ui.edition.textContent = `Viewing ${observationTime(current.collectedAt)}${index === this.index.snapshots.length - 1 ? " (latest observation)" : " (historical observation)"}. Older queue: ${this.sources.find(s => s.id === "legacy").reportDate} · Cluster 15: ${this.sources.find(s => s.id === "cluster15").reportDate} · Last source check: ${checked} Pacific`;
       for (const [key, getValue] of [["technology", technology], ["county", p => countyLabel(p.county)], ["state", p => p.state]]) {
         const selected = this.ui[key].value;
         const first = this.ui[key].options[0];
@@ -130,11 +165,18 @@ class QueueExplorer {
       this.matchLocations();
       this.render();
       this.renderSources();
+      this.renderChanges(previous, comparisonUnavailable);
+      this.renderHistorySelection();
     } catch (error) {
       if (generation !== this.generation) return;
-      this.ui.edition.textContent = "The latest queue observation could not be loaded. Reload the page to try again or use the source reports below.";
+      if (this.snapshot) this.ui.snapshot.value = this.snapshotIndex;
+      this.ui.edition.textContent = this.snapshot
+        ? `Could not load that observation. Still viewing ${observationTime(this.snapshot.collectedAt)}. Choose an observation to retry.`
+        : "The queue observation could not be loaded. Reload the page to try again or use the CAISO reports.";
       this.ui.content.hidden = !this.snapshot;
       console.error(error);
+    } finally {
+      if (generation === this.generation) this.ui.snapshot.disabled = false;
     }
   }
 
@@ -432,6 +474,122 @@ class QueueExplorer {
     const link = element("a", "Download this source workbook ↗"); link.href = this.base + source.file; content.append(link);
     this.ui.dialog.scrollTop = 0;
     this.ui.dialog.showModal();
+  }
+
+  renderChanges(previous, unavailable) {
+    this.ui.changes.replaceChildren();
+    this.ui["history-changes"].open = false;
+    const changes = unavailable ? null : compareQueues(previous, this.snapshot);
+    this.ui["changes-summary"].textContent = unavailable ? "Comparison unavailable"
+      : changes === null ? "First saved observation · baseline"
+      : `${changes.length} ${changes.length === 1 ? "project changed" : "projects changed"} since the previous observation`;
+    this.ui["change-note"].textContent = unavailable
+      ? "The preceding observation could not be loaded. The selected observation is still available above."
+      : changes === null ? "This is our first saved observation. We have no earlier report to compare."
+      : `Compared with ${observationTime(previous.collectedAt)}. Requested online dates are proposals, not commitments.`;
+    for (const change of changes ?? []) {
+      const article = element("article");
+      article.append(element("h3", `${change.name} · Queue ${change.id}`));
+      if (change.kind !== "updated") {
+        article.append(element("p", change.kind === "appeared" ? "Newly present in this report; application date may be earlier." : "Absent from this report; outcome unconfirmed."));
+      } else {
+        const list = element("ul");
+        const format = (value, key) => Array.isArray(value)
+          ? value.map(c => `${c.fuel}: ${c.capacityMw === null ? "MW not reported" : `${number.format(c.capacityMw)} MW`}`).join("; ") || "Not reported"
+          : key === "netMw" && value !== null ? `${number.format(value)} MW` : label(value);
+        change.fields.forEach(field => list.append(element("li", `${CHANGE_FIELDS[field.key]}: ${format(field.before, field.key)} → ${format(field.after, field.key)}`)));
+        article.append(list);
+      }
+      this.ui.changes.append(article);
+    }
+  }
+
+  async loadHistory() {
+    const observations = await Promise.all(this.index.snapshots.map(async (entry, index) => {
+      try { return {...entry, index, snapshot: await this.readObservation(index)}; }
+      catch (error) {
+        console.error("Queue history observation unavailable", error);
+        return {...entry, index, snapshot: null};
+      }
+    }));
+    const weeks = queueHistoryWeeks(observations);
+    const maximum = Math.max(1, ...weeks.map(week => week.snapshot?.projects.length ?? 0));
+    // Round the count axis to readable steps, leaving space above the tallest stack.
+    const magnitude = 10 ** Math.floor(Math.log10(maximum / 5));
+    const tickStep = Math.max(1, [1, 2, 5, 10].find(step => step * magnitude >= maximum / 5) * magnitude);
+    const axisMaximum = Math.ceil(maximum / tickStep) * tickStep;
+    const plotHeightPx = 240;
+    this.ui["history-chart"].replaceChildren();
+    this.historyButtons.clear();
+    const axis = element("div", undefined, "queue-history-axis");
+    axis.setAttribute("aria-hidden", "true");
+    const viewport = element("div", undefined, "queue-history-viewport");
+    const plot = element("div", undefined, "queue-history-plot");
+    plot.style.minWidth = `${weeks.length * 112}px`;
+    const grid = element("div", undefined, "queue-history-grid");
+    grid.setAttribute("aria-hidden", "true");
+    for (let count = 0; count <= axisMaximum; count += tickStep) {
+      const tick = element("span", number.format(count));
+      tick.style.top = `${32 + plotHeightPx * (1 - count / axisMaximum)}px`;
+      axis.append(tick);
+      const line = element("span");
+      line.style.bottom = `${count / axisMaximum * 100}%`;
+      grid.append(line);
+    }
+    plot.append(grid);
+    viewport.append(plot);
+    this.ui["history-chart"].append(axis, viewport);
+    const clearHover = () => { this.ui["history-hover"].textContent = ""; };
+    clearHover();
+    const weekLabel = date => new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {timeZone: "UTC", month: "short", day: "numeric", year: "numeric"});
+    for (const week of weeks) {
+      const bar = element(week.counts ? "button" : "div", undefined, "queue-week");
+      const track = element("span", undefined, "queue-week-track");
+      if (week.counts) {
+        bar.type = "button";
+        const total = week.snapshot.projects.length;
+        const stack = element("span", undefined, "queue-week-stack");
+        stack.setAttribute("aria-hidden", "true");
+        stack.style.height = `${plotHeightPx * total / axisMaximum}px`;
+        stack.append(element("span", number.format(total), "queue-week-total"));
+        for (const status of ["ACTIVE", "COMPLETED", "WITHDRAWN"]) {
+          const segment = element("span", undefined, `queue-week-segment queue-status-${status.toLowerCase()}`);
+          segment.style.height = `${total ? week.counts[status] / total * 100 : 0}%`;
+          const statusLabel = status[0] + status.slice(1).toLowerCase();
+          const count = week.counts[status];
+          // Keep thin future segments to scale; their counts remain in the hover readout.
+          if (plotHeightPx * count / axisMaximum >= 18) {
+            segment.append(element("span", number.format(count), "queue-week-count"));
+          }
+          const hoverText = `${statusLabel} · ${number.format(count)} ${count === 1 ? "project" : "projects"} · ${number.format(total ? count / total * 100 : 0)}% of ${number.format(total)} · Week of ${weekLabel(week.weekStart)}`;
+          segment.addEventListener("pointerenter", () => { this.ui["history-hover"].textContent = hoverText; });
+          segment.addEventListener("pointerleave", clearHover);
+          stack.append(segment);
+        }
+        const description = `Week of ${weekLabel(week.weekStart)}. Observed ${observationTime(week.collectedAt)}. ${total} projects: ${week.counts.ACTIVE} active, ${week.counts.COMPLETED} completed, ${week.counts.WITHDRAWN} withdrawn. View observation.`;
+        bar.setAttribute("aria-label", description);
+        bar.addEventListener("click", () => this.loadSnapshot(week.index));
+        bar.addEventListener("focus", () => { this.ui["history-hover"].textContent = `Week of ${weekLabel(week.weekStart)} · ${number.format(week.counts.ACTIVE)} active · ${number.format(week.counts.COMPLETED)} completed · ${number.format(week.counts.WITHDRAWN)} withdrawn`; });
+        bar.addEventListener("blur", clearHover);
+        track.append(stack);
+        this.historyButtons.set(week.index, bar);
+      } else {
+        track.append(element("span", week.collectedAt ? "Observation unavailable" : "No saved observation", "queue-week-gap"));
+      }
+      bar.append(track, element("span", weekLabel(week.weekStart), "queue-week-label"));
+      plot.append(bar);
+    }
+    this.renderHistorySelection();
+  }
+
+  renderHistorySelection() {
+    this.historyButtons.forEach((button, index) => button.setAttribute("aria-pressed", String(index === this.snapshotIndex)));
+    if (!this.snapshot) return;
+    const counts = {ACTIVE: 0, COMPLETED: 0, WITHDRAWN: 0};
+    this.snapshot.projects.forEach(project => { counts[project.status]++; });
+    const total = this.snapshot.projects.length;
+    const values = Object.entries(counts).map(([status, count]) => `${number.format(count)} ${status.toLowerCase()} (${number.format(total ? count / total * 100 : 0)}%)`);
+    this.ui["history-selection"].textContent = `Viewing ${observationTime(this.snapshot.collectedAt)}: ${values.join(" · ")}.`;
   }
 
   renderSources() {

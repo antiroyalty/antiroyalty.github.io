@@ -128,7 +128,9 @@ The OASIS fixture contains two public intervals downloaded on September 18, 2026
 
 `/queue/` combines two CAISO workbooks: [Cluster 14 and earlier](https://www.caiso.com/documents/publicqueuereport.xlsx) and [Cluster 15](https://www.caiso.com/documents/cluster-15-interconnection-requests.xlsx). The initial editions have a September 18, 2026 run date and a July 16, 2026 publication date, respectively. They contain 2,448 records, including 349 active projects. Report dates are displayed separately. They are not live market data.
 
-The default view shows active projects. Filters, rankings, summaries, charts, and project records share the same selection. Completed and withdrawn records are available through the status filter. Each project links to a retained source workbook and identifies its worksheet and row.
+The default view shows active projects. Filters, rankings, summaries, and the map share the same selection. Completed and withdrawn records are available through the status filter. Each project links to a retained source workbook and identifies its worksheet and row.
+
+The observation selector restores a saved report across the explorer. The weekly history chart counts all reported projects by status, independent of filters. Each Pacific week starts Monday and uses its latest saved observation; observations within a week are never summed. Weeks between observations remain gaps. Failed downloads are labeled unavailable. Selecting a bar loads that observation in place without moving focus or scrolling. Existing filters remain applied. Segment hover shows category counts and shares in a fixed readout beneath the chart, with a contrasting light-and-dark outline on the segment. An expandable comparison lists changes since the immediately preceding observation. Collection times and source report dates are distinct; changes are observations, not inferred event dates. The first observation has no earlier comparison.
 
 Domain rules:
 

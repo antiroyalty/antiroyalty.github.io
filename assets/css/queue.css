@@ -15,6 +15,44 @@
 .queue-filters input, .queue-filters select { width: 100%; min-width: 0; padding-inline: 10px; }
 .queue-filters input, .queue-filters select, .queue-filters button { height: 44px; box-sizing: border-box; }
 .queue-filters button { font-size: .85rem; white-space: nowrap; }
+.queue-observation-controls { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: end; gap: 12px 24px; margin-bottom: 8px; }
+.queue-observation-controls label { flex: 0 1 340px; max-width: 100%; }
+.queue-observation-controls .queue-note { flex: 1 1 240px; margin: 0; }
+.queue-history-changes { padding: 18px 0; border-top: 1px solid var(--border); }
+.queue-history-changes > summary { cursor: pointer; color: var(--blue-deep); }
+.queue-history-list { max-height: 400px; overflow-y: auto; overflow-wrap: anywhere; }
+.queue-history-list article { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.queue-history-list h3 { font-size: 1rem; margin: 0 0 8px; }
+.queue-history-list ul { margin: 0; padding-left: 20px; font-size: .9rem; }
+.queue-history { margin: 16px 0 40px; }
+.queue-history-legend { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 24px 0 16px; font: .7rem var(--mono-font); color: var(--muted); }
+.queue-history-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.queue-history-legend i { display: inline-block; width: 12px; height: 12px; }
+.queue-status-active { background: #497c8a; }
+.queue-status-completed { background: #829376; }
+.queue-status-withdrawn { background: #b76a4a; }
+.queue-history-axis-title { margin: 0 0 0 52px; font: .65rem var(--mono-font); color: var(--muted); }
+.queue-history-chart { display: grid; grid-template-columns: 52px minmax(0, 1fr); }
+.queue-history-axis { position: relative; font: .65rem var(--mono-font); color: var(--muted); }
+.queue-history-axis span { position: absolute; right: 10px; transform: translateY(-50%); }
+.queue-history-viewport { overflow-x: auto; padding-bottom: 8px; }
+.queue-history-plot { position: relative; display: flex; padding-top: 32px; }
+.queue-history-grid { position: absolute; top: 32px; left: 0; right: 0; height: 240px; border-left: 1px solid var(--border); pointer-events: none; }
+.queue-history-grid span { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); opacity: .5; }
+.queue-page .queue-week { position: relative; display: flex; flex: 1 0 112px; flex-direction: column; padding: 0 14px; box-sizing: border-box; background: transparent; border: 0; border-radius: 0; min-width: 0; text-align: center; color: #303633; }
+.queue-page .queue-week:hover { background: transparent; }
+.queue-page .queue-week:focus-visible { outline: 2px solid #303633; outline-offset: -2px; }
+.queue-week-track { height: 240px; display: flex; flex-direction: column; justify-content: end; align-items: center; }
+.queue-week-total { position: absolute; bottom: 100%; left: 0; right: 0; margin-bottom: 8px; font: .75rem var(--mono-font); }
+.queue-week-stack { position: relative; display: flex; flex-direction: column-reverse; flex-shrink: 0; width: 100%; max-width: 150px; }
+.queue-week-segment { position: relative; display: block; min-height: 0; }
+.queue-week-count { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; color: #101310; font: 600 .7rem/1 var(--mono-font); font-variant-numeric: tabular-nums; }
+.queue-status-active .queue-week-count { color: #fff; }
+.queue-week-segment:hover { z-index: 1; outline: 1px solid #303633; box-shadow: inset 0 0 0 2px #fffaf1; }
+.queue-week-label { min-height: 42px; padding-top: 12px; font: .65rem/1.5 var(--mono-font); color: var(--muted); }
+.queue-week[aria-pressed="true"] .queue-week-label { color: #303633; font-weight: 700; text-decoration: underline; text-underline-offset: 6px; }
+.queue-history-readout { min-height: 3em; margin: 8px 0 12px; font: .75rem/1.5 var(--mono-font); color: #303633; }
+.queue-week-gap { color: var(--muted); font-size: .8rem; }
 .queue-summary { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--blue-deep); border-bottom: 1px solid var(--border); }
 .queue-summary article { padding: 24px 20px; border-right: 1px solid var(--border); }
 .queue-summary article:first-child { padding-left: 0; }

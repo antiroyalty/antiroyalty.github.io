@@ -145,6 +145,35 @@ export function compareQueues(previous, current) {
   return changes;
 }
 
+// Weeks begin on Monday in Pacific time. One observation represents a week;
+// counts are never added across observations of the same projects.
+export function queueHistoryWeeks(observations) {
+  const calendar = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit"});
+  const weeks = new Map();
+  for (const observation of observations) {
+    const parts = Object.fromEntries(calendar.formatToParts(new Date(observation.collectedAt)).map(p => [p.type, p.value]));
+    const date = new Date(`${parts.year}-${parts.month}-${parts.day}T00:00:00Z`);
+    date.setUTCDate(date.getUTCDate() - (date.getUTCDay() + 6) % 7);
+    const weekStart = date.toISOString().slice(0, 10);
+    const previous = weeks.get(weekStart);
+    if (previous && Date.parse(previous.collectedAt) > Date.parse(observation.collectedAt)) continue;
+    let counts = null;
+    if (observation.snapshot) {
+      counts = {ACTIVE: 0, COMPLETED: 0, WITHDRAWN: 0};
+      observation.snapshot.projects.forEach(project => { counts[project.status]++; });
+    }
+    weeks.set(weekStart, {...observation, weekStart, counts});
+  }
+  const dates = [...weeks.keys()].sort();
+  if (!dates.length) return [];
+  const result = [];
+  for (let time = Date.parse(dates[0]); time <= Date.parse(dates.at(-1)); time += 7 * DAY_MS) {
+    const weekStart = new Date(time).toISOString().slice(0, 10);
+    result.push(weeks.get(weekStart) ?? {weekStart, counts: null});
+  }
+  return result;
+}
+
 const owner = value => value.toUpperCase().replace(/[^A-Z]/g, "").replace("PGAE", "PGE");
 const county = value => value.toUpperCase().replace(/ COUNTY\b/g, "").trim();
 const station = value => value.toUpperCase().replace(/\b\d+(?:\.\d+)?\s*KV\b/g, "")
