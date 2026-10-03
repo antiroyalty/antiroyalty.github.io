@@ -5,173 +5,182 @@ date: 2026-09-10 12:00:00 -0700
 categories: notes
 ---
 
-There's a dissonance in how we talk and act about climate change and decarbonization: on the one hand, we say we needed it yesterday. On the other hand, we don't set up electrification to be a flywheel. Mass-adoption and incentivization has hardly taken off.
+There’s a dissonance in how we talk and act about climate change and decarbonization: on the one hand, we say we needed it yesterday. On the other hand, we don’t set up electrification to be a flywheel. We still make adopting the thing we want people to adopt surprisingly difficult.
 
-Starting with the obvious: we should have started acting on the climate change problem much earlier. Because now, the [IPCC pathways that limit warming to 1.5°C](https://www.ipcc.ch/report/ar6/syr/summary-for-policymakers/) require massive emissions reductions, *and actually removing carbon dioxide from the air*, like a carbon-sucking machine. Fundamentally, that's not so straight forward: we have _some_ ways to remove carbon, like forests and soil, and some very early engineered systems. But we don't have anything operating at the scale assumed in most climate models.
+Starting with the obvious: we should have started acting on climate change much earlier. The pathways assessed by the IPCC that limit warming to 1.5°C combine deep emissions reductions with *actually removing carbon dioxide from the air*. Some removal can come from forests and soils, and some from engineered systems, including the “carbon-sucking machines.” But scaling these methods comes with substantial feasibility and sustainability constraints. Having removal in a model doesn’t mean we’ve worked out how to deliver it. [IPCC assessment](https://www.ipcc.ch/report/ar6/wg3/chapter/summary-for-policymakers/)
 
-I don't want our plan to depend on a future machine arriving just in time to mop up decades of emissions. It seems risky to bet _the whole earth_ on the thing we don't even have now. To be more confident we'll actually achieve our results, we could instead emit less carbon now. The less we have in the air, the less we'll have to remove later, and the more likely we'll be to find a technology that could actually do it.
+I don’t want our plan to depend on a future machine arriving just in time to mop up decades of emissions. It seems risky to bet *the whole earth* on something we haven’t demonstrated at the scale we’d need. To be more confident we’ll actually achieve our results, we could instead emit less carbon now. The less we put into the air, the less we’ll have to remove later.
 
-On the other hand, the work to decarbonize has been, in my opinion, sluggish. We spend years discussing the optimal program, the perfect incentive, and the exact allocation of every cost. Cost, reliability, and equity are real constraints. They are not reasons to wait forever, though!
+Meanwhile, the work to decarbonize has been, in my opinion, sluggish. We spend years discussing the optimal program, the perfect incentive, and the exact allocation of every cost. Cost, reliability, and equity are real constraints. They are not reasons to wait forever, though!
 
 So what would it actually mean to electrify California fast?
 
-My short answer is: replace the largest sources of fossil-fuel use first, stop treating every electric project as a unique engineering problem, make new loads flexible by default, and build clean supply and wires at the same time.
+I think a lot of it comes down to making ordinary projects ordinary. A household replacing a water heater shouldn’t have to work through a small research project to figure out whether it can buy an electric one. And the utility shouldn’t discover, one customer application at a time, that the neighborhood is going to need more electricity.
 
-## Electrification is not the final goal
+## What are we trying to make faster?
 
-The goal is not to install the largest possible number of electric appliances. The goal is to stop burning fossil fuels while keeping energy reliable and affordable. (Because of that, the efficiency movement had been effective at accomplishing that goal for a long time, but it's no longer good enough!)
+The goal is to stop burning fossil fuels while keeping energy reliable and affordable. Counting electric appliances gives us some information about that, but it doesn’t tell us how much fossil-fuel use we’ve displaced.
 
-Electrification is still one of the most useful ways to get there. Electric technologies often need much less energy to perform the same task. For instance: a typical electric vehicle converts about 87 to 91 percent of its stored energy into movement, compared with about 30 percent for a gasoline vehicle simply because of thermodynamic limits. ([U.S. Department of Energy](https://www.energy.gov/cmei/vehicles/articles/fotw-1360-sept-16-2024-typical-ev-87-91-efficient-compared-30-conventional)) A heat pump moves heat instead of producing it through combustion, so can use much less energy than a furnace or electric-resistance heater. ([U.S. Department of Energy](https://www.energy.gov/energysaver/heat-pump-systems))
+Electrification is useful partly because electric equipment can do the same job with much less energy. The Department of Energy estimates a typical EV’s efficiency at 87–91%, including energy recovered through regenerative braking, compared with about 30% for a conventional gasoline vehicle. A heat pump moves heat rather than generating it by burning fuel, which is why it can deliver more heat than the electrical energy it consumes. [DOE vehicle comparison](https://www.energy.gov/cmei/vehicles/articles/fotw-1360-sept-16-2024-typical-ev-87-91-efficient-compared-30-conventional), [heat-pump explanation](https://www.energy.gov/energysaver/heat-pump-systems)
 
-Electric equipment also gets cleaner as the grid gets cleaner. A gas furnace installed today will burn gas for the rest of its life. A heat pump installed today can have lower emissions each year as more clean electricity comes online. This was the promise of electrification, but despite over a decade of work, we still haven't gotten there. 
+There’s also the promise that the equipment gets cleaner as the grid gets cleaner. A gas furnace installed today will keep burning gas for the rest of its life. A heat pump can have lower operating emissions as the electricity supplying it gets cleaner, without the household replacing it again.
 
-Even if we were further along, "wlectrify everything" isn't really a complete climate strategy. Beyond that California would also need fewer vehicle miles, better transit and land use, industrial process changes, methane reductions, energy efficiency, and carbon removal for emissions that are genuinely difficult to get rid of. Transportation is still California's largest source of greenhouse gas emissions, according to the state's [2023 emissions inventory](https://ww2.arb.ca.gov/ghg-inventory-data).
+Even then, I’d want to know how much fossil-fuel use we’re actually displacing. We could get more EVs on the road while people also drive more, for example. Or better transit could reduce gasoline consumption without adding any electric cars to our count. So I’d measure progress in fuel displaced and emissions avoided. The number of devices installed only tells us part of that.
 
-I suggest a new metric: measure speed in fossil fuel displaced and emissions avoided, not in electrified devices installed.
+## Start before the water heater breaks
 
-## Use equipment replacement as the deadline
+The end of an appliance’s life is an obvious opportunity. The owner already needs to spend money, and something is getting installed either way.
 
-The fastest practical time to replace a furnace, water heater, or car is often when the existing one reaches the end of its life. That is when the owner is already prepared to spend money and the project already has to happen.
+Unfortunately, it’s also a terrible time to start planning.
 
-The problem is that equipment failures create terrible planning conditions. If a gas water heater breaks on Friday, most people will buy whatever can be installed by Monday. They will not wait for a panel assessment, permit, rebate application, and electrical work.
+If a gas water heater breaks on Friday, most people will buy whatever can be installed by Monday. They’re not going to wait for a panel assessment, electrical work, a permit, and a rebate application to work their way through four different processes. They need hot water.
 
-Fast electrification therefore starts before the equipment fails. Buildings can be made electric-ready with panel space, conduit, suitable circuits, and a plan for managing load. Contractors can offer standard replacement packages, meanwhile permits and incentives have to use basic pre-approved designs. And, some homes might be able to avoid a service upgrade by using load-management controls instead of assuming every new appliance must run at full power at the same time.
+We’ve effectively arranged things so that the easy choice is to buy another gas appliance. Then we ask the customer to make the harder choice because it’s better for the climate.
 
-This is less exciting than announcing a new technology target, because ultimately we don't need any new tech. But this is also a benefit -- we don't have to wait to set this into motion: it's feasible *today*.
+I’d rather make the electric replacement easy. Some of the work has to happen before the failure: checking electrical capacity, identifying suitable equipment, preparing circuits where they’re needed, and knowing what the installation will cost. Contractors could offer standard replacement packages, with permits and incentives designed around common configurations.
 
-## Make energization routine
+Some houses might also avoid a service upgrade by managing their loads. We don’t necessarily need every appliance to run at full power simultaneously. More on that in a moment.
 
-California uses the word *energization* for connecting a new building or a larger electric load to utility service. This is different from generation interconnection, which connects solar, batteries, or power plants to the grid.
+For these ordinary replacements, we don’t have to wait for a new technology. We could start preparing houses and standardizing installations now. That seems like a much better use of the time before someone’s furnace or water heater fails.
 
-Some energization projects still take months or years. California passed SB 410 and AB 50 to address that problem, and the CPUC has now established target timelines and utility reporting requirements. ([CPUC energization proceeding](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/infrastructure/energization)) publishing timelines is useful because they lets us see where projects stop moving. Then, the actual work can start: reporting a delay isn't the same as unblocking it.
+## Make connecting the equipment routine
 
-The application process should start with structured data, automatic checks for missing information, and a visible list of project milestones. An LLM could help normalize older documents or route unusual requests. Ideally, a more durable solution is a standard application that does not need an LLM to interpret it in the first place, but that doesn't fit as well with the mish-mash world of old paper trails we live in. At least the LLM can accelerate part of it.
+California uses the word *energization* for connecting a new building or a larger electric load to utility service. That’s different from generation interconnection, where something like a solar installation or power plant connects to supply electricity.
 
-But it has its limits. An LLM can tell us that an application is missing a parcel number. What it can't do, though, is manufacture a transformer, design a feeder, or send a crew to the site.
+California has already tried to address energization delays through SB 410 and AB 50. The CPUC adopted target timelines, reporting requirements, and a process for customers to report delays. That gives us a way to see where projects stop moving. [CPUC energization proceeding](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/infrastructure/energization)
 
-Ideally, we would streamline as much of this as possible, aka create a "Happy Path" that's easy for consumers to adopt. Utilities can separate routine requests from projects that need detailed engineering. A standard heat pump, managed EV charger, or small service change should have a standard path. Engineers should spend their time on cases that are actually unusual. 
+Then the actual work has to start. Reporting a delay isn’t the same as unblocking it.
 
-Imagined like this, it seems clear that this would accelerate electrification and decarbonization - we just haven't been properly serious about it so far.
+The application process seems like an obvious place to improve things: structured data, automatic checks for missing information, and milestones that both the customer and utility can see. An LLM could help normalize older documents or route unusual requests. Ideally, we’d have a standard application that doesn’t need an LLM to interpret it in the first place, but that doesn’t fit as well with the mish-mash world of old paper trails we live in. At least the LLM can accelerate part of it.
 
-## Build distribution capacity before every customer asks for it
+The purpose would be to get a complete application to the right person with enough information to make a decision. If the next step requires a transformer or a construction crew, we should be able to see that too, including who’s responsible and what’s holding it up.
 
-The current process is often reactive. A customer requests service, the utility studies the request, and only then does it discover that a transformer, feeder, or substation needs an upgrade.
+What I’d like is a “Happy Path” for common projects. If a heat pump or managed EV charger fits a configuration the utility has already evaluated, there should be a predictable way to approve it. Engineers should spend their time on the cases where the equipment or local grid conditions actually require investigation.
 
-That approach works when load grows slowly. It works much less well when an entire neighborhood is adding electric cars, heat pumps, and water heaters.
+That would mean doing more work upfront to define those configurations and identify their limits. But we’d get to reuse that work. Making every applicant go through the same investigation again seems like an expensive way to avoid standardizing the process.
 
-California already forecasts where electric load is likely to grow. Utilities can combine those forecasts with building data, vehicle adoption, permits, and the age and loading of existing equipment. They should use that information to order equipment and upgrade constrained areas before every individual customer enters a queue.
+## Build capacity before everyone asks for it
 
-This requires regulators to let utilities invest ahead of confirmed requests, while still checking that the investment is useful. It also requires utilities to publish enough information for customers, cities, and developers to plan around real grid capacity.
+The larger problem is what happens when the application is complete and the physical capacity still isn’t there.
 
-I think this is a larger bottleneck than application paperwork. Better software can remove wasted time, which matters. But if the physical capacity is not there, a perfect application only reaches "no" faster...
+A customer requests service, the utility studies it, and the project turns out to require a transformer, feeder, or substation upgrade. Now there’s another process for design, funding, permits, equipment, and construction. Better application software gets the customer to this point faster, but they still can’t connect.
 
-## Why is building distribution capacity reactive? A side note
+My initial reaction is: we already know we want people to electrify. Why are we waiting for them to ask individually?
 
-In my opinion, it's three factors stacked together: a legacy planning model, regulatory incentives, and real engineering uncertainty. But the deepest issue is who bears the risk of a forecast being wrong.
+I guess it’s a bit uncharitable to call the whole process reactive. Utilities already forecast load and use meter data and geographic models. Knowing that California will adopt more EVs, though, doesn’t tell them which neighborhood will adopt first, which transformer will be overloaded, or what time everyone will charge. A proposed development might never get built. A large customer might arrive much sooner than expected.
 
-Historically, electricity demand grew slowly. Utilities could watch demand rise on a circuit, wait for a firm customer request, and then justify an upgrade. Regulators also wanted to avoid making every ratepayer pay for transformers and substations that might never be used.
+That explains why the forecast is difficult. It doesn’t make waiting for a firm request a sufficient plan.
 
-That approach makes a particular tradeoff:
-- Build early, and ratepayers risk paying for unused capacity.
-- Wait for certainty, and customers bear the delay.
+The question underneath this is who bears the risk of being wrong. Build early, and ratepayers might pay for capacity that sits unused. Wait, and customers bear the delay. If that delay leads someone to buy another gas furnace or prevents a fleet from switching to electric vehicles, there’s a cost to that decision too. It just doesn’t appear as an unused transformer on the utility’s books.
 
-The old system favored certainty. That was reasonable when demand changed gradually. It works much less well when a fleet-charging depot can request several megawatts and be ready within months, while the required grid upgrade may take years. CPUC staff has explicitly said that the prior practice is “no longer sufficient” for these new loads. [CPUC staff proposal, 2024](https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M529/K078/529078850.PDF)
+I think we need to be much more willing to build ahead of credible demand, and explicit about how we decide which forecasts are credible enough.
 
-There are also genuine engineering limits. Distribution problems are extremely local. Knowing that California will adopt more EVs doesn’t tell a utility:
-- which neighborhood will adopt them first;
-- which transformer will become overloaded;
-- what hour the vehicles will charge;
-- whether a proposed development will actually be built; or
-- whether customers will manage their demand instead of requiring an upgrade
+California is moving in that direction. A 2024 CPUC decision called for longer-term distribution planning, better use of local development and energization data, and information about temporary “bridging solutions” where customers could connect before permanent upgrades are complete. Those can include flexible service or limits on when and how much power a customer draws. [CPUC distribution-planning decision](https://www.cpuc.ca.gov/news-and-updates/all-news/cpuc-enhances-utility-distribution-planning-to-better-meet-growth-in-customer-demand)
 
-Utilities therefore need forecasts at the circuit and transformer level, not just statewide projections. They also have to check voltage, equipment temperature, protection settings, and the capacity of upstream feeders and substations.
+The planning horizon matters a lot. If a substation takes seven years to plan and construct, a highly accurate three-year forecast still arrives four years too late. By the time we can confidently point to the demand, we’ve already missed the chance to be ready for it.
 
-I guess it's a bit uncharitable to say that the process is reactive. It's not -- utilities already forecast load and use meter data and geographic models. The reactive part often appears later: a firm service request reveals that the forecast didn’t reserve enough capacity at that exact location, or the request arrives much sooner than expected. The upgrade then enters a separate process for design, funding, permits, equipment, and construction. Effectively, electrification makes every weakness in that arrangement more visible.
-
-California is now trying to allow a utility to start planning (and sometimes funding or building) an upgrade before a completed customer application proves the electricity need (projects called ["pending loads"](https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M544/K154/544154869.PDF)). A 2024 CPUC decision requires longer-term planning, better use of local development and energization data, and temporary “bridging solutions” when permanent upgrades won’t arrive in time. [CPUC summary, Oct 2024](https://www.cpuc.ca.gov/news-and-updates/all-news/cpuc-enhances-utility-distribution-planning-to-better-meet-growth-in-customer-demand). Longer term planning helps because if a substation takes seven years to plan and construct, a highly accurate three-year forecast is almost useless. By the time the need appears in the forecast, the utility is already four years late.
+I’d want the forecasts tied to actual decisions: which equipment gets ordered, which projects enter design, and which locations need more investigation. Otherwise, we can keep improving the forecast while the construction schedule stays exactly where it was.
 
 ## Make flexible demand the default
 
-Electrification adds a lot of energy demand, but it does not have to add the same amount of peak demand.
+Electrification adds electricity consumption. How much it adds to the peak depends partly on when we use it.
 
-Many new electric loads can move in time. An EV usually needs to be charged by morning, not the minute it arrives home. A heat-pump water heater can warm water before the evening peak. A building can pre-heat or pre-cool within a comfortable range. Batteries can charge when clean power is abundant and discharge later.
+An EV might need to be charged by morning, without needing to charge immediately when it gets home. A water heater can do some of its heating before the evening peak. A building can pre-heat or pre-cool within a comfortable range. We should be using that flexibility as part of the plan for electrification.
 
-California has set a goal of shifting 7,000 MW of demand by 2030. ([California Energy Commission](https://www.energy.ca.gov/news/2023-05/california-adopts-goal-make-more-electricity-available-through-smarter-use)) That is not a small side program. Flexible demand can let the same grid serve more electric equipment while avoiding some of the most expensive peak-driven upgrades. Right now, configuring this demand is done appliance-by-appliance on a case-by-case basis, and only if your battery / EV app allows it. If that wasn't limiting enough, the only controls we have right now are fixed schedules rather than dynamic shifting based on demand and price. Part of the reason for this is it's hard to coordinate. We could either have the central third party coordinate it, or perhaps we could use other signals to infer the load on the line.
+California has a goal of shifting 7,000 MW of demand by 2030. That’s substantial enough to affect how we plan the grid and design the equipment connecting to it. [California Energy Commission](https://www.energy.ca.gov/news/2023-05/california-adopts-goal-make-more-electricity-available-through-smarter-use)
 
-Could appliances infer grid conditions from the electricity already reaching the house? To some degree. A controller can measure the home’s current and keep its combined loads within the panel’s limit. Voltage and frequency can also reveal some unusual local or system conditions. But neither reliably tells the appliance how heavily loaded the neighborhood grid is—or what electricity currently costs. For ordinary load shifting, the utility still needs to send an explicit price or capacity signal. Local electrical measurements can provide the guardrails, but they can’t replace that signal.
+But I don’t think we’ll get there by expecting everyone to become interested in demand response. Someone buying an EV mostly wants their car charged. They shouldn’t need to compare utility programs, configure several apps, and keep checking whether their schedules still make sense.
 
-At the scale of one house, flexible demand can also help avoid some panel and service upgrades. Electrical service is sized around the maximum load that might run at one time, even though a house spends most of the day well below that maximum. A listed power-control system can measure the current entering the house and adjust flexible equipment before the service reaches its limit. PG&E currently has something called [Rule 2](https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_RULES_2.pdf) which recognizes that idea. Under this rule, loads controlled by a UL 3141-certified system do not count toward *connected load* (the equipment that could otherwise run at the same time) when the system enforces an import limit. That gives you an interesting "out" for electrifying within the current constraints - you can electrify without necessarily upsizing your electrical service. (The appliances still require correctly sized circuits and breakers).
+There are already tools for sending useful signals. The CEC’s MIDAS system provides access to time-varying rates, emissions signals, and Flex Alerts. I’d want those signals connected to the equipment so a customer can specify what they need—when the car must be ready, for example—and the system can handle the timing. [CEC MIDAS](https://www.energy.ca.gov/proceedings/market-informed-demand-automation-server-midas)
 
-Imagine a 100A house with its power control system set to keep managed demand <= 80A. The house is using 45A, so the controller lets the car charge at 32A (77A total draw). Then the oven and heat pump turn on, adding another 25A. Letting everything continue would push demand to 102A. Instead, the controller can reduce the car to 10A and thus the total stays at 80A. When the oven turns off, the car automatically starts to charge faster again. The main breaker still provides the final protection, but it doesn't have to act. (Breaker is meant to be an emergency stopgap / shutoff). Notice the difference from a fixed schedule? The controller enforces the real electrical limit, even when the household takes on some unexpected load.
+There’s also a more local opportunity: managing how much power the house draws at once.
 
-Ideally, the controls should be automatic, understandable, and easy to override. Customers should also share in the value they provide. A program that makes people uncomfortable or hands complete control to a utility will not last. Neither will a system that leaves the utility saddled with aging infrastructure, spiky demand, and limited resources.
+For a simplified example, imagine a house with a properly designed control system enforcing an 80A import limit. The other loads are using 45A, so the car can charge at 32A, bringing the total to 77A. Then the oven and heat pump add another 25A. Instead of letting the total reach 102A, the controller reduces the car’s charging to 10A. The house stays at 80A. When the other loads fall, the car can charge faster again.
 
-## Build clean supply and transmission in parallel
+Notice what changed: the car gets its energy over a different period, and the house doesn’t need to draw the maximum power of every appliance simultaneously.
 
-Demand flexibility reduces the amount of new infrastructure California needs. That helps, it's still time to build.
+The circuits and protective equipment still have to be correctly designed. The main breaker remains there for protection; we shouldn’t be using it as the thing that routinely manages demand.
 
-The grid still has to serve more transit, buildings, industry, manufacturing, and data centers while replacing fossil generation. California can't electrify first and build the supply later. It also can't build remote renewable gen without the transmission that we also need to actually deliver it.
+PG&E’s Rule 2 recognizes certain controlled loads under specified conditions, including a UL 3141-certified power-control system with independently verified import-limit functionality. That gives a concrete route for considering managed equipment differently from equipment that can all run at once. [PG&E Rule 2, section H.7](https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_RULES_2.pdf)
+
+This is the sort of option I’d want checked *before* telling a household it needs a larger service.
+
+Managing the house’s limit and responding to the wider grid are separate jobs, though. Measuring the current entering the house tells a controller when to slow down the car. It doesn’t tell the controller how heavily loaded the neighborhood is, or what electricity costs at that moment. For that, we need communication with the utility or another coordinating service.
+
+I want the controls to be automatic and understandable, with customers able to specify what they need and share in the savings. If flexible operation reduces the infrastructure we have to build, some of that value should make electrification cheaper for the people providing the flexibility.
+
+## Build the supply and wires at the same time
+
+California still needs clean generation, storage, transmission, and distribution capacity as it replaces fossil-fuel use and serves additional demand. Moving consumption around helps us use that infrastructure better. It doesn’t remove the need to build it.
+
+We can’t finish electrifying and then get around to supplying the electricity. We also can’t build remote generation and assume the power will somehow reach the places that need it.
 
 <figure class="post-banner">
   <img src="{{ '/assets/img/electrification/caiso-20-year-resource-transmission-plan.png' | relative_url }}" alt="CAISO map of California showing areas for new solar, wind, geothermal, and storage resources, with arrows for the additional transmission needed to reach major load centers">
   <figcaption>CAISO's 2022 twenty-year outlook shows how much new generation and storage California expected to connect, and where additional transmission would be needed. The exact forecast has changed since then, but the map still shows the basic problem: many new resources are far from the places that use the most electricity. (<a href="https://www.caiso.com/documents/20yrtransmissionoutlookmap.pdf">CAISO</a>)</figcaption>
 </figure>
 
-We're starting to see the scale: CAISO's approved 2025–2026 transmission plan includes 38 projects with an estimated cost of $6.7 billion. More than half of the projects and cost are driven by load growth. The plan is based on a forecast of 15 GW of additional load by 2035 and 20 GW by 2040. ([CAISO](https://www.caiso.com/about/news/news-releases/iso-board-of-governors-approves-2025-2026-transmission-plan))
-This will be really exciting if all the projects follow through: California still has to permit them, finance them, buy equipment, settle where it goes, and construct it. If any one of those steps waits for all the others to finish, the schedule expands by years.
+CAISO’s approved 2025–2026 transmission plan includes 38 projects with an estimated cost of $6.7 billion. More than half the projects, and more than half the cost, are driven by forecasted load growth. [CAISO transmission plan](https://www.caiso.com/about/news/news-releases/iso-board-of-governors-approves-2025-2026-transmission-plan)
 
-## Use better models to approve ordinary projects faster?
+I’m excited to see that scale of planning. What I’d want to follow next is the construction: what has been ordered, what permits remain, and when the capacity will actually be available.
 
-This is the part where I think better computating could help.
+There are dependencies between those steps, but we should be looking for work that can happen in parallel. Waiting to settle every uncertainty before starting the next piece is how a project that we need urgently ends up years away.
 
-Utilities currently use power-flow studies to determine whether new load will overload equipment or cause voltage problems. The studies are pretty detailed, and they're important for difficult cases, but they can be pretty slow if every request begins from zero.
+The demand forecast, the procurement schedule, and the customer’s expected connection date need to describe a project that can actually happen. I’d like to see us judge the planning process by whether those dates line up.
 
-California already has a version of this! It is called *Integration Capacity Analysis*, or ICA, and it isn't an AI model. The utility starts with an electrical model of a distribution feeder, adds load at a modeled location, and keeps increasing it until the added load causes a thermal, voltage, protection, or operating violation. California's standard method produces results for 576 representative month-hour conditions instead of relying on one peak snapshot.
+## Use better models to approve ordinary projects faster
 
-The three large investor-owned utilities publish these numbers. [PG&E's Grid Resource Integration Portal](https://www.pge.com/en/about/doing-business-with-pge/interconnections/distributed-resource-planning-data-and-maps.html) includes load and generation ICA values for individual line sections. [SCE's Distribution Resources Plan External Portal](https://drpep.sce.com/drpep/?page=Page) shows available load capacity at the circuit, distribution-bank, and substation levels. [SDG&E's ICA map](https://marketplace.sdge.com/more-information/customer-generation/enhanced-integration-capacity-analysis-ica) reports load integration capacity for line segments. These portals are maps of model results, not the models themselves.
+This is where I think better computing could help.
 
-They're also screening tools, not promises that a project can connect. A [2026 CPUC review](https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M604/K537/604537575.PDF) explains that the current ICA method does not test every possible constraint. It can miss limitations at a service transformer or secondary conductor, short-circuit duty, and some higher-voltage equipment. The map and the later engineering review don't always agree.
+Utilities use power-flow studies to check whether new loads would overload equipment or cause voltage problems. My question is how much of that work we can do ahead of time, then reuse across similar requests.
 
-This is useful, but it isn't yet an automated "yes." What if we could have fast sub-models that screen clusters of EV chargers or heat pumps, identify clearly safe requests, and send only borderline cases to a full engineering study? NREL has already demonstrated [EV hosting-capacity analysis](https://www.nrel.gov/docs/fy21osti/75639.pdf) on real distribution feeders.
+California already publishes results from *Integration Capacity Analysis*, or ICA. These calculations estimate how much additional generation or load parts of the distribution system can accommodate under modeled conditions. PG&E includes the results in its Grid Resource Integration Portal. [PG&E planning data and maps](https://www.pge.com/en/about/doing-business-with-pge/interconnections/distributed-resource-planning-data-and-maps.html)
 
-[DeepOPF](https://arxiv.org/abs/1905.04479) is an interesting example of the larger idea. It uses a neural network to approximate an optimal power-flow calculation much faster than a conventional solver. It is not a ready-made answer for residential energization; it addresses a different grid problem, but it does show how a slower physical calculation can help train a much faster first-pass model.
+There’s still a gap between a map showing available capacity and a project getting approval. A 2026 CPUC draft review describes constraints outside the current analysis, including service-transformer and secondary-system limitations, and short-circuit duty. The engineering review can therefore find a problem that the published capacity number didn’t capture. [CPUC draft ICA review](https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M604/K537/604537575.PDF)
 
-These models could be a good place to start for triage, but of course we'll need extra checks to authorize the specific work. The model should show its safety margin, the data it used, and why a request passed. Engineers should validate it against conventional studies and field measurements. Hopefully, over time, engineering effort on some of these projects can go down.
+I’d want to use those discrepancies to work out what the screening process is missing. Which additional checks would let us confidently approve a common configuration? Which information is stale or unavailable? Which projects really do need a full study?
 
-## The harder problem is affordability
+That seems like a useful place to develop faster models. We could screen common configurations of chargers or heat pumps against the constraints that matter at that location, then send the cases we can’t resolve to an engineer.
 
-After looking at residential solar and storage costs, I think affordability might be the bigger threat to fast electrification.
+[DeepOPF](https://arxiv.org/abs/1905.04479) is an interesting example of the broader computational idea: use a neural network to approximate a slower optimal power-flow calculation. It addresses a different grid problem, so it isn’t a residential-energization tool. What interests me is the possibility of using expensive calculations to train a faster model for decisions we need to make repeatedly.
 
-California can make heat pumps and electric vehicles technically available. But households will not switch fuels quickly if electricity is expensive, installations are unpredictable, and every project risks an electrical upgrade. A one-time rebate can help with the purchase price, but after consumers get their device, it's trouble if they still have to deal with a high monthly bill or a gnarly process that forces the homeowner to coordinate five contractors.
+For an approval process, I’d want the model to expose its inputs and safety margins, and to be checked against conventional studies and field measurements. Those checks would establish which decisions we can automate. Over time, we should be able to expand that set instead of treating every new application as if we’ve learned nothing from the previous ones.
 
-This creates an uncomfortable feedback loop. The grid needs investment to support electrification. Utilities recover much of that investment through electric rates. Higher rates can then make an electric car or heat pump less attractive than the fossil-fuel equipment it is supposed to replace. If adoption slows, electricity sales grow more slowly, so the grid's fixed costs are spread across fewer new kilowatt-hours. That puts still more upward pressure on rates.
+## Affordability determines whether this takes off
+
+After looking at residential solar and storage costs, I think affordability might be the larger threat to fast electrification.
+
+We can make heat pumps and EVs technically available. But people won’t switch quickly if the installation price is unpredictable, the electricity bill is high, and buying an appliance might turn into an electrical-upgrade project. A rebate can help with the purchase. It doesn’t resolve the monthly bill, or the gnarly process where the homeowner ends up coordinating five contractors.
+
+I want electrification to make sense for the person paying for it. We can’t build a mass-adoption strategy around asking people to absorb those costs and difficulties because they care about the climate.
+
+There’s an uncomfortable feedback loop here. The grid needs investment to support electrification, and utilities recover costs through customers’ bills. Higher electricity prices can then make electric equipment less attractive. If adoption slows, there’s less additional electricity consumption over which to spread the grid’s fixed costs.
+
+We can end up making the transition more expensive through the way we pay for it.
 
 <figure class="post-banner">
   <img src="{{ '/assets/img/electrification/electrification-affordability-loop.svg' | relative_url }}" alt="Feedback loop in which needed grid investment increases grid costs per kilowatt-hour, higher rates make electric vehicles and heat pumps less attractive, slower electrification limits electricity sales, and fixed grid costs are spread over fewer kilowatt-hours">
   <figcaption>This is the bad version of the flywheel: higher costs slow electrification, and slower electrification makes the same costs harder to spread.</figcaption>
 </figure>
 
-The opposite could become a useful flywheel. The [California Energy Commission's latest forecast](https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=106694&tn=269602) expects additional sales from electrification and data centers to spread fixed utility costs across more electricity use. That could moderate rates, but it only works if people can afford to electrify in the first place.
+More electricity use could help spread those costs, particularly where we can use capacity that’s already there. The CEC’s draft 2025 energy forecast anticipates that additional sales from electrification and data centers will moderate upward pressure on rates. [CEC draft forecast](https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=106694&tn=269602)
 
-Equity is part of this problem, not a distraction from it. A transition limited to homeowners with cash, time, and good credit will not be fast at the scale California needs. Renters, apartment buildings, small businesses, and lower-income households need simple programs that don't need them to be energy-policy experts to actually reap the benefits of electrification. We can't hand-hold every house through the electrification decision and implementation: at some point, this needs to become the obvious, no-brainer choice that takes off on its own, for this to actually work.
+That makes the timing of costs and adoption important. We need people to be able to afford the equipment and its operation before we can realize the benefits of wider adoption. I’d want rate design and installation support evaluated together: does the household actually end up with an affordable way to switch?
 
-At the same time, an equity program can't take three years to design and another year to approve each participant. Speed means making support predictable and easy to claim.
+And which households can use it?
+
+Renters can’t necessarily choose their heating system. Apartment buildings have different ownership and electrical arrangements. A household without spare cash can’t make an expensive purchase just because someone calculates that it might pay back eventually.
+
+If our process mainly works for homeowners with cash, time, and good credit, we’ve designed for a limited part of California. We need arrangements that work for the other households too, without requiring each participant to learn the rules of the energy system.
+
+I also don’t want those programs to spend years being designed and then take months to approve each person. Eligibility should be understandable, support should be predictable, and the contractor should know how to apply it as part of the installation.
 
 ## What I mean by fast
 
-I started with a question about how to electrify as fast as possible; but what's beneath that is that we need *divestment* from carbon-emitting sources, fast.
+We can’t hand-hold every house through its own electrification research, financing, and construction project. At some point, this needs to become the obvious, no-brainer choice that takes off on its own.
 
-Electrification isn't the goal by itself. The goal is to eliminate fossil-fuel combustion fast enough to matter, without making the energy system unreliable or unaffordable. There might be a better way to do this, but for cars and buildings, electrification is usually the strongest tool we have. In other sectors, efficiency, changes in demand, clean fuels, carbon removal, etc. might be better.
+That means doing more of the work collectively and in advance. Prepare the buildings before equipment fails. Evaluate common installations so the engineering can be reused. Order grid equipment early enough that it arrives when the demand does. Make flexible operation part of the installation, with a clear benefit for the customer.
 
-My version of "fast electrification" would do six things at once:
-
-1. Prepare buildings before fossil equipment fails.
-2. Give routine electric loads a standard path to energization.
-3. Build distribution capacity ahead of predictable demand.
-4. Make flexible operation the default for cars, water heating, heating, and cooling.
-5. Build clean generation, storage, and transmission in parallel.
-6. Use faster models to screen ordinary cases while engineers focus on real constraints.
-
-My point is to stop making every project bespoke. California already knows which technologies it wants people to adopt and where much of the demand will appear. The state should plan for that demand as a system, instead of asking each household or business to discover the same obstacles one project at a time. That seems both faster and more realistic than waiting for one perfect technology to save us later.
+My frustration is that we already know we want these things to happen, but still ask each household or business to discover the same obstacles and negotiate its way through them. I want California to take responsibility for making the whole process work—from deciding to replace an appliance to actually using the electric one at a cost the customer can afford. That’s the work I think we should be treating as urgent.
 
 *I started drafting these ideas in 2025 and returned to them in 2026.*
