@@ -1,19 +1,19 @@
 ---
 layout: post
-title: "EnergySage is cooking the books"
+title: "EnergySage is cooking the books and misleading consumers"
 date: 2026-08-18 12:00:00 -0700
 categories: notes
 ---
 
-I was recently reviewing an EnergySage comparison generated on July 10, 2026, with five quotes for solar and battery storage. All five quotes showed a shorter payback period with a battery than with solar alone. The solar-and-battery estimates ranged from 6.1 to 7.6 years, while the solar-only estimates ranged from 6.8 to 9.6 years.
+I was reviewing an EnergySage comparison generated on July 10, 2026, with five quotes for solar and battery storage. All five quotes showed a shorter payback period with a battery than with solar alone. The solar-and-battery estimates ranged from 6.1 to 7.6 years, while the solar-only estimates ranged from 6.8 to 9.6 years.
 
-This was interesting, and suspicious to me; I've been researching the cost of residential solar and storage in California at Energy and Resources Group, Berkeley, part of the Energy, Modeling, Analysis and Controls Group (EMAC). In my tentative results, adding a battery can save money on the electric bill, but the savings are usually not enough to recover the cost of the battery... so I started investigating.
+Interesting; suspicious. I've been researching the cost of residential solar and storage in California at Energy and Resources Group, Berkeley, part of the Energy, Modeling, Analysis and Controls Group (EMAC). In my tentative results, adding a battery can save money on the electric bill, but the savings are usually not enough to recover the cost of the battery... so I started investigating.
 
 At first, I thought the difference was probably simple payback (the way they're calculating) vs NPV (the way I'm calculating the cost effectiveness). Simple payback counts how many years of savings it takes to recover the original cost. Net present value also accounts for the fact that a dollar saved fifteen years from now is worth less than a dollar saved today.
 
 That was part of the difference, but not all of it. I started working backwards from the EnergySage numbers to understand what else was going on.
 
-## Working backwards from the five quotes
+## So batteries are valued at 94K?
 
 In the quote, five installers proposed different prices for both solar and storage. EnergySage then showed how much the homeowner would supposedly save over 25 years with solar alone, and with solar plus a battery.
 
@@ -44,7 +44,7 @@ The answer was basically the same every time. EnergySage assigned the battery be
 
 The five quotes look like five separate financial projections, but they're mostly the same projection with five different prices plugged in. EnergySage gives the battery about $94,000 in value every time. It then subtracts whatever that installer charges. So the cheapest battery automatically looks like the best investment, without any visible adjustment for which battery it is or how it performs...
 
-## The 7.1 percent assumption is doing a lot
+## Why would you assume electricity prices are going up by 7% yoy?
 
 Looking at the fine print: EnergySage assumes that electricity prices will increase by 7.1 percent every year. It bases this number on the previous ten years of California electricity prices reported by the U.S. Energy Information Administration.
 
@@ -82,17 +82,17 @@ Any forecast for 2050 could be wrong. Rates might increase faster than the CEC o
 
 There is also a small date problem. Forty cents compounded 24 times becomes $2.07, so that is the price in "year 25" if 40 cents is the price in year one. If 40 cents is the 2026 price and it grows for 25 full years, the 2051 price would be $2.22 per kWh.
 
-## Future dollars are not today's dollars
+## Time value of money 101
 
-Then I looked at what EnergySage does with those future electricity prices. The quote reports "25 year savings (cash)," not net present value. It adds each year's projected savings at its full future-dollar amount.
+OK now let's look at what EnergySage does with those future electricity prices. The quote reports "25 year savings (cash)," not net present value. It adds each year's projected savings at its full future-dollar amount.
 
-A cash total is problematic because it doesn't measure what those savings are worth today. It should not be compared directly with a cost paid today. A dollar received in 2051 is worth less than a dollar received now, in other words, today's dollar can be used or invested for the next 25 years.
+A cash total is wrong!! It's misleading at best!! It doesn't measure what those savings are worth today. It should not be compared directly with a cost paid today. A dollar received in 2051 is worth less than a dollar received now, in other words, today's dollar can be used or invested for the next 25 years.
 
-Suppose someone offered me $1,000 today or $1,000 in 2051. At a 7 percent discount rate, the second option is worth about $184 today! The two payments have the same number printed on them, but they absolutely do not have the same value.
+Suppose someone offered me $1,000 today or $1,000 in 2051. At a 7 percent discount rate, the second option is worth *only* $184 today! The two payments have the same number printed on them, but they absolutely do not have the same value.
 
-What's crazy is that same issue appears in EnergySage's electricity calculation. The model turns 40 cents into $2.08 through escalation. Discounted back 24 years at 7 percent, that $2.08 is worth about 41 cents today. The escalation makes the future number much larger. Converting it to present value almost completely reverses that increase.
+What's crazy is that EnergySage commits the same basic error in their cost calculation. The model turns 40 cents into $2.08 through escalation. Discounted back 24 years at 7 percent, that $2.08 is worth about 41 cents today. The escalation makes the future number much larger. Converting it to present value almost completely reverses that increase.
 
-EnergySage uses the first calculation but not the second, which is what I find misleading. The quote makes the future savings grow rapidly, then presents every future dollar as though it were worth a dollar today.
+EnergySage uses the first calculation but not the second, which is what I find misleading. The quote makes the future savings grow rapidly, then presents every future dollar as though it were worth a dollar today!
 
 Here is the same problem another way. If the first-year saving is `S`:
 
@@ -104,7 +104,7 @@ The `25.3 × S` figure is the present value. The 2.5 figure compares EnergySage'
 
 `64.2 × S ÷ 25.3 × S = 2.54`
 
-In this example, the cash-savings headline is about 2.5 times the present value. The 7 percent discount rate is only an example, but the underlying problem does not depend on that exact rate. EnergySage is mixing money from different years without translating it into one common year's dollars.
+ EnergySage is mixing money from different years without translating it into today's dollars. This is economics 101.
 
 The result is also heavily back-loaded. About 61 percent of the nominal savings arrive during years 16 through 25. About 35 percent arrive during the final five years alone. Most of the displayed value therefore depends on electricity prices far in the future.
 
@@ -165,9 +165,13 @@ Over 15 years, that produces a break-even installed cost of about $701 per kWh:
 
 The five EnergySage battery prices ranged from $10,900 to $14,650, which was lower than the battery price in my model. However, the exported comparison doesn't provide enough detail about usable capacity, power, or included equipment. We can't fully make an equivalent price comparison without those details.
 
-## Energy...Sage?
+## Energy...Sage? or Energy Fool?
 
-EnergySage is at best a starting point for getting excited about solar + storage and electrification, but I would absolutely not use it as a financial modeling tool without rebuilding the calculation. Before relying on the savings or payback numbers, I would want to see:
+EnergySage says positions themselves as an "independent comparison-shopping layer"... but they get installer network fees from solar, battery, heat pump installers as a monthly / per-lead quote! So basically... so they're highly incentivized to recommend installing these devices, and installing more of them. By no means are they an independent audit of battery economics.
+
+EnergySage makes several assumptions and calculation errors in their favour: they assume an unusually high electricity-price increase, compounds it for 25 years, omits the tariff rules that determine a battery's value, and don't replace the battery. 
+
+EnergySage is at best a starting point for getting excited about solar + storage and electrification, but I would *absolutely* not use it as a financial modeling tool without rebuilding the calculation. Before relying on the savings or payback numbers, I would want to see:
 
 - The battery's usable capacity, output power, efficiency, and expected degradation.
 - The household's hourly imports and exports.
@@ -177,6 +181,3 @@ EnergySage is at best a starting point for getting excited about solar + storage
 - The equipment, electrical work, and backup hardware included in the price.
 - The annual cash flows used to calculate payback and long-term savings.
 
-I went into this expecting a technical difference between simple payback and net present value. Instead, I found several assumptions that all push the result in the same direction. EnergySage assumes an unusually high electricity-price increase, compounds it for 25 years, omits the tariff rules that determine a battery's value, and does not show a battery replacement.
-
-Together, those choices make the battery look like an "obvious" financial winner. The quote gives a homeowner a precise payback period and a large savings number, but not the information needed to reproduce either one. The five installer offers might still be useful, and I would maybe use them to decide who to call. But I would not use EnergySage's savings estimate to decide whether the battery will pay for itself and whether this is a good decision from an economic perspective.
