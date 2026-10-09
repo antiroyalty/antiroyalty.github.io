@@ -165,7 +165,7 @@ Over 15 years, that produces a break-even installed cost of about $701 per kWh:
 
 The five EnergySage battery prices ranged from $10,900 to $14,650, which was lower than the battery price in my model. However, the exported comparison doesn't provide enough detail about usable capacity, power, or included equipment. We can't fully make an equivalent price comparison without those details.
 
-## Energy...Sage? or Energy Fool?
+## Energy...Sage? or EnergyFool?
 
 EnergySage says positions themselves as an "independent comparison-shopping layer"... but they get installer network fees from solar, battery, heat pump installers as a monthly / per-lead quote! So basically... so they're highly incentivized to recommend installing these devices, and installing more of them. By no means are they an independent audit of battery economics.
 
