@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What an EnergySage Quote Is Actually Calculating"
+title: "EnergySage is cooking the books"
 date: 2026-08-18 12:00:00 -0700
 categories: notes
 ---
