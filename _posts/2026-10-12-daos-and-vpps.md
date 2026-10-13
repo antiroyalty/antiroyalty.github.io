@@ -39,6 +39,6 @@ In a private company, some mix of security / infra / IT will address these issue
 
 Autonomous execution introduces some tricky security cases. Anthropic has eval incidents where models access real systems when models get internet access; OpenAI has their issues with HuggingFace. Now agents have access to everyone's email addresses - and most services allow password reset by just clicking a link in your email inbox! So whose password is it really? 
 
-If attacks become faster and more automatic, we also need the ability to contain damage faster. We can't necessarily ask agents to behave safely and responsibly; those are just guidelines and execution instructions. Suddenly, imagining the world full of adverse (digital) actors seems a lot more likely, and it's exactly the world that crypto was built for.
+If attacks become faster and more automatic, we also need the ability to contain damage faster. What does that actually look like in practice, and what's the role for the human in the loop? Honestly, I'm not sure. My hunch is that we can't just ask agents to behave safely and responsibly; those are just guidelines and execution instructions. The other thing I see is that the world full of adverse (digital) actors seems a lot more likely, and it's exactly the world that crypto was built for.
 
-Is decentralizing the vote the answer to our energy security challenges? Maybe. Probably not.
+Is decentralizing the vote the answer to our energy security challenges? Maybe... but I still think there might be other, easier, cheaper, and more flexible ways to get the safety features we want. I don't think it's right for us to look for a problem to fit a technology; the need for it has to be burning and abundantly clear. So DAOs: probably not.
