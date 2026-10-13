@@ -20,7 +20,7 @@ explorer_url: "https://electrify-california.vercel.app/"
 
   <section class="case-section" aria-labelledby="case-about-title">
     <h2 id="case-about-title">A county-level view of going electric</h2>
-    <p>Choose a county and compare a gas home and gasoline car with electric appliances and an EV. See energy spending alongside equipment costs, then explore how solar and storage change the result.</p>
+    <p>Compare a gas home and gasoline car with electric appliances and an EV. The latest study covers Alameda, Los Angeles, and San Diego, including existing cooling. Explore how solar, storage, export rules, and modeled tax credits change annual costs.</p>
     <p>This companion presents saved research results for representative single-family homes. It is not a quote or a forecast for your address. The explorer includes the study assumptions and source data.</p>
   </section>
 </article>
