@@ -45,19 +45,13 @@ For these ordinary replacements, we don’t have to wait for a new technology. W
 
 ## Make connecting the equipment routine
 
-California uses the word *energization* for connecting a new building or a larger electric load to utility service. That’s different from generation interconnection, where something like a solar installation or power plant connects to supply electricity.
-
-California has already tried to address energization delays through SB 410 and AB 50. The CPUC adopted target timelines, reporting requirements, and a process for customers to report delays. That gives us a way to see where projects stop moving. [CPUC energization proceeding](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/infrastructure/energization)
-
-Then the actual work has to start. Reporting a delay isn’t the same as unblocking it.
-
-The application process seems like an obvious place to improve things: structured data, automatic checks for missing information, and milestones that both the customer and utility can see. An LLM could help normalize older documents or route unusual requests. Ideally, we’d have a standard application that doesn’t need an LLM to interpret it in the first place, but that doesn’t fit as well with the mish-mash world of old paper trails we live in. At least the LLM can accelerate part of it.
+Let's start with the application process. How can we improve things to speed them up? We can add structured data, automatic checks for missing information, and milestones that both the customer and utility can see. An LLM could help normalize older documents or route unusual requests. Ideally, we’d have a standard application that doesn’t need an LLM to interpret it in the first place, but that doesn’t fit as well with the mish-mash world of old paper trails we live in. At least the LLM can accelerate part of it.
 
 The purpose would be to get a complete application to the right person with enough information to make a decision. If the next step requires a transformer or a construction crew, we should be able to see that too, including who’s responsible and what’s holding it up.
 
 What I’d like is a “Happy Path” for common projects. If a heat pump or managed EV charger fits a configuration the utility has already evaluated, there should be a predictable way to approve it. Engineers should spend their time on the cases where the equipment or local grid conditions actually require investigation.
 
-That would mean doing more work upfront to define those configurations and identify their limits. But we’d get to reuse that work. Making every applicant go through the same investigation again seems like an expensive way to avoid standardizing the process.
+That would mean doing more work upfront to define those configurations and identify their limits. But we’d get to reuse that work. Making every applicant go through the same investigation again seems like an expensive way to avoid standardizing the process. Then what?
 
 ## Build capacity before everyone asks for it
 
@@ -79,23 +73,23 @@ California is moving in that direction. A 2024 CPUC decision called for longer-t
 
 The planning horizon matters a lot. If a substation takes seven years to plan and construct, a highly accurate three-year forecast still arrives four years too late. By the time we can confidently point to the demand, we’ve already missed the chance to be ready for it.
 
-I’d want the forecasts tied to actual decisions: which equipment gets ordered, which projects enter design, and which locations need more investigation. Otherwise, we can keep improving the forecast while the construction schedule stays exactly where it was.
+I’d want the forecasts tied to actual decisions: which equipment gets ordered, which projects enter design, and which locations need more investigation. Otherwise, we can keep improving the forecast while the construction schedule stays exactly where it was. Then what?
 
 ## Make flexible demand the default
 
-Electrification adds electricity consumption. How much it adds to the peak depends partly on when we use it.
+Electrification adds electricity consumption. How much it adds to the peak depends on when we use it, so demand flexibility has to be inherent to what we're building.
 
-An EV might need to be charged by morning, without needing to charge immediately when it gets home. A water heater can do some of its heating before the evening peak. A building can pre-heat or pre-cool within a comfortable range. We should be using that flexibility as part of the plan for electrification.
+Someone might need their EV charged by the time they leave for work, but they don't necessarily need it charged _right_ when they get home. That's the classic example. Similarly: a water heater can do some of its heating before the evening peak. A building can pre-heat or pre-cool within a comfortable range. We should be using that flexibility as part of the plan for electrification.
 
-California has a goal of shifting 7,000 MW of demand by 2030. That’s substantial enough to affect how we plan the grid and design the equipment connecting to it. [California Energy Commission](https://www.energy.ca.gov/news/2023-05/california-adopts-goal-make-more-electricity-available-through-smarter-use)
+California has the goal of shifting 7,000 MW of demand by 2030. That’s a big enough number to affect how we plan the grid _and_ to prioritize designing the equipment around it. [California Energy Commission](https://www.energy.ca.gov/news/2023-05/california-adopts-goal-make-more-electricity-available-through-smarter-use)
 
 But I don’t think we’ll get there by expecting everyone to become interested in demand response. Someone buying an EV mostly wants their car charged. They shouldn’t need to compare utility programs, configure several apps, and keep checking whether their schedules still make sense.
 
-There are already tools for sending useful signals. The CEC’s MIDAS system provides access to time-varying rates, emissions signals, and Flex Alerts. I’d want those signals connected to the equipment so a customer can specify what they need—when the car must be ready, for example—and the system can handle the timing. [CEC MIDAS](https://www.energy.ca.gov/proceedings/market-informed-demand-automation-server-midas)
+There are some tools for sending useful signals. The CEC’s MIDAS system provides access to time-varying rates, emissions signals, and Flex Alerts. I’d want those signals connected to the equipment so a customer can specify what they need—when the car must be ready, for example—and the system can handle the timing. [CEC MIDAS](https://www.energy.ca.gov/proceedings/market-informed-demand-automation-server-midas)
 
 There’s also a more local opportunity: managing how much power the house draws at once.
 
-For a simplified example, imagine a house with a properly designed control system enforcing an 80A import limit. The other loads are using 45A, so the car can charge at 32A, bringing the total to 77A. Then the oven and heat pump add another 25A. Instead of letting the total reach 102A, the controller reduces the car’s charging to 10A. The house stays at 80A. When the other loads fall, the car can charge faster again.
+For a simple example, imagine a house with a properly designed control system enforcing an 80A import limit. The other loads are using 45A, so the car can charge at 32A, bringing the total to 77A. Then the oven and heat pump add another 25A. Instead of letting the total reach 102A, the controller reduces the car’s charging to 10A. The house stays at 80A. When the other loads fall, the car can charge faster again.
 
 Notice what changed: the car gets its energy over a different period, and the house doesn’t need to draw the maximum power of every appliance simultaneously.
 
@@ -103,11 +97,11 @@ The circuits and protective equipment still have to be correctly designed. The m
 
 PG&E’s Rule 2 recognizes certain controlled loads under specified conditions, including a UL 3141-certified power-control system with independently verified import-limit functionality. That gives a concrete route for considering managed equipment differently from equipment that can all run at once. [PG&E Rule 2, section H.7](https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_RULES_2.pdf)
 
-This is the sort of option I’d want checked *before* telling a household it needs a larger service.
+This is the sort of option I’d want checked _before_ telling a house it needs a bigger panel.
 
 Managing the house’s limit and responding to the wider grid are separate jobs, though. Measuring the current entering the house tells a controller when to slow down the car. It doesn’t tell the controller how heavily loaded the neighborhood is, or what electricity costs at that moment. For that, we need communication with the utility or another coordinating service.
 
-I want the controls to be automatic and understandable, with customers able to specify what they need and share in the savings. If flexible operation reduces the infrastructure we have to build, some of that value should make electrification cheaper for the people providing the flexibility.
+I want the controls to be automatic and understandable, with customers able to specify what they need and share savings. If flexible operation reduces the infrastructure we have to build, some of that value should make electrification cheaper for the people providing the flexibility. Then what?
 
 ## Build the supply and wires at the same time
 
@@ -126,7 +120,7 @@ I’m excited to see that scale of planning. What I’d want to follow next is t
 
 There are dependencies between those steps, but we should be looking for work that can happen in parallel. Waiting to settle every uncertainty before starting the next piece is how a project that we need urgently ends up years away.
 
-The demand forecast, the procurement schedule, and the customer’s expected connection date need to describe a project that can actually happen. I’d like to see us judge the planning process by whether those dates line up.
+The demand forecast, the procurement schedule, and the customer’s expected connection date need to describe a project that can actually happen. I’d like to see us judge the planning process by whether those dates line up. Then what?
 
 ## Use better models to approve ordinary projects faster
 
@@ -144,7 +138,7 @@ That seems like a useful place to develop faster models. We could screen common 
 
 [DeepOPF](https://arxiv.org/abs/1905.04479) is an interesting example of the broader computational idea: use a neural network to approximate a slower optimal power-flow calculation. It addresses a different grid problem, so it isn’t a residential-energization tool. What interests me is the possibility of using expensive calculations to train a faster model for decisions we need to make repeatedly.
 
-For an approval process, I’d want the model to expose its inputs and safety margins, and to be checked against conventional studies and field measurements. Those checks would establish which decisions we can automate. Over time, we should be able to expand that set instead of treating every new application as if we’ve learned nothing from the previous ones.
+For an approval process, I’d want the model to expose its inputs and safety margins, and to be checked against conventional studies and field measurements. Those checks would establish which decisions we can automate. Over time, we should be able to expand that set instead of treating every new application as if we’ve learned nothing from the previous ones. Then what?
 
 ## Affordability determines whether this takes off
 
@@ -173,14 +167,14 @@ Renters can’t necessarily choose their heating system. Apartment buildings hav
 
 If our process mainly works for homeowners with cash, time, and good credit, we’ve designed for a limited part of California. We need arrangements that work for the other households too, without requiring each participant to learn the rules of the energy system.
 
-I also don’t want those programs to spend years being designed and then take months to approve each person. Eligibility should be understandable, support should be predictable, and the contractor should know how to apply it as part of the installation.
+I also don’t want those programs to spend years being designed and then take months to approve each person. Eligibility should be understandable, support should be predictable, and the contractor should know how to apply it as part of the installation. OK, and if we get this right, then what?
 
-## What I mean by fast
+## Fast means easy
 
 We can’t hand-hold every house through its own electrification research, financing, and construction project. At some point, this needs to become the obvious, no-brainer choice that takes off on its own.
 
 That means doing more of the work collectively and in advance. Prepare the buildings before equipment fails. Evaluate common installations so the engineering can be reused. Order grid equipment early enough that it arrives when the demand does. Make flexible operation part of the installation, with a clear benefit for the customer.
 
-My frustration is that we already know we want these things to happen, but still ask each household or business to discover the same obstacles and negotiate its way through them. I want California to take responsibility for making the whole process work—from deciding to replace an appliance to actually using the electric one at a cost the customer can afford. That’s the work I think we should be treating as urgent.
+My frustration is that we already know we want these things to happen, but still ask each household or business to discover the same obstacles and negotiate its way through them. I want California to take responsibility for making the whole process work. From deciding to replace an appliance to actually using the electric one at a cost the customer can afford. _That’s_ the work I think we should be treating as urgent.
 
 *I started drafting these ideas in 2025 and returned to them in 2026.*
