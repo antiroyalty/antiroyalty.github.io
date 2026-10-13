@@ -16,7 +16,6 @@ permalink: /projects/
       <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}" aria-label="{{ item.title }}">
         <span class="project-tile__content">
           <h3>{{ item.title }}</h3>
-          {% if item.description %}<p>{{ item.description }}</p>{% endif %}
         </span>
         <span class="project-specimen project-specimen--{{ forloop.index }}" aria-hidden="true"></span>
       </a>

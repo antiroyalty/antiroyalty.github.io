@@ -154,7 +154,6 @@ permalink: /grid/
   </section>
 
   <div class="grid-source-note">
-    <p><strong>How to read this:</strong> A regional price gap is a market signal, not proof that a specific line is overloaded. Select a hub to see whether energy, congestion, or modeled losses are shaping its price.</p>
     <p>Infrastructure: <a href="https://lab.data.ca.gov/dataset/california-electric-transmission-lines">California Energy Commission</a>, approximate public geometry. Prices: <a href="https://oasis.caiso.com/mrioasis/logon.do">California ISO OASIS</a>, five-minute hub LMPs. Informational data only.</p>
   </div>
 </section>

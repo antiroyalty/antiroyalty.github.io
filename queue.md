@@ -51,10 +51,10 @@ permalink: /queue/
       <p class="eyebrow">05 / The queue over time</p>
       <h2 id="queue-history-title">How is the queue changing?</h2>
       <div class="queue-history-modes" role="group" aria-label="History period">
-        <button type="button" data-q="history-annual-button" aria-pressed="true" aria-controls="queue-annual-panel">Year-end · 2020–2025</button>
-        <button type="button" data-q="history-weekly-button" aria-pressed="false" aria-controls="queue-weekly-panel">Recent weeks</button>
+        <button type="button" data-q="history-weekly-button" aria-pressed="true" aria-controls="queue-weekly-panel">Recent weeks</button>
+        <button type="button" data-q="history-annual-button" aria-pressed="false" aria-controls="queue-annual-panel">Year-end · 2020–2025</button>
       </div>
-      <div id="queue-annual-panel" data-q="history-annual-panel">
+      <div id="queue-annual-panel" data-q="history-annual-panel" hidden>
         <p class="queue-note">CAISO project counts in each year's Queued Up dataset, including completed and withdrawn records. Counts cover the full CAISO sample, independent of the filters above.</p>
         <div class="queue-history-legend" aria-label="Project status colors"><span><i class="queue-status-active"></i>Active</span><span><i class="queue-status-completed"></i>Completed</span><span><i class="queue-status-withdrawn"></i>Withdrawn</span><span><i class="queue-status-suspended"></i>Suspended</span></div>
         <p class="queue-history-axis-title">Projects</p>
@@ -65,7 +65,7 @@ permalink: /queue/
         <p class="queue-note">Completed and withdrawn counts include earlier years; they are not new outcomes within that year. Source revisions and coverage changes can also change the totals. “Operational” is shown as “Completed.”</p>
         <p class="queue-note">Source: <a href="https://emp.lbl.gov/queues">Lawrence Berkeley National Laboratory and GridTracker, Queued Up</a> (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>). Adapted to CAISO project counts. These annual editions have different coverage from our recent CAISO observations. The map and project list use the recent observations.</p>
       </div>
-      <div id="queue-weekly-panel" data-q="history-weekly-panel" hidden>
+      <div id="queue-weekly-panel" data-q="history-weekly-panel">
         <p class="queue-note">Project counts across the full reports, including completed and withdrawn projects. Each bar uses the latest saved observation in that Pacific week, independent of the filters above.</p>
         <div class="queue-history-legend" aria-label="Project status colors"><span><i class="queue-status-active"></i>Active</span><span><i class="queue-status-completed"></i>Completed</span><span><i class="queue-status-withdrawn"></i>Withdrawn</span></div>
         <p class="queue-history-axis-title">Projects</p>
