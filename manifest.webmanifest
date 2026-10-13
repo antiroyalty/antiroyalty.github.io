@@ -10,7 +10,7 @@
   "background_color": "#eee7d8",
   "icons": [
     {
-      "src": "/assets/img/favicon.png",
+      "src": "/assets/img/favicon.png?v=yellow-circle",
       "sizes": "64x64",
       "type": "image/png"
     }
