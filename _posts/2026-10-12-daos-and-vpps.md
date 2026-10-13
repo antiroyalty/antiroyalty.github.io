@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Are DAOs the future of secure dispatch for Virtual Power Plants?"
+title: "Are DAOs the future of secure dispatch for VPPs?"
 date: 2026-10-12 12:00:00 -0700
 categories: notes
 ---
