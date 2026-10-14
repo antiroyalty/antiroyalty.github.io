@@ -464,7 +464,6 @@ class QueueExplorer {
     content.append(definitionList([
       ["Connection point", p.poi], ["Location", [p.county, p.state].filter(Boolean).join(", ")], online,
     ]));
-    content.append(element("p", "Queue age is not an estimate of remaining wait. Requested online dates can change.", "queue-note"));
     for (const [title, entries] of [
       ["Dates and application status", [
         ["Queue entry", p.queueDate], ["Application received", p.applicationDate],

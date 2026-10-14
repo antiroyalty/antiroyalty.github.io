@@ -85,10 +85,7 @@ permalink: /queue/
       <p>CAISO publishes Cluster 14 and earlier separately from Cluster 15. These editions can have different dates. This explorer includes projects outside California when they request connection to the CAISO-controlled grid.</p>
       <div data-q="sources"></div>
       <p>“Time in queue” measures elapsed calendar days, not a forecast of remaining wait or proof of a study delay. Active entries can include amendments to existing plants. Missing or inconsistent dates remain unavailable. Requested online dates are not commitments.</p>
-      <p>The map matches normalized substation names, transmission owners, and counties against the site's public CEC substation reference. It shows connection substations, not project footprints. Line connections, proposed facilities, ambiguous names, and unmatched records remain included in the filters and totals. The dashed CAISO area is a retired 2021 reference.</p>
-      <p>Technology categories use reported fuels. Solar and storage components can share one connection limit, so their individual MW values must not be added to infer net grid capacity.</p>
-      <p>County filters combine capitalization and “County” suffix variations. Project details preserve the source spelling, including incomplete or inconsistent place names.</p>
-      <p>Sources are checked daily by the site's data workflow after deployment. Changed project records create a new observation. Each weekly bar shows that week's latest saved observation. Original workbooks are retained with each source version. The first observation establishes the baseline; it cannot reveal earlier changes.</p>
+      <p>The map matches normalized substation names, transmission owners, and counties against the site's public CEC substation reference. It shows connection substations, not project footprints. Line connections, proposed facilities, ambiguous names, and unmatched records remain included in the filters and totals.</p>
       <p><a href="https://www.caiso.com/generation-transmission/generation/generator-interconnection">CAISO generator interconnection ↗</a> · <a href="https://www.arcgis.com/home/item.html?id=147c83114a3f4ff8a82225e3d6c24857">Historical area reference ↗</a></p>
     </details>
   </div>
