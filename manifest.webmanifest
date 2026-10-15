@@ -10,8 +10,13 @@
   "background_color": "#eee7d8",
   "icons": [
     {
-      "src": "/assets/img/favicon.png?v=yellow-circle",
-      "sizes": "64x64",
+      "src": "{{ '/assets/img/yellow-dot-192.png' | relative_url }}",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "{{ '/assets/img/yellow-dot-512.png' | relative_url }}",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

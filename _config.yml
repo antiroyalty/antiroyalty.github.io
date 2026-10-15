@@ -26,7 +26,7 @@ lang: en
 
 # permalink: /:slug.html
 
-favicon: "/assets/img/favicon.svg"
+favicon: "/assets/img/yellow-dot.svg"
 
 plugins:
   - jekyll-feed

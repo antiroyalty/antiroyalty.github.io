@@ -1,10 +1,11 @@
+# Projects appear in this order on the homepage and Projects page.
 # Date records when the project was introduced, not its latest data refresh.
-- title: "What would it cost to go electric?"
-  date: "2026-08-17"
-  url: "/projects/electrify-california/"
-  description: Explore how electrification, solar, storage, and California utility rates shape modeled household costs.
-  accent: paper
-  status: Research preview
+- title: "What's in the queue?"
+  date: "2026-09-19"
+  url: "/queue/"
+  description: Explore proposed generation and storage in the CAISO interconnection queue—where projects want to connect and how long they've been waiting.
+  accent: map
+  status: Public data explorer
 
 - title: "What's happening on the grid?"
   date: "2026-08-11"
@@ -13,12 +14,12 @@
   accent: map
   status: Prototype
 
-- title: "What's in the queue?"
-  date: "2026-09-19"
-  url: "/queue/"
-  description: Explore proposed generation and storage in the CAISO interconnection queue—where projects want to connect and how long they've been waiting.
-  accent: map
-  status: Public data explorer
+- title: "What would it cost to go electric?"
+  date: "2026-08-17"
+  url: "/projects/electrify-california/"
+  description: Explore how electrification, solar, storage, and California utility rates shape modeled household costs.
+  accent: paper
+  status: Research preview
 
 - title: "Where can the grid take more load?"
   date: "2024-09-15"

@@ -19,8 +19,7 @@ layout: default
     <a href="{{ '/projects/' | relative_url }}">All projects</a>
   </div>
   <div class="projects-grid projects-grid--home">
-    {% assign projects = site.data.projects | sort: 'date' | reverse %}
-    {% for item in projects limit:3 %}
+    {% for item in site.data.projects limit:3 %}
       <a class="project-tile project-tile--{{ item.accent | default: 'paper' }}" href="{{ item.url | relative_url }}">
         <span class="project-tile__content">
           <h3>{{ item.title }}</h3>
