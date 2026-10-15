@@ -406,10 +406,12 @@ class QueueExplorer {
   }
 
   selectPoi(poi, utility = null) {
+    const focusedConnectionIndex = [...this.ui.connections.children].indexOf(document.activeElement);
     this.connectionSelection = this.connectionSelection?.poi === poi && this.connectionSelection?.utility === utility
       ? null : {poi, utility};
     this.render();
-    this.ui["connection-filter"].parentElement.scrollIntoView({behavior: "smooth", block: "start"});
+    // Connection toggles preserve list order; restore focus after replacing its buttons.
+    if (focusedConnectionIndex >= 0) this.ui.connections.children[focusedConnectionIndex]?.focus({preventScroll: true});
   }
 
   renderMap() {

@@ -84,8 +84,6 @@ permalink: /queue/
     <details class="queue-method"><summary>Sources and how to read this</summary>
       <p>CAISO publishes Cluster 14 and earlier separately from Cluster 15. These editions can have different dates. This explorer includes projects outside California when they request connection to the CAISO-controlled grid.</p>
       <div data-q="sources"></div>
-      <p>“Time in queue” measures elapsed calendar days, not a forecast of remaining wait or proof of a study delay. Active entries can include amendments to existing plants. Missing or inconsistent dates remain unavailable. Requested online dates are not commitments.</p>
-      <p>The map matches normalized substation names, transmission owners, and counties against the site's public CEC substation reference. It shows connection substations, not project footprints. Line connections, proposed facilities, ambiguous names, and unmatched records remain included in the filters and totals.</p>
       <p><a href="https://www.caiso.com/generation-transmission/generation/generator-interconnection">CAISO generator interconnection ↗</a> · <a href="https://www.arcgis.com/home/item.html?id=147c83114a3f4ff8a82225e3d6c24857">Historical area reference ↗</a></p>
     </details>
   </div>

@@ -86,7 +86,7 @@ There is also a small date problem. Forty cents compounded 24 times becomes $2.0
 
 OK now let's look at what EnergySage does with those future electricity prices. The quote reports "25 year savings (cash)," not net present value. It adds each year's projected savings at its full future-dollar amount.
 
-A cash total is wrong!! It's misleading at best!! It doesn't measure what those savings are worth today. It should not be compared directly with a cost paid today. A dollar received in 2051 is worth less than a dollar received now, in other words, today's dollar can be used or invested for the next 25 years.
+A cash total is wrong!! It's misleading at best! It doesn't measure what those savings are worth today. It should not be compared directly with a cost paid today. A dollar received in 2051 is worth less than a dollar received now, in other words, today's dollar can be used or invested for the next 25 years.
 
 Suppose someone offered me $1,000 today or $1,000 in 2051. At a 7 percent discount rate, the second option is worth *only* $184 today! The two payments have the same number printed on them, but they absolutely do not have the same value.
 
@@ -165,9 +165,9 @@ Over 15 years, that produces a break-even installed cost of about $701 per kWh:
 
 The five EnergySage battery prices ranged from $10,900 to $14,650, which was lower than the battery price in my model. However, the exported comparison doesn't provide enough detail about usable capacity, power, or included equipment. We can't fully make an equivalent price comparison without those details.
 
-## Energy...Sage? or EnergyFool?
+## Energy...Sage? EnergyFool?
 
-EnergySage says positions themselves as an "independent comparison-shopping layer"... but they get installer network fees from solar, battery, heat pump installers as a monthly / per-lead quote! So basically... so they're highly incentivized to recommend installing these devices, and installing more of them. By no means are they an independent audit of battery economics.
+EnergySage says positions themselves as an "independent comparison-shopping layer"... but they get installer network fees from solar, battery, heat pump installers as a monthly / per-lead quote! So basically... they're highly incentivized to recommend installing these devices, and installing more of them. By no means are they an independent audit of battery economics.
 
 EnergySage makes several assumptions and calculation errors in their favour: they assume an unusually high electricity-price increase, compounds it for 25 years, omits the tariff rules that determine a battery's value, and don't replace the battery. 
 
@@ -181,3 +181,4 @@ EnergySage is at best a starting point for getting excited about solar + storage
 - The equipment, electrical work, and backup hardware included in the price.
 - The annual cash flows used to calculate payback and long-term savings.
 
+Honestly, even though I'm 100% in favour of electrification, I'm pretty disappointed at their modeling and reporting approach, and I find it to be misleading and disingenuous to consumers. I want us to do better.
